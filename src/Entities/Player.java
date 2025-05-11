@@ -2,6 +2,7 @@ package Entities;
 
 import Main.GamePanel;
 import Main.KeyHandler;
+import Main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -46,23 +47,31 @@ public class Player extends Entity{
     }
     public void getPlayerImage() {
 
+        up1 = setup("Player_Up_1");
+        up2 = setup("Player_Up_2");
+        down1 = setup("Player_Down_1");
+        down2 = setup("Player_Down_2");
+        left1 = setup("Player_Left_1");
+        left2 = setup("Player_Left_2");
+        right1 = setup("Player_Right_1");
+        right2 = setup("Player_Right_2");
+        standNorth = setup("stand_back");
+        standSouth = setup("stand_front");
+        standEast = setup("stand_right");
+        standWest = setup("stand_left");
+
+    }
+    public BufferedImage setup(String imageName) {
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
         try {
-            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/Player_Up_1.png")));
-            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/Player_Up_2.png")));
-            down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/Player_Down_1.png")));
-            down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/Player_Down_2.png")));
-            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/Player_Left_1.png")));
-            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/Player_Left_2.png")));
-            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/Player_Right_1.png")));
-            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/Player_Right_2.png")));
-            standNorth = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_back.png")));
-            standSouth = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_front.png")));
-            standEast = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_right.png")));
-            standWest = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_left.png")));
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/" + imageName + ".png")));
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        return image;
     }
 
     public void update() {
@@ -92,7 +101,7 @@ public class Player extends Entity{
 
             } else {
                 standCounter++;
-                if (standCounter == 15) {
+                if (standCounter == 10) {
                     standCounter = 0;
                     switch (direction) {
                         case "up":
@@ -209,7 +218,7 @@ public class Player extends Entity{
                 break;
         };
 
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, screenX, screenY, null);
         g2.setColor(Color.RED);
         //g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
