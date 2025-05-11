@@ -12,7 +12,7 @@ public class OBJ_BlueDiamond extends OBJ_Diamonds {
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/Blue_Diamond.png")));
         }catch (IOException e){
-            e.printStackTrace();
+
         }
         collision = true;
 

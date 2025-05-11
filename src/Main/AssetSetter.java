@@ -1,6 +1,8 @@
 package Main;
 
 import Object.*;
+import Object.Diamonds.OBJ_BlueDiamond;
+
 public class AssetSetter {
 
     GamePanel gp;
@@ -27,5 +29,8 @@ public class AssetSetter {
         gp.obj[3].worldX = 30 * gp.tileSize;
         gp.obj[3].worldY = 15 * gp.tileSize;
 
+        gp.obj[4] = new OBJ_BlueDiamond();
+        gp.obj[4].worldX = 35 * gp.tileSize;
+        gp.obj[4].worldY = 15 * gp.tileSize;
         }
 }

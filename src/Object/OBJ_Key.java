@@ -11,7 +11,7 @@ public class OBJ_Key extends SuperObject{
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/Blue_Key.png")));
         }catch (IOException e){
-            e.printStackTrace();
+
         }
 
     }
