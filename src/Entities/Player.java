@@ -16,7 +16,7 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
 
-    public int hasKey = 0;
+    //public int hasKey = 0;
     private int standCounter = 1;
 
     boolean moving = false;
@@ -154,33 +154,12 @@ public class Player extends Entity{
 
     public void pickUpObject(int i) {
         if (i != 999){
-            String objectName = gp.obj[i].name;
-            switch (objectName) {
-                case "Key":
-                    gp.playSE(1);
-                    hasKey++;
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("You got a key!");
-                    break;
-                case "Door":
-                    gp.playSE(2);
-                    if (hasKey > 0) {
-                        gp.obj[i] = null;
-                        hasKey--;
-                        gp.ui.showMessage("You opened the door!");
-                        break;
-                    }   else{
-
-                        gp.ui.showMessage("You need a key!");
-                        break;
-                    }
-                case "BlueDiamond":
-                    gp.ui.gameFinished = true;
-                    gp.stopMusic();
-                    gp.playSE(3);
-
-                    break;
-            }
+           //this is where you have player-object interactions
+            //if (gp.obj[i].type == type) {
+            //    gp.playSE(1);
+            //    hasKey++;
+            //    gp.obj[i] = null;
+            //}
         }
 
     }

@@ -12,7 +12,7 @@ public class AssetSetter {
 
     }
         public void setObject(){
-
+        /*
         gp.obj[0] = new OBJ_Key(gp);
         gp.obj[0].worldX = 31 * gp.tileSize;
         gp.obj[0].worldY = 30 * gp.tileSize;
@@ -31,6 +31,6 @@ public class AssetSetter {
 
         gp.obj[4] = new OBJ_BlueDiamond(gp);
         gp.obj[4].worldX = 35 * gp.tileSize;
-        gp.obj[4].worldY = 15 * gp.tileSize;
+        gp.obj[4].worldY = 15 * gp.tileSize;*/
         }
 }
