@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable{
     public int gameState;
     public final int playState = 1;
     public final int pauseState = 2;
-
+    public final int dialogueState = 3;
     public GamePanel(){
         this.setPreferredSize(new java.awt.Dimension(screenWidth, screenHeight));
         this.setBackground(java.awt.Color.black);
@@ -96,7 +96,14 @@ public class GamePanel extends JPanel implements Runnable{
     public void update(){
         // Update game logic here
         if(gameState == playState) {
+            // Player
             player.update();
+            // NPC
+            for (Entity entity : npc) {
+                if (entity != null) {
+                    entity.update();
+                }
+            }
         }
         if(gameState == pauseState) {
             //nothing

@@ -78,13 +78,6 @@ public class Player extends Entity{
                     direction = "right";
                 }
                 moving = true;
-                //CHECKS TILE COLLISION
-                collisionOn = false;
-                gp.cChecker.checkTile(this);
-
-                //CHECKS OBJECT COLLISION
-                int objIndex = gp.cChecker.checkObject(this, true);
-                pickUpObject(objIndex);
 
             } else {
                 standCounter++;
@@ -105,7 +98,20 @@ public class Player extends Entity{
                             break;
                     }
                 }
+
             }
+
+            //CHECKS TILE COLLISION
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+
+            //CHECKS OBJECT COLLISION
+            int objIndex = gp.cChecker.checkObject(this, true);
+            pickUpObject(objIndex);
+
+            //CHECKS NPC COLLISION
+            int npcIndex = gp.cChecker.checkEntity(this,gp.npc);
+            interactNPC(npcIndex);
         }
 
         if(moving){
@@ -147,6 +153,12 @@ public class Player extends Entity{
             //    hasKey++;
             //    gp.obj[i] = null;
             //}
+        }
+    }
+
+    public void interactNPC(int i){
+        if (i != 999){
+            gp.gameState = gp.dialogueState;
         }
 
     }

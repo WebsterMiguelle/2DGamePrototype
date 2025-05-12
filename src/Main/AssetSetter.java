@@ -37,12 +37,8 @@ public class AssetSetter {
 
         public void setNPC(){
             gp.npc[0] = new NPC_Mage(gp);
-            gp.npc[0].worldX = 31 * gp.tileSize;
+            gp.npc[0].worldX = 22 * gp.tileSize;
             gp.npc[0].worldY = 30 * gp.tileSize;
-
-            gp.npc[1] = new NPC_Mage(gp);
-            gp.npc[1].worldX = 35 * gp.tileSize;
-            gp.npc[1].worldY = 31 * gp.tileSize;
 
         }
 }

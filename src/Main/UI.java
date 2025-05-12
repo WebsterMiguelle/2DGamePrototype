@@ -11,7 +11,7 @@ public class UI {
     Font arial_40, arial_80B;
 
     Graphics2D g2;
-    //BufferedImage keyImage;
+
     public boolean messageOn = false;
     public String message = "";
     public int messageCounter = 0;
@@ -22,8 +22,6 @@ public class UI {
 
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
-        //OBJ_Key key = new OBJ_Key(gp);
-        //keyImage = key.image;
     }
 
     public void showMessage(String text) {
@@ -43,6 +41,11 @@ public class UI {
 
         if(gp.gameState == gp.pauseState) {
             drawPauseScreen();
+        }
+
+        if(gp.gameState == gp.dialogueState) {
+            drawDialogueScreen();
+
         }
     }
 
@@ -73,4 +76,22 @@ public class UI {
         y += gp.tileSize;
         g2.drawString(text, x, y);
     }
+
+    public void drawDialogueScreen() {
+
+        //WINDOW
+        int x = gp.tileSize*2;
+        int y = gp.tileSize/2;
+        int width= gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.tileSize*5;
+
+        drawSubWindow(x,y,width,height);
+    }
+
+    public void drawSubWindow(int x, int y, int width, int height){
+    Color c = new Color (0,0,0);
+    g2.setColor(c);
+    g2.fillRoundRect(x,y,width,height,35,35);
+    }
+
 }
