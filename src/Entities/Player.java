@@ -2,16 +2,13 @@ package Entities;
 
 import Main.GamePanel;
 import Main.KeyHandler;
-import Main.UtilityTool;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
+
 
 public class Player extends Entity{
-    GamePanel gp;
+
     KeyHandler keyH;
     public final int screenX;
     public final int screenY;
@@ -23,10 +20,12 @@ public class Player extends Entity{
     int pixelCounter = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
-        this.gp = gp;
+        super(gp);
+
         this.keyH = keyH;
         setDefaultValues();
         getPlayerImage();
+
         screenX = gp.screenWidth/2 - (gp.tileSize/2);
         screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
@@ -40,38 +39,26 @@ public class Player extends Entity{
 
     }
     public void setDefaultValues() {
-        worldX = gp.tileSize * 34;
-        worldY = gp.tileSize * 27;
+        worldX = gp.tileSize * 21;
+        worldY = gp.tileSize * 29;
         speed = 4;
         direction = "down";
     }
     public void getPlayerImage() {
 
-        up1 = setup("Player_Up_1");
-        up2 = setup("Player_Up_2");
-        down1 = setup("Player_Down_1");
-        down2 = setup("Player_Down_2");
-        left1 = setup("Player_Left_1");
-        left2 = setup("Player_Left_2");
-        right1 = setup("Player_Right_1");
-        right2 = setup("Player_Right_2");
-        standNorth = setup("stand_back");
-        standSouth = setup("stand_front");
-        standEast = setup("stand_right");
-        standWest = setup("stand_left");
+        up1 = setup("/player/Player_Up_1");
+        up2 = setup("/player/Player_Up_2");
+        down1 = setup("/player/Player_Down_1");
+        down2 = setup("/player/Player_Down_2");
+        left1 = setup("/player/Player_Left_1");
+        left2 = setup("/player/Player_Left_2");
+        right1 = setup("/player/Player_Right_1");
+        right2 = setup("/player/Player_Right_2");
+        standNorth = setup("/player/stand_back");
+        standSouth = setup("/player/stand_front");
+        standEast = setup("/player/stand_right");
+        standWest = setup("/player/stand_left");
 
-    }
-    public BufferedImage setup(String imageName) {
-        UtilityTool uTool = new UtilityTool();
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/" + imageName + ".png")));
-            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return image;
     }
 
     public void update() {

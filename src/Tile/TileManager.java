@@ -19,17 +19,38 @@ public class TileManager {
 
     public TileManager(GamePanel gp){
         this.gp = gp;
-        tile = new Tile[10];
+        tile = new Tile[50];
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
         getTileImage();
-        loadMap("/maps/map01.txt");
+        loadMap("/maps/BedroomMap.txt");
     }
 
     public void getTileImage(){
 //format of the tile is "TileID", "TileName", "collision"
-            setup(0,"Grass_111",false);
-            setup(1,"Grass_112",true);
-            setup(2,"Grass_11113",true);
+            setup(0,"00",true);
+            setup(1,"01",true);
+            setup(2,"02",true);
+            setup(3,"03",true);
+            setup(4,"04",true);
+            setup(5,"05",true);
+            setup(6,"06",true);
+            setup(7,"07",true);
+            setup(8,"08",true);
+            setup(9,"09",false);
+            setup(10,"10",true);
+            setup(11,"11",true);
+            setup(12,"12",true);
+            setup(13,"13",true);
+            setup(14,"14",true);
+            setup(15,"15",true);
+            setup(16,"16",true);
+            setup(17,"17",true);
+            setup(18,"18",true);
+            setup(19,"19",true);
+            setup(20,"20",true);
+            setup(21,"21",true);
+            setup(22,"22",true);
+            setup(23,"23",true);
     }
 
     public void setup(int index, String imagePath, boolean collision){
@@ -37,7 +58,7 @@ public class TileManager {
 
         try{
             tile[index] = new Tile();
-            tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/" + imagePath+".png")));
+            tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/Bedroom/" + imagePath+".png")));
             tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
             tile[index].collision = collision;
 
