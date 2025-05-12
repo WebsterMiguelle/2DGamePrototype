@@ -13,8 +13,7 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
 
-    //public int hasKey = 0;
-    private int standCounter = 1;
+    private int standCounter = 0;
 
     boolean moving = false;
     int pixelCounter = 0;
@@ -54,6 +53,7 @@ public class Player extends Entity{
         left2 = setup("/player/Player_Left_2");
         right1 = setup("/player/Player_Right_1");
         right2 = setup("/player/Player_Right_2");
+
         standNorth = setup("/player/stand_back");
         standSouth = setup("/player/stand_front");
         standEast = setup("/player/stand_right");
@@ -101,6 +101,10 @@ public class Player extends Entity{
 
             }
 
+
+        }
+
+        if(moving){
             //CHECKS TILE COLLISION
             collisionOn = false;
             gp.cChecker.checkTile(this);
@@ -112,9 +116,7 @@ public class Player extends Entity{
             //CHECKS NPC COLLISION
             int npcIndex = gp.cChecker.checkEntity(this,gp.npc);
             interactNPC(npcIndex);
-        }
 
-        if(moving){
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
                 if(!collisionOn){
                     switch(direction){
@@ -158,9 +160,12 @@ public class Player extends Entity{
 
     public void interactNPC(int i){
         if (i != 999){
-            gp.gameState = gp.dialogueState;
+            if(gp.keyH.enterPressed){
+                gp.gameState = gp.dialogueState;
+                gp.npc[i].speak();
+            }
         }
-
+        gp.keyH.enterPressed = false;
     }
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
@@ -194,10 +199,10 @@ public class Player extends Entity{
             case "StandRight":
                 image = standEast;
                 break;
-        };
+        }
 
         g2.drawImage(image, screenX, screenY, null);
         g2.setColor(Color.RED);
-        //g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
 }

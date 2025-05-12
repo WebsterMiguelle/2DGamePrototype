@@ -22,16 +22,40 @@ public class Entity {
 
     public int actionLockCounter = 0;
 
-    public Rectangle solidArea = new Rectangle(0,0,48,48);
+    public Rectangle solidArea = new Rectangle(1,1,46,46);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
+
+    String[] dialogues = new String[20];
+    int dialogueIndex = 0;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
 
-    public void setAction() {
-        // Override in child classes
+    public void setAction() {}
+    public void speak() {
+
+        if(dialogues[dialogueIndex] == null){
+            dialogueIndex = 0;
+        }
+        gp.ui.currentDialogue = dialogues[dialogueIndex];
+        dialogueIndex++;
+
+        switch(gp.player.direction){
+            case "up":
+                direction = "StandDown";
+                break;
+            case "down":
+                direction = "StandUp";
+                break;
+            case "left":
+                direction = "StandRight";
+                break;
+            case "right":
+                direction = "StandLeft";
+                break;
+        }
     }
 
     public void update(){
@@ -41,6 +65,7 @@ public class Entity {
         gp.cChecker.checkTile(this);
         gp.cChecker.checkObject(this, false);
         gp.cChecker.checkPlayer(this);
+
 
         if(!collisionOn){
             switch(direction){
@@ -73,6 +98,7 @@ public class Entity {
                 worldX - gp.tileSize < gp.player.worldX + gp.player.screenX + gp.tileSize &&
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY - gp.tileSize &&
                 worldY - gp.tileSize < gp.player.worldY + gp.player.screenY + gp.tileSize) {
+
             switch (direction) {
                 case "up":
                     if (spriteNum == 1) {image = up1;}
@@ -104,7 +130,8 @@ public class Entity {
                     break;
             }
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-
+            g2.setColor(Color.RED);
+            g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
 
         }
     }

@@ -12,7 +12,7 @@ public class NPC_Mage extends Entity {
         direction = "StandDown";
         speed = 1;
         getImage();
-
+        setDialogue();
     }
     public void getImage() {
 
@@ -24,10 +24,20 @@ public class NPC_Mage extends Entity {
         left2 = setup("/NPC/Mage_WalkLeft2");
         right1 = setup("/NPC/Mage_WalkRight1");
         right2 = setup("/NPC/Mage_WalkRight2");
+
         standNorth = setup("/NPC/Mage_FaceBack");
         standSouth = setup("/NPC/Mage_FaceFront");
         standEast = setup("/NPC/Mage_FaceRight");
         standWest = setup("/NPC/Mage_FaceLeft");
+
+    }
+
+    public void setDialogue(){
+
+        dialogues[0] = "Heed my warnings, traveler.";
+        dialogues[1] = "Your adventure will not be easy \nfor you will face many foes.";
+        dialogues[2] = "But you shall prevail.";
+        dialogues[3] = "Goodluck Rex";
 
     }
 
@@ -52,5 +62,9 @@ public class NPC_Mage extends Entity {
             }
             actionLockCounter = 0;
         }
+    }
+
+    public void speak(){
+       super.speak();
     }
 }

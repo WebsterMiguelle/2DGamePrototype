@@ -2,8 +2,6 @@ package Main;
 
 import Entities.Entity;
 
-import java.awt.*;
-
 public class CollisionChecker {
     GamePanel gp;
 
@@ -83,7 +81,6 @@ public class CollisionChecker {
                             System.out.println("Up Collision");
                             if(gp.obj[i].collision){
                                     entity.collisionOn = true;
-
                             }
                             if(player){
                                 index = i;
@@ -91,13 +88,11 @@ public class CollisionChecker {
                         }
                         break;
                     case "down":
-                        //
                         entity.solidArea.y += entity.speed;
                         if(entity.solidArea.intersects(gp.obj[i].solidArea)){
                         System.out.println("Down Collision");
                             if(gp.obj[i].collision){
                                 entity.collisionOn = true;
-
                             }
                             if(player){
                                 index = i;
@@ -105,13 +100,11 @@ public class CollisionChecker {
                     }
                         break;
                     case "left":
-                        //
                         entity.solidArea.x -= entity.speed;
                         if(entity.solidArea.intersects(gp.obj[i].solidArea)){
                         System.out.println("Left Collision");
                             if(gp.obj[i].collision){
                                 entity.collisionOn = true;
-
                             }
                             if(player){
                                 index = i;
@@ -151,7 +144,7 @@ public class CollisionChecker {
             if (target[i] != null) {
                 // Calculate entity's current solid area in world coordinates
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
-                entity.solidArea.y= entity.worldY + entity.solidArea.y;
+                entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
                 // Calculate object's solid area in world coordinates
                 target[i].solidArea.x = target[i].worldX + target[i].solidArea.x;
@@ -161,33 +154,34 @@ public class CollisionChecker {
                 switch (entity.direction) {
                     case "up":
                         entity.solidArea.y -= entity.speed;
-                        if(entity.solidArea.intersects(target[i].solidArea)){
-                                entity.collisionOn = true;
+                        if (entity.solidArea.intersects(target[i].solidArea)) {
+                            entity.collisionOn = true;
                             index = i;
                         }
                         break;
                     case "down":
                         entity.solidArea.y += entity.speed;
-                        if(entity.solidArea.intersects(target[i].solidArea)){
-                          entity.collisionOn = true;
+                        if (entity.solidArea.intersects(target[i].solidArea)) {
+                            entity.collisionOn = true;
                             index = i;
                         }
                         break;
                     case "left":
                         entity.solidArea.x -= entity.speed;
-                        if(entity.solidArea.intersects(target[i].solidArea)){
-                                entity.collisionOn = true;
+                        if (entity.solidArea.intersects(target[i].solidArea)) {
+                            entity.collisionOn = true;
                             index = i;
-                            }
+                        }
                         break;
                     case "right":
                         entity.solidArea.x += entity.speed;
-                        if(entity.solidArea.intersects(target[i].solidArea)){
-                                entity.collisionOn = true;
-                                index = i;
+                        if (entity.solidArea.intersects(target[i].solidArea)) {
+                            entity.collisionOn = true;
+                            index = i;
                         }
                         break;
                 }
+
                 entity.solidArea.x = entity.solidAreaDefaultX;
                 entity.solidArea.y = entity.solidAreaDefaultY;
                 target[i].solidArea.x = target[i].solidAreaDefaultX;

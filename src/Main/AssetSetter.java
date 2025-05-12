@@ -1,8 +1,6 @@
 package Main;
 
 import Entities.NPC_Mage;
-import Object.*;
-import Object.Diamonds.OBJ_BlueDiamond;
 
 public class AssetSetter {
 
@@ -37,8 +35,8 @@ public class AssetSetter {
 
         public void setNPC(){
             gp.npc[0] = new NPC_Mage(gp);
-            gp.npc[0].worldX = 22 * gp.tileSize;
-            gp.npc[0].worldY = 30 * gp.tileSize;
+            gp.npc[0].worldX = 20 * gp.tileSize;
+            gp.npc[0].worldY = 29 * gp.tileSize;
 
         }
 }
