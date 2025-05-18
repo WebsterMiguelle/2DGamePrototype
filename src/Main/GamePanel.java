@@ -42,6 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
+    Config config = new Config(this);
     Thread gameThread;
 
     //Entity and Object
@@ -64,7 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.addKeyListener(keyH);
         this.setFocusable(true);
     }
-    public void setupGame(){
+    public void setupGame() {
         aSetter.setObject();
         aSetter.setNPC();
         //playMusic(0);
@@ -74,7 +75,9 @@ public class GamePanel extends JPanel implements Runnable{
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
 
-        setFullScreen();
+        if (fullScreenOn) {
+            setFullScreen();
+        }
     }
     public void startGameThread(){
         gameThread = new Thread(this);
