@@ -8,14 +8,14 @@ import java.net.URL;
 
 public class Sound {
     Clip clip;
-    URL soundURL[] = new URL[30];
+    URL[] soundURL = new URL[30];
     FloatControl fc;
     int volumeScale = 3;
     float volume;
 
     public Sound(){
 
-        soundURL[0] = getClass().getResource(("/sound/mixkit-game-level-music-689.wav"));
+        soundURL[0] = getClass().getResource(("/sound/medieval-music-by-sjal-on-hunehals-borg-18936.wav"));
         soundURL[1] = getClass().getResource(("/sound/mixkit-winning-a-coin-video-game-2069.wav"));
         soundURL[2] = getClass().getResource(("/sound/mixkit-train-door-open-1637.wav"));
         soundURL[3] = getClass().getResource(("/sound/mixkit-arcade-retro-game-over-213.wav"));

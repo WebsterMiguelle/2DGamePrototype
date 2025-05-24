@@ -1,7 +1,6 @@
 package Main;
 
 import java.awt.*;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -35,8 +34,6 @@ public class UI {
             e.printStackTrace();
         }
     }
-
-
 
     public void showMessage(String text) {
         message = text;
@@ -124,6 +121,7 @@ public class UI {
             }
         }
     }
+
     public void drawPauseScreen() {
         // Pause screen
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50f));
@@ -187,6 +185,7 @@ public class UI {
         gp.keyH.enterPressed = false;
 
     }
+
     public void options_top(int frameX, int frameY){
 
         int textX;
@@ -219,10 +218,12 @@ public class UI {
         textY += gp.tileSize;
         g2.drawString("Music", textX, textY);
         if(commandNum == 1){g2.drawString(">", textX-25, textY);}
+
         //Sound Effects
         textY += gp.tileSize;
         g2.drawString("Sounds", textX, textY);
         if(commandNum == 2){g2.drawString(">", textX-25, textY);}
+
         //Control
         textY += gp.tileSize;
         g2.drawString("Controls", textX, textY);
@@ -357,6 +358,7 @@ public class UI {
             if(gp.keyH.enterPressed){
                 subState = 0;
                 gp.gameState = gp.titleState;
+                gp.stopMusic();
             }
         }
         //NO

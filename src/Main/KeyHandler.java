@@ -36,14 +36,16 @@ public class KeyHandler implements KeyListener {
             }
     }
     public void titleState(int code){
-        if (code == KeyEvent.VK_W) {
+        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
             gp.ui.commandNum--;
+            gp.playSE(1);
             if (gp.ui.commandNum < 0) {
                 gp.ui.commandNum = 2;
             }
         }
-        if (code == KeyEvent.VK_S) {
+        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
             gp.ui.commandNum++;
+            gp.playSE(1);
             if (gp.ui.commandNum > 2) {
                 gp.ui.commandNum = 0;
             }
@@ -63,16 +65,16 @@ public class KeyHandler implements KeyListener {
         }
     }
     public void playState(int code){
-        if (code == KeyEvent.VK_W) {
+        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
             upPressed = true;
         }
-        if (code == KeyEvent.VK_A) {
+        if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
             leftPressed = true;
         }
-        if (code == KeyEvent.VK_S) {
+        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
             downPressed = true;
         }
-        if (code == KeyEvent.VK_D) {
+        if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
             rightPressed = true;
         }
 
@@ -120,14 +122,14 @@ public class KeyHandler implements KeyListener {
             case 3 -> 1;
             default -> 0;
         };
-        if(code == KeyEvent.VK_W) {
+        if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
             gp.ui.commandNum--;
             gp.playSE(1);
             if(gp.ui.commandNum < 0) {
                 gp.ui.commandNum = maxCommandNum;
             }
         }
-        if(code == KeyEvent.VK_S) {
+        if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
             gp.ui.commandNum++;
             gp.playSE(1);//change this to appropriate sound
             if(gp.ui.commandNum > maxCommandNum) {
@@ -135,7 +137,7 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if(code == KeyEvent.VK_A){
+        if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT){
             if(gp.ui.subState == 0){
                 if(gp.ui.commandNum == 1 && gp.music.volumeScale > 0) {
                     gp.music.volumeScale--;
@@ -148,7 +150,7 @@ public class KeyHandler implements KeyListener {
                 }
             }
         }
-        if(code == KeyEvent.VK_D){
+        if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT){
             if(gp.ui.subState == 0){
                 if(gp.ui.commandNum == 1 && gp.music.volumeScale < 5) {
                     gp.music.volumeScale++;
@@ -167,16 +169,16 @@ public class KeyHandler implements KeyListener {
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if (code == KeyEvent.VK_W) {
+        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
             upPressed = false;
         }
-        if (code == KeyEvent.VK_A) {
+        if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
             leftPressed = false;
         }
-        if (code == KeyEvent.VK_S) {
+        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
             downPressed = false;
         }
-        if (code == KeyEvent.VK_D) {
+        if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
             rightPressed = false;
         }
     }

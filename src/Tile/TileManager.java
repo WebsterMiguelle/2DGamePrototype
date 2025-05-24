@@ -27,6 +27,7 @@ public class TileManager {
 
     public void getTileImage(){
 //format of the tile is "TileID", "TileName", "collision"
+        //Bedroom Tiles
             setup(0,"00",true);
             setup(1,"01",true);
             setup(2,"02",true);
@@ -51,6 +52,7 @@ public class TileManager {
             setup(21,"21",true);
             setup(22,"22",true);
             setup(23,"23",true);
+            //Outside Tiles
     }
 
     public void setup(int index, String imagePath, boolean collision){
