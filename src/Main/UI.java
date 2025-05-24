@@ -64,12 +64,15 @@ public class UI {
         if(gp.gameState == gp.optionsState) {
             drawOptionsScreen();
         }
+
+        if (gp.gameState == gp.minigameState && gp.currentMinigame != null) {
+            gp.currentMinigame.draw(g2);
+        }
     }
 
     public int getXforCenteredText(String text) {
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-        int x = gp.screenWidth / 2 - length / 2;
-        return x;
+        return gp.screenWidth / 2 - length / 2;
     }
 
     public void drawTitleScreen() {
@@ -324,7 +327,7 @@ public class UI {
         g2.drawString("WASD", textX, textY); textY += gp.tileSize;
         g2.drawString("P", textX, textY); textY += gp.tileSize;
         g2.drawString("E", textX, textY); textY += gp.tileSize;
-        g2.drawString("ESC", textX, textY); textY += gp.tileSize;
+        g2.drawString("ESC", textX, textY);
 
         //BACK
         textX = frameX + gp.tileSize;

@@ -58,6 +58,10 @@ public class GamePanel extends JPanel implements Runnable{
     public final int dialogueState = 3;
     public final int optionsState = 4;
 
+    //MInigames state
+    public final int minigameState = 5;
+    public Minigame currentMinigame = null;
+
     public GamePanel(){
         this.setPreferredSize(new java.awt.Dimension(screenWidth, screenHeight));
         this.setBackground(java.awt.Color.black);
@@ -137,14 +141,26 @@ public class GamePanel extends JPanel implements Runnable{
         if(gameState == pauseState) {
             //nothing
         }
+        if (gameState == minigameState && currentMinigame != null) {
+            currentMinigame.update();
+            if (currentMinigame.isWon()) {
+                // You can transition state or reward player
+                gameState = playState;
+                currentMinigame = null;
+            }
+        }
 
     }
     public void drawToTempScreen(){
+
         //Debug
         long drawStart = 0;
         if(keyH.showDebugText){
             drawStart = System.nanoTime();
-
+        }
+        if (gameState == minigameState && currentMinigame != null) {
+            currentMinigame.draw(g2);
+            return; // skip the rest of the main game rendering
         }
         //Title SCREEN
         if(gameState == titleState) {

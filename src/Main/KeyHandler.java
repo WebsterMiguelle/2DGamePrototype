@@ -8,7 +8,7 @@ public class KeyHandler implements KeyListener {
     public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
     //debug
     public boolean showDebugText = false;
-
+    public boolean inMinigame = false;
     public KeyHandler(GamePanel gp){
             this.gp = gp;
     }
@@ -34,7 +34,12 @@ public class KeyHandler implements KeyListener {
             else if (gp.gameState == gp.optionsState) {
                 optionsState(code);
             }
+
+        if (gp.gameState == gp.minigameState && gp.currentMinigame instanceof SnakeMinigame snakeGame) {
+            snakeGame.handleKeyPress(code);
+        }
     }
+
     public void titleState(int code){
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
             gp.ui.commandNum--;
@@ -62,6 +67,11 @@ public class KeyHandler implements KeyListener {
             if (gp.ui.commandNum == 2) {
                 System.exit(0);
             }
+        }
+        if(code == KeyEvent.VK_M){
+            gp.gameState = gp.minigameState;
+            inMinigame = true;
+            gp.currentMinigame = new SnakeMinigame(gp);// Example minigame, you can replace it with any other minigame
         }
     }
     public void playState(int code){
@@ -97,7 +107,11 @@ public class KeyHandler implements KeyListener {
     }
     public void pauseState(int code){
         if(code == KeyEvent.VK_P) {
-            gp.gameState = gp.playState;
+            if(inMinigame) {
+                gp.gameState = gp.minigameState;
+            } else {
+                gp.gameState = gp.playState;
+            }
         }
         if(code == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.titleState;
