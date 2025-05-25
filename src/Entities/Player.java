@@ -15,8 +15,8 @@ public class Player extends Entity{
 
     private int standCounter = 0;
 
-    boolean moving = false;
-    int pixelCounter = 0;
+    //boolean moving = false;
+    //int pixelCounter = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -29,12 +29,12 @@ public class Player extends Entity{
         screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
         solidArea = new Rectangle();
-        solidArea.x = 1;
-        solidArea.y = 1;
+        solidArea.x = 8;
+        solidArea.y = 12;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 46;
-        solidArea.height = 46;
+        solidArea.width = 32;
+        solidArea.height = 32;
 
     }
     public void setDefaultValues() {
@@ -63,8 +63,7 @@ public class Player extends Entity{
 
     public void update() {
 
-        if (!moving) {
-            if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+            if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed || keyH.enterPressed) {
                 if (keyH.upPressed) {
                     direction = "up";
                 }
@@ -77,7 +76,6 @@ public class Player extends Entity{
                 if (keyH.rightPressed) {
                     direction = "right";
                 }
-                moving = true;
 
             } else {
                 standCounter++;
@@ -101,10 +99,6 @@ public class Player extends Entity{
 
             }
 
-
-        }
-
-        if(moving){
             //CHECKS TILE COLLISION
             collisionOn = false;
             gp.cChecker.checkTile(this);
@@ -116,9 +110,11 @@ public class Player extends Entity{
             //CHECKS NPC COLLISION
             int npcIndex = gp.cChecker.checkEntity(this,gp.npc);
             interactNPC(npcIndex);
+            ;
+
 
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
-                if(!collisionOn){
+                if(!collisionOn && !keyH.enterPressed){
                     switch(direction){
                         case "up": worldY -= speed;break;
                         case "down": worldY += speed;break;
@@ -127,6 +123,8 @@ public class Player extends Entity{
                     }
 
                 }
+                gp.keyH.enterPressed = false;
+
                 spriteCounter++;
                 if (spriteCounter > 12) {
                     if (spriteNum == 1) {
@@ -137,14 +135,7 @@ public class Player extends Entity{
                     spriteCounter = 0;
                 }
 
-                pixelCounter += speed;
-
-                if(pixelCounter == 48){
-                  moving = false;
-                  pixelCounter = 0;
-                }
             }
-        }
 
 
     public void pickUpObject(int i) {
@@ -161,13 +152,11 @@ public class Player extends Entity{
     public void interactNPC(int i){
         if (i != 999){
             //include if player and npc touch, "Pres Enter" will pop up
-
             if(gp.keyH.enterPressed){
                 gp.gameState = gp.dialogueState;
                 gp.npc[i].speak();
             }
         }
-        gp.keyH.enterPressed = false;
     }
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
@@ -204,7 +193,8 @@ public class Player extends Entity{
         }
 
         g2.drawImage(image, screenX, screenY, null);
-        g2.setColor(Color.RED);
-        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+        //debug
+//        g2.setColor(Color.RED);
+//        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
 }

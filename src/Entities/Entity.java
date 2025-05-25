@@ -16,15 +16,20 @@ public class Entity {
     public int speed;
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2,
             standNorth, standSouth, standEast, standWest;
-    public String direction;
+    public String direction = "down";
     public int spriteCounter = 0;
     public int spriteNum = 1;
 
     public int actionLockCounter = 0;
 
-    public Rectangle solidArea = new Rectangle(1,1,46,46);
+    public Rectangle solidArea = new Rectangle(8,8,32,32);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
+
+    public BufferedImage image;
+    public String name;
+    public boolean collision = false;
+
 
     String[] dialogues = new String[20];
     int dialogueIndex = 0;
@@ -130,8 +135,9 @@ public class Entity {
                     break;
             }
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-            g2.setColor(Color.RED);
-            g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+            //Debug
+//            g2.setColor(Color.RED);
+//            g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
 
         }
     }

@@ -2,6 +2,7 @@ package Entities;
 
 import Main.GamePanel;
 
+import java.awt.*;
 import java.util.Random;
 
 public class NPC_Mage extends Entity {
@@ -13,6 +14,14 @@ public class NPC_Mage extends Entity {
         speed = 1;
         getImage();
         setDialogue();
+
+        solidArea = new Rectangle();
+        solidArea.x = 8;
+        solidArea.y = 12;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        solidArea.width = 32;
+        solidArea.height = 32;
     }
     public void getImage() {
 

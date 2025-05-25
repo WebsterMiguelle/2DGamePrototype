@@ -1,14 +1,15 @@
 package Object;
 
+import Entities.Entity;
 import Main.GamePanel;
 import Main.UtilityTool;
 
-public class OBJ_Diamonds extends SuperObject{
+public class OBJ_Diamonds extends Entity {
 GamePanel gp;
 
 
     public OBJ_Diamonds(GamePanel gp) {
-        this.gp = gp;
+        super(gp);
 
     }
 }
