@@ -154,16 +154,16 @@ public class SnakeMinigame extends Minigame {
         }
 
         if ((code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) && !left) {
-            right = true;
+            right = true; up = false; down = false; left = false;
         }
         if ((code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) && !right) {
-            left = true;
+            left = true; up = false; down = false; right = false;
         }
         if ((code == KeyEvent.VK_W || code == KeyEvent.VK_UP) && !down) {
-            up = true;
+            up = true; right = false; left = false; down = false;
         }
         if ((code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) && !up) {
-            down = true;
+            down = true; right = false; left = false; up = false;
         }
     }
 
