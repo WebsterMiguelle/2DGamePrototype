@@ -77,7 +77,41 @@ public class Player extends Entity{
                     direction = "right";
                 }
 
-            } else {
+                //CHECKS TILE COLLISION
+                collisionOn = false;
+                gp.cChecker.checkTile(this);
+
+                //CHECKS OBJECT COLLISION
+                int objIndex = gp.cChecker.checkObject(this, true);
+                pickUpObject(objIndex);
+
+                //CHECKS NPC COLLISION
+                int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+                interactNPC(npcIndex);
+
+
+                //IF COLLISION IS FALSE, PLAYER CAN MOVE
+                if (!collisionOn && !keyH.enterPressed) {
+                    switch (direction) {
+                        case "up":      worldY -= speed;break;
+                        case "down":    worldY += speed;break;
+                        case "left":    worldX -= speed;break;
+                        case "right":   worldX += speed;break;
+                    }
+                }
+                gp.keyH.enterPressed = false;
+
+                spriteCounter++;
+                if (spriteCounter > 12) {
+                    if (spriteNum == 1) {
+                        spriteNum = 2;
+                    } else if (spriteNum == 2) {
+                        spriteNum = 1;
+                    }
+                    spriteCounter = 0;
+                }
+            }
+            else {
                 standCounter++;
                 if (standCounter == 10) {
                     standCounter = 0;
@@ -98,42 +132,6 @@ public class Player extends Entity{
                 }
 
             }
-
-            //CHECKS TILE COLLISION
-            collisionOn = false;
-            gp.cChecker.checkTile(this);
-
-            //CHECKS OBJECT COLLISION
-            int objIndex = gp.cChecker.checkObject(this, true);
-            pickUpObject(objIndex);
-
-            //CHECKS NPC COLLISION
-            int npcIndex = gp.cChecker.checkEntity(this,gp.npc);
-            interactNPC(npcIndex);
-            ;
-
-
-            //IF COLLISION IS FALSE, PLAYER CAN MOVE
-                if(!collisionOn && !keyH.enterPressed){
-                    switch(direction){
-                        case "up": worldY -= speed;break;
-                        case "down": worldY += speed;break;
-                        case "left": worldX -= speed;break;
-                        case "right": worldX += speed;break;
-                    }
-
-                }
-                gp.keyH.enterPressed = false;
-
-                spriteCounter++;
-                if (spriteCounter > 12) {
-                    if (spriteNum == 1) {
-                        spriteNum = 2;
-                    } else if (spriteNum == 2) {
-                        spriteNum = 1;
-                    }
-                    spriteCounter = 0;
-                }
 
             }
 

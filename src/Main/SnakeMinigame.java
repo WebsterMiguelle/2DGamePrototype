@@ -10,7 +10,7 @@ import java.util.Random;
 public class SnakeMinigame extends Minigame {
 
     private final int tileSize = 48;
-    private final int maxScreenCol = 16;
+    private final int maxScreenCol = 20;
     private final int maxScreenRow = 12;
     private final int screenWidth = tileSize * maxScreenCol;
     private final int screenHeight = tileSize * maxScreenRow;
@@ -45,7 +45,7 @@ public class SnakeMinigame extends Minigame {
         move();
         checkCollision();
         checkEat();
-        if (snakeLength >= 10) {
+        if (snakeLength >= 20) {
             running = false;
             won = true;
             gp.playMusic(0);
