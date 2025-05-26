@@ -38,6 +38,9 @@ public class KeyHandler implements KeyListener {
         if (gp.gameState == gp.minigameState && gp.currentMinigame instanceof SnakeMinigame snakeGame) {
             snakeGame.handleKeyPress(code);
         }
+         if (gp.gameState == gp.minigameState && gp.currentMinigame instanceof HangmanMinigame hangmanGame) {
+            hangmanGame.handleKeyPress(code);
+        }
     }
 
     public void titleState(int code){
@@ -73,6 +76,11 @@ public class KeyHandler implements KeyListener {
             gp.gameState = gp.minigameState;
             inMinigame = true;
             gp.currentMinigame = new SnakeMinigame(gp);// Example minigame, you can replace it with any other minigame
+        }
+        if(code == KeyEvent.VK_H){
+            gp.gameState = gp.minigameState;
+            inMinigame = true;
+            gp.currentMinigame = new HangmanMinigame(gp);// Example minigame, you can replace it with any other minigame
         }
     }
     public void playState(int code){
