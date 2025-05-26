@@ -15,6 +15,9 @@ public class Player extends Entity{
 
     private int standCounter = 0;
 
+    private boolean canInteract = false;
+    private int boxX = 0;
+    private int boxY = 0;
     //boolean moving = false;
     //int pixelCounter = 0;
 
@@ -27,6 +30,10 @@ public class Player extends Entity{
 
         screenX = gp.screenWidth/2 - (gp.tileSize/2);
         screenY = gp.screenHeight/2 - (gp.tileSize/2);
+
+
+        boxX = screenX + gp.tileSize / 2 - 24 / 2;
+        boxY = screenY - 24 - 5;
 
         solidArea = new Rectangle();
         solidArea.x = 8;
@@ -77,6 +84,7 @@ public class Player extends Entity{
                     direction = "right";
                 }
 
+
                 //CHECKS TILE COLLISION
                 collisionOn = false;
                 gp.cChecker.checkTile(this);
@@ -87,8 +95,8 @@ public class Player extends Entity{
 
                 //CHECKS NPC COLLISION
                 int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+                canInteract = npcIndex != 999;
                 interactNPC(npcIndex);
-
 
                 //IF COLLISION IS FALSE, PLAYER CAN MOVE
                 if (!collisionOn && !keyH.enterPressed) {
@@ -149,7 +157,6 @@ public class Player extends Entity{
 
     public void interactNPC(int i){
         if (i != 999){
-            //include if player and npc touch, "Pres Enter" will pop up
             if(gp.keyH.enterPressed){
                 gp.gameState = gp.dialogueState;
                 gp.npc[i].speak();
@@ -194,5 +201,15 @@ public class Player extends Entity{
         //debug
 //        g2.setColor(Color.RED);
 //        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+
+        if (canInteract) {
+            g2.setColor(new Color(0, 0, 0, 180));
+            g2.fillRoundRect(boxX, boxY, 24, 24, 10, 10);
+
+            g2.setColor(Color.WHITE);
+            g2.setFont(new Font("Arial", Font.BOLD, 16));
+            g2.drawString("E  to Interact", boxX + 7, boxY + 17);
+        }
+
     }
 }

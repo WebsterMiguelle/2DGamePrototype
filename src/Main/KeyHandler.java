@@ -56,7 +56,7 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if (code == KeyEvent.VK_ENTER) {
+        if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_E) {
             if (gp.ui.commandNum == 0) {
                 gp.gameState = gp.playState;
                 gp.playMusic(0);
@@ -92,7 +92,7 @@ public class KeyHandler implements KeyListener {
             gp.gameState = gp.pauseState;
         }
 
-        if(code == KeyEvent.VK_ENTER) {
+        if(code == KeyEvent.VK_ENTER|| code == KeyEvent.VK_E) {
             enterPressed = true;
         }
 
@@ -119,7 +119,7 @@ public class KeyHandler implements KeyListener {
         }
     }
     public void dialogueState(int code){
-        if (code == KeyEvent.VK_ENTER) {
+        if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_E) {
             gp.gameState = gp.playState;
         }
     }
@@ -127,7 +127,7 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.playState;
         }
-        if(code == KeyEvent.VK_ENTER) {
+        if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_E) {
             enterPressed = true;
         }
 
