@@ -57,6 +57,7 @@ public class KeyHandler implements KeyListener {
         }
 
         if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_E) {
+            gp.playSE(2);
             if (gp.ui.commandNum == 0) {
                 gp.gameState = gp.playState;
                 gp.playMusic(0);
@@ -129,6 +130,7 @@ public class KeyHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_E) {
             enterPressed = true;
+            gp.playSE(2);
         }
 
         int maxCommandNum = switch (gp.ui.subState) {

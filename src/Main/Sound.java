@@ -16,8 +16,8 @@ public class Sound {
     public Sound(){
 
         soundURL[0] = getClass().getResource(("/sound/SoldierPoetKingHarmonica.wav"));
-        soundURL[1] = getClass().getResource(("/sound/mixkit-winning-a-coin-video-game-2069.wav"));
-        soundURL[2] = getClass().getResource(("/sound/mixkit-train-door-open-1637.wav"));
+        soundURL[1] = getClass().getResource(("/sound/mixkit-wood-hard-hit-2182.wav"));
+        soundURL[2] = getClass().getResource(("/sound/mixkit-select-click-1109.wav"));
         soundURL[3] = getClass().getResource(("/sound/mixkit-arcade-retro-game-over-213.wav"));
     }
 
