@@ -66,6 +66,7 @@ public class GamePanel extends JPanel implements Runnable{
     public Minigame currentMinigame = null;
     //MINIGAMES
     public final int snakeGameState = 10;
+    public final int hangmanGameState = 10;
 
     public GamePanel(){
         this.setPreferredSize(new java.awt.Dimension(screenWidth, screenHeight));
