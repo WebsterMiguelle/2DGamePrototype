@@ -1,4 +1,9 @@
-animals,Lion,Zebra,Elephant,Bird,Tiger,Panda,Komodo Dragon
-sports,Basketball,Soccer,Football,Badminton,Volleyball,Golf,
-fruits,Banana,Orange,Apple,Strawberry,Mango,Tomato,
-anime, Naruto, One Piece, Dragon Ball Z
+I bend no knee to sword or flame,=No title, riches, gift or name.=Yet when the dark surrounds your soul,=It is through me you reach your goal.:Courage
+I do not shout, yet all obey,=I guide the just, then fade away.=I am not might, I am not fear,=But I make the true path clear.:Wisdom
+I sleep beneath the ash and dust,=Waiting for the brave and just.=Not forged of gold or made of stone,=But by a hand that stands alone.:Destiny
+I was once a kingdom's heart,=Now silent stone, pulled apart.=Once filled with song, now only cries,=Beneath black waters, hope still lies.:Ruins
+I bring both freedom and despair,=Born when trust hangs in the air.=I toppled crowns with wicked cheers,=My whispers sowed a thousand fears.:Rebellion
+I cannot be taken, only earned,=Through trials faced and lessons learned.=I wait atop a shattered throne,=To crown not blood, but soul alone.:Honor
+
+
+

@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 
 public class HangmanMinigame extends Minigame {
@@ -12,13 +14,21 @@ public class HangmanMinigame extends Minigame {
     private final int maxScreenRow = 12;
     private final int screenWidth = tileSize * maxScreenCol;
     private final int screenHeight = tileSize * maxScreenRow;
+    private final int originalScreenWidth = screenWidth;
+    private final int originalScreenHeight = screenHeight;
+
+    private int correctAnswers = 0;
+
+    Font daydreamFont;
 
     public int maxLife = 7;
     public int life = maxLife;
 
-    BufferedImage background, heartFull, heartHalf, heartBlank;
+    BufferedImage background, heartFull, heartHalf, heartBlank,
+    life0,life1, life2, life3, life4, life5, life6, life7;
     private boolean running = false;
     private boolean won = false;
+    private boolean finished = false;
 
     //HANGMAN VARIABLES
     private final WordDB wordDB;
@@ -41,6 +51,15 @@ public class HangmanMinigame extends Minigame {
         displayWord = new char[actualWord.length()];
         for (int i = 0; i < actualWord.length(); i++) {
             displayWord[i] = (actualWord.charAt(i) == ' ') ? ' ' : '_';
+
+            try {
+                InputStream is = getClass().getResourceAsStream("/fonts/Daydream.ttf");
+                assert is != null;
+                daydreamFont = Font.createFont(Font.TRUETYPE_FONT, is);
+
+            } catch(FontFormatException | IOException e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -52,10 +71,19 @@ public class HangmanMinigame extends Minigame {
 
     private void loadImages() {
         try {
-            background = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/photoBGs/battle-background-sunny-hillsx4.png")));
+            background = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/photoBGs/night-sky-background-zoomed.png")));
             heartFull = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/heart_full.png")));
             heartHalf = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/heart_half.png")));
             heartBlank = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/heart_blank.png")));
+            life0 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life0.png")));
+            life1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life1.png")));
+            life2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life2.png")));
+            life3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life3.png")));
+            life4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life4.png")));
+            life5 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life5.png")));
+            life6 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life6.png")));
+            life7 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life7.png")));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,11 +100,34 @@ public class HangmanMinigame extends Minigame {
                 g2.drawString("No challenge loaded!", 100, 100);
                 return;
             }
+            Image lifeImage = null;
+            switch(life){
+                case 0 -> lifeImage = life0;
+                case 1 -> lifeImage = life1;
+                case 2 -> lifeImage = life2;
+                case 3 -> lifeImage = life3;
+                case 4 -> lifeImage = life4;
+                case 5 -> lifeImage = life5;
+                case 6 -> lifeImage = life6;
+                case 7 -> lifeImage = life7;
+            }
+
+            if (lifeImage != null) {
+                int centerX = (screenWidth - 400) / 2;
+                int centerY = (screenHeight - 400) / 2;
+
+                float opacity = 0.5f;
+                Composite originalComposite = g2.getComposite();
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                g2.drawImage(lifeImage, centerX, centerY, 400, 400, null);
+                g2.setComposite(originalComposite);
+            }
+
             // CATEGORY LABEL
             String category = wordChallenge[0];
             int labelHeight = 50;
 
-            Font font = new Font("Courier New", Font.BOLD, 30);
+            Font font = g2.getFont().deriveFont(Font.PLAIN, 20f);
             g2.setFont(font);
             FontMetrics metrics = g2.getFontMetrics(font);
             int textWidth = metrics.stringWidth(category);
@@ -88,22 +139,32 @@ public class HangmanMinigame extends Minigame {
             int textX = (screenWidth - textWidth) / 2;
             int textY = boxY+ (labelHeight + textHeight) / 2-4;
 
-            Color yellowTransparent = new Color(255, 255, 0, 180);
-            g2.setColor(yellowTransparent);
-            g2.fillRect(boxX, boxY, screenWidth, labelHeight);
+//            Color yellowTransparent = new Color(255, 255, 0, 180);
+//            g2.setColor(yellowTransparent);
+//            g2.fillRect(boxX, boxY, screenWidth, labelHeight);
+//
+//            g2.setColor(Color.BLACK);
+//            g2.setStroke(new BasicStroke(5));
+//            g2.drawRect(boxX, boxY, screenWidth - 3, labelHeight);
 
-            g2.setColor(Color.BLACK);
-            g2.setStroke(new BasicStroke(5));
-            g2.drawRect(boxX, boxY, screenWidth - 3, labelHeight);
+            g2.setColor(Color.WHITE);
+            String[] lines = category.split("=");
+            int lineHeight = g2.getFontMetrics().getHeight();
+            int totalTextHeight = lines.length * lineHeight;
+            int startY = boxY + (labelHeight - totalTextHeight) / 2 + g2.getFontMetrics().getAscent();
 
-            g2.setColor(Color.black);
-            g2.drawString(category,  textX, textY);
+            for (int i = 0; i < lines.length; i++) {
+                int lineWidth = g2.getFontMetrics().stringWidth(lines[i]);
+                int lineX = (screenWidth - lineWidth) / 2;
+                int lineY = startY + i * lineHeight;
+                g2.drawString(lines[i], lineX, lineY);
+            }
 
             //HIDDEN WORD PANEL
-            Font hiddenFont = new Font("Arial", Font.BOLD, 70);
+            Font hiddenFont = g2.getFont().deriveFont(Font.PLAIN, 20f);
             g2.setFont(hiddenFont);
             FontMetrics metrics1 = g2.getFontMetrics(hiddenFont);
-            String word = WordDB.hideWords(new String(displayWord));
+            String word = new String(displayWord);
 
             int hiddenTextWidth = metrics1.stringWidth(word);
             int hiddenTextHeight = metrics1.getAscent();
@@ -116,58 +177,78 @@ public class HangmanMinigame extends Minigame {
             int hiddenTextX = (screenWidth - hiddenTextWidth) / 2;
             int hiddenTextY = hiddenBoxY + (hiddenBoxHeight - hiddenTextHeight) / 2 + hiddenTextHeight/2;
 
-            Color blackTransparent = new Color(0, 0, 0, 120);
+            Color blackTransparent = new Color(0, 0, 0, 0);
             g2.setColor(blackTransparent);
             g2.fillRect(hiddenBoxX, hiddenBoxY, screenWidth, hiddenBoxHeight);
 
-            g2.setColor(Color.BLACK);
-            g2.setStroke(new BasicStroke(5));
-            g2.drawRect(hiddenBoxX, hiddenBoxY, screenWidth - 3, hiddenBoxHeight);
+//            g2.setColor(Color.BLACK);
+//            g2.setStroke(new BasicStroke(5));
+//            g2.drawRect(hiddenBoxX, hiddenBoxY, screenWidth - 3, hiddenBoxHeight);
 
             g2.setColor(Color.white);
             g2.drawString(word,  hiddenTextX, hiddenTextY);
 
             //PLAYER HEART LIVES STATUS
-            int x = gp.tileSize / 2;
-            int y = gp.tileSize / 2;
-
-            for (int i = 0; i < maxLife / 2; i++) {
-                g2.drawImage(heartBlank, x + i * gp.tileSize, y, gp.tileSize, gp.tileSize, null);
-            }
-
-            // Draw full hearts
-            x = gp.tileSize / 2;
-            int fullHearts = life / 2;
-            for (int i = 0; i < fullHearts; i++) {
-                g2.drawImage(heartFull, x + i * gp.tileSize, y, gp.tileSize, gp.tileSize, null);
-            }
-
-            // If odd number, draw half heart
-            if (life % 2 != 0) {
-                g2.drawImage(heartHalf, x + fullHearts * gp.tileSize, y, gp.tileSize, gp.tileSize, null);
-            }
+//            int x = gp.tileSize / 2;
+//            int y = gp.tileSize / 2;
+//
+//            for (int i = 0; i < maxLife / 2; i++) {
+//                g2.drawImage(heartBlank, x + i * gp.tileSize, y, gp.tileSize, gp.tileSize, null);
+//            }
+//
+//            // Draw full hearts
+//            x = gp.tileSize / 2;
+//            int fullHearts = life / 2;
+//            for (int i = 0; i < fullHearts; i++) {
+//                g2.drawImage(heartFull, x + i * gp.tileSize, y, gp.tileSize, gp.tileSize, null);
+//            }
+//
+//            // If odd number, draw half heart
+//            if (life % 2 != 0) {
+//                g2.drawImage(heartHalf, x + fullHearts * gp.tileSize, y, gp.tileSize, gp.tileSize, null);
+//            }
 
         }
         if (!running) {
-            g2.setColor(won ? Color.cyan : Color.red);
-            g2.setFont(new Font("Courier New", Font.BOLD, 50));
-            String msg = won ? "You won the quest!" : "Game Over";
-            g2.drawString(msg, (screenWidth - g2.getFontMetrics().stringWidth(msg)) / 2, screenHeight / 2);
+            if(!won) {
+                int textY = screenHeight / 2;
+                g2.setColor(Color.darkGray);
+                g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50f));
+                String msg = "Game Over";
+                g2.drawString(msg, (screenWidth - g2.getFontMetrics().stringWidth(msg)) / 2, textY);
+
+                textY -= 3;
+                g2.setColor(Color.white);
+                g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50f));
+                msg = "Game Over";
+                g2.drawString(msg, ((screenWidth - g2.getFontMetrics().stringWidth(msg)) / 2) - 3, textY);
+
+                textY += 100;
+                g2.setColor(Color.red);
+                g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 30f));
+                msg = "Do you accept this fate?";
+                g2.drawString(msg, ((screenWidth - g2.getFontMetrics().stringWidth(msg)) / 2), textY);
+
+                textY += 50;
+                g2.setColor(Color.white);
+                g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20f));
+                msg = "Yes  or  No";
+                g2.drawString(msg, ((screenWidth - g2.getFontMetrics().stringWidth(msg)) / 2), textY);
+                finished = true;
+            }
+            //!! NEED TO ADD KEY HANDLER FOR YES OR NO
             return;
         }
 
-        }
-
-
+    }
         @Override
         public boolean isWon() {
-            return false;
+            return won;
         }
 
         public void handleKeyPress(int code) {
             if (code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.titleState;
-                gp.playMusic(0);
                 return;
             }
             if (code >= KeyEvent.VK_A && code <= KeyEvent.VK_Z) {
@@ -183,22 +264,72 @@ public class HangmanMinigame extends Minigame {
                     if (wordChars[i] == guessedChar) {
                         displayWord[i] = wordChallenge[1].charAt(i); // Keep original case
                         found = true;
-
                     }
                 }
                 if (!found) {
                     life--;
                 }
                 if (new String(displayWord).equalsIgnoreCase(wordChallenge[1])) {
-                    won = true;
-                    running = false;
+                    correctAnswers++;
+                    int REQUIRED_CORRECT_ANSWERS = 3;
+                    if (correctAnswers >= REQUIRED_CORRECT_ANSWERS) {
+                        won = true;      // Player wins the whole game
+                        running = false;
+                        gp.playMusic(0);
+                    } else {
+                        // Reset for next challenge
+                        loadNewChallenge();   // method to load a new riddle + reset displayWord and life
+                    }
                 }
                 if(life <= 0) {
                     won = false;
                     running = false;
+                    correctAnswers = 0;
                 }
             }
-
+           if(finished){
+               if(code == KeyEvent.VK_Y) {
+                   gp.gameState = gp.playState;
+                   gp.playMusic(0);
+               }
+               if(code == KeyEvent.VK_N) {
+                   reset();
+               }
+           }
         }
+        public void reset() {
+            running = true;
+            won = false;
+            finished = false;
+            life = 7;
+            wordChallenge = wordDB.loadChallenge();
+            wordDB.reset();
+            loadNewChallenge();
+            String actualWord = wordChallenge[1];
+            displayWord = new char[actualWord.length()];
+            for (int i = 0; i < actualWord.length(); i++) {
+                displayWord[i] = (actualWord.charAt(i) == ' ') ? ' ' : '_';
+            }
+        }
+
+    private void loadNewChallenge() {
+        wordChallenge = wordDB.loadChallenge();
+        initializeDisplayWord();
+        running = true;
+    }
+
+    private void initializeDisplayWord() {
+        String answer = wordChallenge[1];
+        displayWord = new char[answer.length()];
+        for (int i = 0; i < displayWord.length; i++) {
+            if (answer.charAt(i) == ' ') {
+                displayWord[i] = ' ';
+            } else {
+                displayWord[i] = '_';
+            }
+        }
+    }
+
+
 }
 
