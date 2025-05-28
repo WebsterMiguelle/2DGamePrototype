@@ -20,7 +20,7 @@ public class Player extends Entity{
     private int boxY = 0;
     //boolean moving = false;
     //int pixelCounter = 0;
-
+ //KULANG PA KAG ADDITION SA MULTI WORLD MANAGEMENT,
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
 
