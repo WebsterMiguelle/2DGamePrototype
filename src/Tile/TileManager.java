@@ -5,7 +5,6 @@ import Main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,14 +14,15 @@ public class TileManager {
 
     GamePanel gp;
     public Tile[] tile;
-    public int[][] mapTileNum;
+    public int[][][] mapTileNum;
 
     public TileManager(GamePanel gp){
         this.gp = gp;
-        tile = new Tile[50];
-        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+        tile = new Tile[500];
+        mapTileNum = new int[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
         getTileImage();
-        loadMap("/maps/BedroomMap.txt");
+        loadMap("/maps/BedroomMap.txt",0);
+        loadMap("/maps/livingroom.txt",1);
     }
 
     public void getTileImage(){
@@ -52,7 +52,99 @@ public class TileManager {
             setup(21,"21",true);
             setup(22,"22",true);
             setup(23,"23",true);
-            //Outside Tiles
+            //Living Room
+        setup(24, "24", true);
+        setup(25, "25", true);
+        setup(26, "26", true);
+        setup(27, "27", true);
+        setup(28, "28", true);
+        setup(29, "29", false);
+        setup(30, "30", true);
+        setup(31, "31", true);
+        setup(32, "32", true);
+        setup(33, "33", true);
+        setup(34, "34", true);
+        setup(35, "35", true);
+        setup(36, "36", true);
+        setup(37, "37", true);
+        setup(38, "38", true);
+        setup(39, "39", true);
+        setup(40, "40", true);
+        setup(41, "41", true);
+        setup(42, "42", true);
+        setup(43, "43", true);
+        setup(44, "44", true);
+        setup(45, "45", true);
+        setup(46, "46", false);
+        setup(47, "47", false);
+        setup(48, "48", false);
+        setup(49, "49", false);
+        setup(50, "50", false);
+        setup(51, "51", false);
+        setup(52, "52", false);
+        setup(53, "53", false);
+        setup(54, "54", false);
+        setup(55, "55", false);
+        setup(56, "56", false);
+        setup(57, "57", false);
+        setup(58, "58", false);
+        setup(59, "59", false);
+        setup(60, "60", false);
+        setup(61, "61", false);
+        setup(62, "62", false);
+        setup(63, "63", false);
+        setup(64, "64", false);
+        setup(65, "65", false);
+        setup(66, "66", false);
+        setup(67, "67", false);
+        setup(68, "68", false);
+        setup(69, "69", false);
+        setup(70, "70", false);
+        setup(71, "71", false);
+        setup(72, "72", false);
+        setup(73, "73", false);
+        setup(74, "74", false);
+        setup(75, "75", false);
+        setup(76, "76", false);
+        setup(77, "77", false);
+        setup(78, "78", false);
+        setup(79, "79", false);
+        setup(80, "80", false);
+        setup(81, "81", false);
+        setup(82, "82", false);
+        setup(83, "83", false);
+        setup(84, "84", false);
+        setup(85, "85", false);
+        setup(86, "86", false);
+        setup(87, "87", false);
+        setup(88, "88", false);
+        setup(89, "89", false);
+        setup(90, "90", false);
+        setup(91, "91", false);
+        setup(92, "92", false);
+        setup(93, "93", true);
+        setup(94, "94", true);
+        setup(95, "95", true);
+        setup(96, "96", true);
+        setup(97, "97", true);
+        setup(98, "98", true);
+        setup(99, "99", false);
+        setup(100, "100", false);
+        setup(101, "101", false);
+        setup(102, "102", false);
+        setup(103, "103", false);
+        setup(104, "104", false);
+        setup(105, "105", false);
+        setup(106, "106", false);
+        setup(107, "107", false);
+        setup(108, "108", true);
+        setup(109, "109", false);
+        setup(110, "110", false);
+
+        //Outside
+
+
+        //Outside Tiles
     }
 
     public void setup(int index, String imagePath, boolean collision){
@@ -60,7 +152,7 @@ public class TileManager {
 
         try{
             tile[index] = new Tile();
-            tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/Bedroom/" + imagePath+".png")));
+            tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/" + imagePath+".png")));
             tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
             tile[index].collision = collision;
 
@@ -71,7 +163,7 @@ public class TileManager {
     }
 
 
-    public void loadMap(String filePath){
+    public void loadMap(String filePath, int map){
         try {
             InputStream is = getClass().getResourceAsStream(filePath);
             assert is != null;
@@ -87,7 +179,7 @@ public class TileManager {
                 while(col < gp.maxWorldCol) {
                     String[] numbers = line.split(" ");
                     int num = Integer.parseInt(numbers[col]);
-                    mapTileNum[col][row] = num;
+                    mapTileNum[map][col][row] = num;
                     col++;
                 }
                 if (col == gp.maxWorldCol) {
@@ -107,7 +199,7 @@ public class TileManager {
         int worldRow = 0;
 
         while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow){
-            int tileNum = mapTileNum[worldCol][worldRow];
+            int tileNum = mapTileNum[gp.currentMap][worldCol][worldRow];
             int worldX = worldCol * gp.tileSize;
             int worldY = worldRow * gp.tileSize;
             int screenX = worldX - gp.player.worldX + gp.player.screenX;

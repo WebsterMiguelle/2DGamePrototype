@@ -25,6 +25,9 @@ public class GamePanel extends JPanel implements Runnable{
     //WORLD SETTINGS
     public final int maxWorldCol = 50; //50 tiles across
     public final int maxWorldRow = 50; //50 tiles down
+    public final int maxMap = 5;
+    public int currentMap = 1;
+
     //FOr fullscreen
     int screenWidth2 = screenWidth;
     int screenHeight2 = screenHeight;
@@ -64,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable{
     //MInigames state
     public final int minigameState = 5;
     public Minigame currentMinigame = null;
+    public boolean inMinigame = false;
     //MINIGAMES
     public final int snakeGameState = 10;
     public final int hangmanGameState = 10;
@@ -152,6 +156,7 @@ public class GamePanel extends JPanel implements Runnable{
             if (currentMinigame.isWon()) {
                 // You can transition state or reward player
                 gameState = playState;
+                stopMusic();
                 currentMinigame = null;
             }
         }

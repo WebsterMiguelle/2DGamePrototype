@@ -8,7 +8,6 @@ public class KeyHandler implements KeyListener {
     public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
     //debug
     public boolean showDebugText = false;
-    public boolean inMinigame = false;
     public KeyHandler(GamePanel gp){
             this.gp = gp;
     }
@@ -26,7 +25,7 @@ public class KeyHandler implements KeyListener {
                 playState(code);
             }
             else if (gp.gameState == gp.pauseState) {
-                   pauseState(code);
+                pauseState(code);
             }
             else if (gp.gameState == gp.dialogueState) {
                 dialogueState(code);
@@ -74,12 +73,12 @@ public class KeyHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_M){
             gp.gameState = gp.minigameState;
-            inMinigame = true;
+            gp.inMinigame = true;
             gp.currentMinigame = new SnakeMinigame(gp);// Example minigame, you can replace it with any other minigame
         }
         if(code == KeyEvent.VK_H){
             gp.gameState = gp.minigameState;
-            inMinigame = true;
+            gp.inMinigame = true;
             gp.currentMinigame = new HangmanMinigame(gp);// Example minigame, you can replace it with any other minigame
         }
     }
@@ -108,19 +107,21 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.optionsState;
         }
-
         //Debug
         if (code == KeyEvent.VK_T) {
             showDebugText = !showDebugText;
         }
+        //reloadmap
+        if(code == KeyEvent.VK_R){
+            switch(gp.currentMap){
+                case 0: gp.tileM.loadMap("maps/BedroomMap.txt", 0); break;
+                case 1: gp.tileM.loadMap("maps/livingroom.txt", 1); break;
+            }
+        }
     }
     public void pauseState(int code){
         if(code == KeyEvent.VK_P) {
-            if(inMinigame) {
-                gp.gameState = gp.minigameState;
-            } else {
-                gp.gameState = gp.playState;
-            }
+            gp.gameState = gp.playState;
         }
         if(code == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.titleState;

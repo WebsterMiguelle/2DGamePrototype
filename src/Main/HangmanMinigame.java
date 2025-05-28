@@ -21,14 +21,15 @@ public class HangmanMinigame extends Minigame {
 
     Font daydreamFont;
 
-    public int maxLife = 7;
-    public int life = maxLife;
+    public int maxLife = 5;
+    public int life = 5;
 
     BufferedImage background, heartFull, heartHalf, heartBlank,
     life0,life1, life2, life3, life4, life5, life6, life7;
     private boolean running = false;
     private boolean won = false;
     private boolean finished = false;
+    private boolean guessedOnce = false;
 
     //HANGMAN VARIABLES
     private final WordDB wordDB;
@@ -42,7 +43,6 @@ public class HangmanMinigame extends Minigame {
         super(gp);
 
         running = true;
-        life = maxLife;
         loadImages();
         wordDB = new WordDB();
         wordChallenge = wordDB.loadChallenge();
@@ -66,24 +66,20 @@ public class HangmanMinigame extends Minigame {
     @Override
     public void update() {
         // Only run logic if the minigame is active
-        if (!running) return;
+        if (!running)
+
+            return;
     }
 
     private void loadImages() {
         try {
             background = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/photoBGs/night-sky-background-zoomed.png")));
-            heartFull = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/heart_full.png")));
-            heartHalf = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/heart_half.png")));
-            heartBlank = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/heart_blank.png")));
             life0 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life0.png")));
             life1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life1.png")));
             life2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life2.png")));
             life3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life3.png")));
             life4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life4.png")));
             life5 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life5.png")));
-            life6 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life6.png")));
-            life7 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life7.png")));
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -94,7 +90,6 @@ public class HangmanMinigame extends Minigame {
     public void draw(Graphics2D g2) {
         g2.drawImage(background, 0, 0, screenWidth, screenHeight, null);
         if (running) {
-
             if (wordChallenge == null) {
                 g2.setColor(Color.RED);
                 g2.drawString("No challenge loaded!", 100, 100);
@@ -108,8 +103,6 @@ public class HangmanMinigame extends Minigame {
                 case 3 -> lifeImage = life3;
                 case 4 -> lifeImage = life4;
                 case 5 -> lifeImage = life5;
-                case 6 -> lifeImage = life6;
-                case 7 -> lifeImage = life7;
             }
 
             if (lifeImage != null) {
@@ -210,6 +203,7 @@ public class HangmanMinigame extends Minigame {
 
         }
         if (!running) {
+            gp.inMinigame = false;
             if(!won) {
                 int textY = screenHeight / 2;
                 g2.setColor(Color.darkGray);
@@ -239,7 +233,6 @@ public class HangmanMinigame extends Minigame {
             //!! NEED TO ADD KEY HANDLER FOR YES OR NO
             return;
         }
-
     }
         @Override
         public boolean isWon() {
@@ -252,6 +245,7 @@ public class HangmanMinigame extends Minigame {
                 return;
             }
             if (code >= KeyEvent.VK_A && code <= KeyEvent.VK_Z) {
+                guessedOnce = true;
                 char guessedChar = (char) code;
                 guessedChar = Character.toLowerCase(guessedChar); // normalize input
 
@@ -266,7 +260,7 @@ public class HangmanMinigame extends Minigame {
                         found = true;
                     }
                 }
-                if (!found) {
+                if (!found && guessedOnce) {
                     life--;
                 }
                 if (new String(displayWord).equalsIgnoreCase(wordChallenge[1])) {
@@ -301,7 +295,7 @@ public class HangmanMinigame extends Minigame {
             running = true;
             won = false;
             finished = false;
-            life = 7;
+            life = 5;
             wordChallenge = wordDB.loadChallenge();
             wordDB.reset();
             loadNewChallenge();

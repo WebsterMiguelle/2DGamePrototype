@@ -83,6 +83,7 @@ public class SnakeMinigame extends Minigame {
     public void draw(Graphics2D g2) {
         g2.drawImage(background, 0, 0, screenWidth, screenHeight, null);
         if (!running) {
+            gp.inMinigame = false;
             if(!won){
                 int textY = screenHeight / 2;
                 g2.setColor(Color.darkGray);
@@ -267,7 +268,6 @@ public class SnakeMinigame extends Minigame {
 
         if (code == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.titleState; // Exit minigame
-            gp.playMusic(0); // Resume background music
             return;
         }
         if (code == KeyEvent.VK_P) {
