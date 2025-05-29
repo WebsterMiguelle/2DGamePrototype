@@ -34,7 +34,7 @@ public class Entity {
     String[] dialogues = new String[20];
     int dialogueIndex = 0;
 
-    public int type; // 0: player, 1: npc, 2: monster, 3: object, 4: door, 5: event
+    public int type = 0; // 0: player, 1: npc, 2: monster, 3: object, 4: door, 5: event
     public final int type_player = 0;
     public final int type_npc = 1;
     public final int type_pillar = 2;
@@ -42,6 +42,9 @@ public class Entity {
     public final int type_book = 4;
     public final int type_crown = 5;
     public final int type_door = 6;
+    public final int type_CrownPillar = 7;
+    public final int type_SwordPillar = 8;
+    public final int type_BookPillar = 9;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
@@ -162,5 +165,21 @@ public class Entity {
             e.printStackTrace();
         }
         return image;
+    }
+
+    public void interact(){}
+
+    public int removeItem(Entity[][] target, String itemName){
+        int index = 999;
+
+        for(int i = 0; i < target[1].length; i++){
+            if(target[gp.currentMap][i] != null){
+                if(target[gp.currentMap][i].name.equals(itemName)){
+                    index = i;
+                    break; // Exit loop after finding the item
+                }
+            }
+        }
+        return index;
     }
 }

@@ -25,7 +25,7 @@ public class TileManager {
 
         this.gp = gp;
 
-        InputStream is = getClass().getResourceAsStream("/maps/bedroomTileData.txt");
+        InputStream is = getClass().getResourceAsStream("/maps/tileData.txt");
         assert is != null;
         BufferedReader br = new BufferedReader(new java.io.InputStreamReader(is));
 
@@ -62,9 +62,9 @@ public class TileManager {
             System.out.println("EXCEPTION: Could not load map data.");
             e.printStackTrace();
         }
-        loadMap("/maps/BedroomMap.txt", 0);
-        loadMap("/maps/livingroom(with furnitures)map.txt", 1);
-
+        loadMap("/maps/bedroomMap(withFurniture).txt", 0);
+        loadMap("/maps/livingRoomMap(withfurniture).txt", 1);
+        loadMap("/maps/VillageAndForestMap.txt", 2);
 
 //        loadMap("/maps/bedroomMap.txt",0);
 //        loadMap("/maps/livingroommap.txt",1);

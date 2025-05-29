@@ -41,7 +41,8 @@ public class HangmanMinigame extends Minigame {
 
     public HangmanMinigame(GamePanel gp) {
         super(gp);
-
+        gp.stopMusic();
+        gp.playMusic(4);
         running = true;
         loadImages();
         wordDB = new WordDB();
@@ -67,7 +68,6 @@ public class HangmanMinigame extends Minigame {
     public void update() {
         // Only run logic if the minigame is active
         if (!running)
-
             return;
     }
 
@@ -204,6 +204,7 @@ public class HangmanMinigame extends Minigame {
         }
         if (!running) {
             gp.inMinigame = false;
+            gp.stopMusic();
             if(!won) {
                 int textY = screenHeight / 2;
                 g2.setColor(Color.darkGray);

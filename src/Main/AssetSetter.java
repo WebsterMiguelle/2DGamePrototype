@@ -7,29 +7,46 @@ public class AssetSetter {
 
     GamePanel gp;
 
+    public int i = 0;
     public AssetSetter(GamePanel gp){
         this.gp = gp;
 
     }
         public void setObject(){
         int mapNum = 0;
-        int i = 0;
-        gp.obj[mapNum][i] = new OBJ_Pillar(gp);
-        gp.obj[mapNum][i].worldX = 16 * gp.tileSize;
-        gp.obj[mapNum][i].worldY = 33 * gp.tileSize;
+
 
         mapNum = 1;
-            gp.obj[mapNum][i] = new OBJ_Pillar(gp);
-            gp.obj[mapNum][i].worldX = 16 * gp.tileSize;
-            gp.obj[mapNum][i].worldY = 33 * gp.tileSize;
-        i++;
+
+            mapNum = 2;
+                gp.obj[mapNum][i] = new OBJ_Crown(gp);
+                gp.obj[mapNum][i].worldX = 35 * gp.tileSize;
+                gp.obj[mapNum][i].worldY = 43 * gp.tileSize;
+            i++;
+                gp.obj[mapNum][i] = new OBJ_Sword(gp);
+                gp.obj[mapNum][i].worldX = 46 * gp.tileSize;
+                gp.obj[mapNum][i].worldY = 33 * gp.tileSize;
+            i++;
+                gp.obj[mapNum][i] = new OBJ_Book(gp);
+                gp.obj[mapNum][i].worldX = 9 * gp.tileSize;
+                gp.obj[mapNum][i].worldY = 44 * gp.tileSize;
+            i++;
+                gp.obj[mapNum][i] = new OBJ_CrownPillar(gp);
+                gp.obj[mapNum][i].worldX = 28 * gp.tileSize;
+                gp.obj[mapNum][i].worldY = 42 * gp.tileSize;
+
+                i++;
+                gp.obj[mapNum][i] = new OBJ_BookPillar(gp);
+                gp.obj[mapNum][i].worldX = 21 * gp.tileSize;
+                gp.obj[mapNum][i].worldY = 36 * gp.tileSize;
+
         }
 
         public void setNPC(){
-            int mapNum = 0;
-            gp.npc[mapNum][0] = new NPC_Mage(gp);
-            gp.npc[mapNum][0].worldX = 20 * gp.tileSize;
-            gp.npc[mapNum][0].worldY = 29 * gp.tileSize;
+//            int mapNum = 0;
+//            gp.npc[mapNum][0] = new NPC_Mage(gp);
+//            gp.npc[mapNum][0].worldX = 20 * gp.tileSize;
+//            gp.npc[mapNum][0].worldY = 29 * gp.tileSize;
 
         }
 }

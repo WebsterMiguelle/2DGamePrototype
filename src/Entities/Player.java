@@ -1,7 +1,9 @@
 package Entities;
 
 import Main.GamePanel;
+import Main.HangmanMinigame;
 import Main.KeyHandler;
+import Main.SnakeMinigame;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,12 +18,12 @@ public class Player extends Entity{
     private int standCounter = 0;
 
     private boolean canInteract = false;
+    public boolean hasCrown, hasSword, hasBook;
     private int boxX = 0;
     private int boxY = 0;
-    int hasKey = 0;
     //boolean moving = false;
     //int pixelCounter = 0;
- //KULANG PA KAG ADDITION SA MULTI WORLD MANAGEMENT,
+
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
 
@@ -46,8 +48,16 @@ public class Player extends Entity{
 
     }
     public void setDefaultValues() {
-        worldX = gp.tileSize * 21;
-        worldY = gp.tileSize * 29;
+        //Sets player in his bed
+        worldX = gp.tileSize * 17;
+        worldY = gp.tileSize * 27;
+        //Sets player center of the pillars
+//        worldX = gp.tileSize * 24;
+//        worldY = gp.tileSize * 36;
+        //Sets Player in living room
+//        worldX = gp.tileSize * 16;
+//        worldY = gp.tileSize * 33;
+
         speed = 4;
         direction = "down";
     }
@@ -92,6 +102,7 @@ public class Player extends Entity{
 
                 //CHECKS OBJECT COLLISION
                 int objIndex = gp.cChecker.checkObject(this, true);
+                canInteract = objIndex != 999;
                 pickUpObject(objIndex);
 
                 //CHECKS NPC COLLISION
@@ -149,13 +160,52 @@ public class Player extends Entity{
 
 
     public void pickUpObject(int i) {
-        if (i != 999){
-           //this is where you have player-object interactions
-//            if (gp.obj[gp.currentMap][i].type == type_pickupOnly) {
-//                gp.playSE(1);
-//                hasKey++;
-//                gp.obj[i] = null;
-//            }
+        if(i == 999) {return;}
+            //CROWN PILLAR / KING TRIALS
+        switch(gp.obj[gp.currentMap][i].type) {
+            case type_crown -> { if (keyH.enterPressed) {
+                gp.obj[gp.currentMap][i].interact();
+                    hasCrown = true;
+                    gp.obj[gp.currentMap][i] = null;
+                }}
+
+            case type_book -> { if (keyH.enterPressed) {
+                gp.obj[gp.currentMap][i].interact();
+                    hasBook = true;
+                    gp.obj[gp.currentMap][i] = null;
+                }}
+
+            case type_CrownPillar -> {
+                if (!hasCrown) {
+                    if (keyH.enterPressed) {
+                        gp.obj[gp.currentMap][i].interact();
+                    }
+                }
+                if (hasCrown) {
+                    if (keyH.enterPressed) {
+                        gp.gameState = gp.minigameState;
+                        gp.inMinigame = true;
+                        gp.currentMinigame = new SnakeMinigame(gp);
+                        hasCrown = false;
+                    }
+                }
+            }
+
+            case type_BookPillar -> {
+                if (!hasBook) {
+                    if (keyH.enterPressed) {
+                        gp.obj[gp.currentMap][i].interact();
+                    }
+                }
+                if (hasBook) {
+                    if (keyH.enterPressed) {
+                        gp.gameState = gp.minigameState;
+                        gp.inMinigame = true;
+                        gp.currentMinigame = new HangmanMinigame(gp);
+                        hasBook = false;
+                    }
+                }
+            }
         }
     }
 
