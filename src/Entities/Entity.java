@@ -34,6 +34,15 @@ public class Entity {
     String[] dialogues = new String[20];
     int dialogueIndex = 0;
 
+    public int type; // 0: player, 1: npc, 2: monster, 3: object, 4: door, 5: event
+    public final int type_player = 0;
+    public final int type_npc = 1;
+    public final int type_pillar = 2;
+    public final int type_sword = 3;
+    public final int type_book = 4;
+    public final int type_crown = 5;
+    public final int type_door = 6;
+
     public Entity(GamePanel gp) {
         this.gp = gp;
     }

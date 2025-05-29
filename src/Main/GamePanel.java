@@ -23,10 +23,10 @@ public class GamePanel extends JPanel implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol; //960 pixels
     public final int screenHeight = tileSize * maxScreenRow; //576 pixels
     //WORLD SETTINGS
-    public final int maxWorldCol = 50; //50 tiles across
-    public final int maxWorldRow = 50; //50 tiles down
+    public int maxWorldCol = 50; //50 tiles across
+    public int maxWorldRow = 50; //50 tiles down
     public final int maxMap = 5;
-    public int currentMap = 1;
+    public int currentMap = 0;
 
     //Current Map: 0 = Bedroom, 1 = Living Room, 2 = Outside *not implemented yet*
 
@@ -66,11 +66,13 @@ public class GamePanel extends JPanel implements Runnable{
     public final int dialogueState = 3;
     public final int optionsState = 4;
 
-    //MInigames state
+    //Minigames state
+
     public final int minigameState = 5;
     public Minigame currentMinigame = null;
     public boolean inMinigame = false;
     //MINIGAMES
+
     public final int snakeGameState = 10;
     public final int hangmanGameState = 10;
 
