@@ -12,6 +12,7 @@ public class AssetSetter {
     }
         public void setObject(){
         /*
+        int mapNum = 0;
         gp.obj[0] = new OBJ_Key(gp);
         gp.obj[0].worldX = 31 * gp.tileSize;
         gp.obj[0].worldY = 30 * gp.tileSize;
@@ -34,9 +35,10 @@ public class AssetSetter {
         }
 
         public void setNPC(){
-            gp.npc[0] = new NPC_Mage(gp);
-            gp.npc[0].worldX = 20 * gp.tileSize;
-            gp.npc[0].worldY = 29 * gp.tileSize;
+            int mapNum = 0;
+            gp.npc[mapNum][0] = new NPC_Mage(gp);
+            gp.npc[mapNum][0].worldX = 20 * gp.tileSize;
+            gp.npc[mapNum][0].worldY = 29 * gp.tileSize;
 
         }
 }

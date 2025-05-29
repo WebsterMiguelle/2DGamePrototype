@@ -43,16 +43,17 @@ public class TileManager {
         setup(12, "12", true);
         setup(13, "13", false);
         setup(14, "14", false);
-        setup(15, "15", false);
-        setup(16, "16", false);
-        setup(17, "17", false);
-        setup(18, "18", false);
-        setup(19, "19", false);
+        //Living Room Tiles
+        setup(15, "15", true);
+        setup(16, "16", true);
+        setup(17, "17", true);
+        setup(18, "18", true);
+        setup(19, "19", true);
         setup(20, "20", true);
         setup(21, "21", true);
-        setup(22, "22", false);
+        setup(22, "22", true);
         setup(23, "23", false);
-        setup(24, "24", false);
+        setup(24, "24", true);
         setup(25, "25", true);
         setup(26, "26", false);
         setup(27, "27", true);

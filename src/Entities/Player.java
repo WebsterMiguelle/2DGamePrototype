@@ -18,6 +18,7 @@ public class Player extends Entity{
     private boolean canInteract = false;
     private int boxX = 0;
     private int boxY = 0;
+    int hasKey = 0;
     //boolean moving = false;
     //int pixelCounter = 0;
  //KULANG PA KAG ADDITION SA MULTI WORLD MANAGEMENT,
@@ -98,6 +99,9 @@ public class Player extends Entity{
                 canInteract = npcIndex != 999;
                 interactNPC(npcIndex);
 
+                //CHECKS EVENT COLLISION
+                gp.eHandler.checkEvent();
+
                 //IF COLLISION IS FALSE, PLAYER CAN MOVE
                 if (!collisionOn && !keyH.enterPressed) {
                     switch (direction) {
@@ -147,11 +151,11 @@ public class Player extends Entity{
     public void pickUpObject(int i) {
         if (i != 999){
            //this is where you have player-object interactions
-            //if (gp.obj[i].type == type) {
-            //    gp.playSE(1);
-            //    hasKey++;
-            //    gp.obj[i] = null;
-            //}
+//            if (gp.obj[gp.currentMap][i].type == type_pickupOnly) {
+//                gp.playSE(1);
+//                hasKey++;
+//                gp.obj[i] = null;
+//            }
         }
     }
 
@@ -159,7 +163,7 @@ public class Player extends Entity{
         if(gp.keyH.enterPressed) {
             if (i != 999) {
                 gp.gameState = gp.dialogueState;
-                gp.npc[i].speak();
+                gp.npc[gp.currentMap][i].speak();
             }
         }
     }
