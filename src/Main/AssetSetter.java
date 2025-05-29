@@ -1,5 +1,6 @@
 package Main;
 
+import Entities.*;
 import Entities.NPC_Mage;
 import Object.*;
 
@@ -49,10 +50,18 @@ public class AssetSetter {
         }
 
         public void setNPC(){
-//            int mapNum = 0;
-//            gp.npc[mapNum][0] = new NPC_Mage(gp);
-//            gp.npc[mapNum][0].worldX = 20 * gp.tileSize;
-//            gp.npc[mapNum][0].worldY = 29 * gp.tileSize;
+            int mapNum = 0;
+            gp.npc[mapNum][0] = new NPC_Mage(gp);
+            gp.npc[mapNum][0].worldX = 20 * gp.tileSize;
+            gp.npc[mapNum][0].worldY = 29 * gp.tileSize;
 
+            mapNum = 1;
+
+            mapNum = 2;
+
+            gp.npc[mapNum][0] = new NPC1(gp);
+            gp.npc[mapNum][0].worldX = 35 * gp.tileSize;
+            gp.npc[mapNum][0].worldY = 13 * gp.tileSize;
+            i++;
         }
 }

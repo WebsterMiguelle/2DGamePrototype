@@ -22,12 +22,25 @@ public class OBJ_CrownPillar extends Entity {
         solidArea.height = 48;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+        setDialogue();
+    }
+    public void setDialogue() {
+        String Line = "";
+
+        if (gp.player.hasCrown && !gp.player.crownDone) {
+            gp.gameState = gp.dialogueState;
+            Line = "Place the crown on the pillar.";
+        } else if (gp.player.crownDone) {
+            gp.gameState = gp.dialogueState;
+            Line = "The crown is already placed.";
+        } else {
+            gp.gameState = gp.dialogueState;
+            Line = "It seems that this pillar needs its item.";
+        }
+        dialogues[0][0] = Line;
     }
 
     public void interact() {
-        if (!gp.player.hasCrown) {
-            gp.gameState = gp.dialogueState;
-            gp.ui.currentDialogue = "It seems that this pillar needs its item.";
-        }
+        startDialogue(this,0);
     }
 }

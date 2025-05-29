@@ -44,7 +44,7 @@ public class TileManager {
         tile = new Tile[fileNames.size()];
         getTileImage();
 
-        is = getClass().getResourceAsStream("/maps/BedroomMap.txt");
+        is = getClass().getResourceAsStream("/maps/bedroomMap(withFurniture).txt");
         assert is != null;
         br = new BufferedReader(new java.io.InputStreamReader(is));
 
@@ -63,11 +63,9 @@ public class TileManager {
             e.printStackTrace();
         }
         loadMap("/maps/bedroomMap(withFurniture).txt", 0);
-        loadMap("/maps/livingRoomMap(withfurniture).txt", 1);
+        loadMap("/maps/LivingRoomMap.txt", 1);
         loadMap("/maps/VillageAndForestMap.txt", 2);
 
-//        loadMap("/maps/bedroomMap.txt",0);
-//        loadMap("/maps/livingroommap.txt",1);
     }
 
     public void getTileImage(){

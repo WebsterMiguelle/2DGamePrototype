@@ -21,9 +21,12 @@ public class OBJ_Book extends Entity {
         solidArea.height = 48;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+        setDialogue();
+    }
+    public void setDialogue() {
+        dialogues[0][0] = "You got the Book!.";
     }
     public void interact(){
-        gp.gameState = gp.dialogueState;
-        gp.ui.currentDialogue = "You got the Book!.";
+        startDialogue(this, 0);
     }
 }

@@ -22,12 +22,25 @@ public class OBJ_BookPillar extends Entity {
         solidArea.height = 48;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+        setDialogue();
+    }
+    public void setDialogue() {
+        String line = "";
+
+        if (gp.player.hasBook && !gp.player.bookDone) {
+            gp.gameState = gp.dialogueState;
+            line = "Place the book on the pillar.";
+        } else if (gp.player.bookDone) {
+            gp.gameState = gp.dialogueState;
+            line = "The book is already placed.";
+        } else {
+            gp.gameState = gp.dialogueState;
+            line = "It seems that this pillar needs its item.";
+        }
+        dialogues[0][0] = line;
     }
 
     public void interact() {
-        if (!gp.player.hasBook) {
-            gp.gameState = gp.dialogueState;
-            gp.ui.currentDialogue = "It seems that this pillar needs its item.";
-        }
+        startDialogue(this, 0);
     }
 }

@@ -35,7 +35,7 @@ public class SnakeMinigame extends Minigame {
 
     private boolean running = true;
     private boolean won = false;
-
+    private boolean finished = false;
 
     private int spriteNum = 1;
     private BufferedImage background, headRight, headLeft, headUp, headDown, body,
@@ -77,6 +77,7 @@ public class SnakeMinigame extends Minigame {
         if (snakeLength >= 10) {
             running = false;
             gp.stopMusic();
+            gp.playMusic(0);
             won = true;
         }
     }
@@ -86,7 +87,7 @@ public class SnakeMinigame extends Minigame {
         g2.drawImage(background, 0, 0, screenWidth, screenHeight, null);
         if (!running) {
             gp.inMinigame = false;
-            if(!won){
+            if(!won) {
                 int textY = screenHeight / 2;
                 g2.setColor(Color.darkGray);
                 g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50f));
@@ -110,7 +111,7 @@ public class SnakeMinigame extends Minigame {
                 g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20f));
                 msg = "Yes  or  No";
                 g2.drawString(msg, ((screenWidth - g2.getFontMetrics().stringWidth(msg)) / 2), textY);
-                //!! NEED TO ADD KEY HANDLER FOR YES OR NO
+                finished = true;
             }
             return;
         }
@@ -265,20 +266,26 @@ public class SnakeMinigame extends Minigame {
     public void handleKeyPress(int code) {
         if (!running) {
             gp.stopMusic();
-            if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_R) {
-                resetGame();
+            if(finished){
+                if(code == KeyEvent.VK_Y) {
+                    gp.gameState = gp.playState;
+                    gp.playMusic(0);
+                }
+                if(code == KeyEvent.VK_N) {
+                    resetGame();
+                }
             }
             return;
         }
 
-        if (code == KeyEvent.VK_ESCAPE) {
-            gp.gameState = gp.titleState; // Exit minigame
-            return;
-        }
-        if (code == KeyEvent.VK_P) {
-            gp.gameState = gp.pauseState; // Pause the game
-            return;
-        }
+//        if (code == KeyEvent.VK_ESCAPE) {
+//            gp.gameState = gp.titleState; // Exit minigame
+//            return;
+//        }
+//        if (code == KeyEvent.VK_P) {
+//            gp.gameState = gp.pauseState; // Pause the game
+//            return;
+//        }
 
         if ((code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) && directionX != -1) {
             directionX = 1; directionY = 0;

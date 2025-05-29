@@ -21,9 +21,13 @@ public class OBJ_Pillar extends Entity {
         solidArea.height = 48;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+        setDialogue();
     }
+    public void setDialogue() {
+        dialogues[0][0] = "This is a pillar.";
+    }
+
     public void interact(){
-        gp.gameState = gp.dialogueState;
-        gp.ui.currentDialogue = "This is a pillar.";
+        startDialogue(this, 0);
     }
 }

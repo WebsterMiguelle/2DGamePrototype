@@ -21,9 +21,12 @@ public class OBJ_Crown extends Entity {
         solidArea.height = 48;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+        setDialogue();
+    }
+    public void setDialogue() {
+        dialogues[0][0] = "You got the Crown!.";
     }
     public void interact(){
-        gp.gameState = gp.dialogueState;
-        gp.ui.currentDialogue = "You got the Crown!.";
+        startDialogue(this, 0);
     }
 }

@@ -31,8 +31,9 @@ public class Entity {
     public boolean collision = false;
 
 
-    String[] dialogues = new String[20];
-    int dialogueIndex = 0;
+    public String[][] dialogues = new String[20][20];
+    public int dialogueIndex = 0;
+    public int dialogueSet = 0;
 
     public int type = 0; // 0: player, 1: npc, 2: monster, 3: object, 4: door, 5: event
     public final int type_player = 0;
@@ -53,26 +54,23 @@ public class Entity {
     public void setAction() {}
     public void speak() {
 
-        if(dialogues[dialogueIndex] == null){
-            dialogueIndex = 0;
-        }
-        gp.ui.currentDialogue = dialogues[dialogueIndex];
-        dialogueIndex++;
 
+    }
+
+    public void facePlayer(){
         switch(gp.player.direction){
-            case "up":
-                direction = "StandDown";
-                break;
-            case "down":
-                direction = "StandUp";
-                break;
-            case "left":
-                direction = "StandRight";
-                break;
-            case "right":
-                direction = "StandLeft";
-                break;
+            case "up": direction = "StandDown";break;
+            case "down": direction = "StandUp";break;
+            case "left":direction = "StandRight";break;
+            case "right":direction = "StandLeft";break;
         }
+    }
+    public void startDialogue (Entity entity,int setNum){
+
+        gp.gameState = gp.dialogueState;
+        gp.ui.npc = entity;
+        dialogueSet = setNum;
+
     }
 
     public void update(){

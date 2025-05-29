@@ -5,9 +5,9 @@ import Main.GamePanel;
 import java.awt.*;
 import java.util.Random;
 
-public class NPC_Mage extends Entity {
+public class NPC_Mother extends Entity {
 
-    public NPC_Mage(GamePanel gp){
+    public NPC_Mother(GamePanel gp){
         super(gp);
 
         direction = "StandDown";
@@ -26,7 +26,7 @@ public class NPC_Mage extends Entity {
         dialogueSet = -1;
     }
     public void getImage() {
-
+//IMAGENOTSET
         up1 = setup("/NPC/Mage_WalkUp1");
         up2 = setup("/NPC/Mage_WalkUp2");
         down1 = setup("/NPC/Mage_WalkDown1");
@@ -86,14 +86,14 @@ public class NPC_Mage extends Entity {
     }
 
     public void speak(){
-       facePlayer();
-       startDialogue(this,dialogueSet);
+        facePlayer();
+        startDialogue(this,dialogueSet);
 
-       dialogueSet++;
+        dialogueSet++;
 
-       if(dialogues[dialogueSet][0] == null){
-        //dialogueSet = 0;
-        dialogueSet --;
-       }
+        if(dialogues[dialogueSet][0] == null){
+            //dialogueSet = 0;
+            dialogueSet --;
+        }
     }
 }

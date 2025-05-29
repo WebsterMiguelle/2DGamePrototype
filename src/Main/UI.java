@@ -1,13 +1,14 @@
 package Main;
 
+import Entities.Entity;
+
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 
-
-
 public class UI {
 
+    public Entity npc;
     GamePanel gp;
     Font daydreamFont;
 
@@ -21,6 +22,16 @@ public class UI {
     public int commandNum = 0;
     public int titleScreenState = 0; // 0 = title
     public int subState = 0; //
+
+    int  charIndex = 0;
+    String combinedText = "";
+
+// Transition control
+    public boolean transitioning = false;
+    public int transitionAlpha = 0;
+    public int transitionPhase = 0; // 0 = None, 1 = Fading Out, 2 = Switching State, 3 = Fading In
+    public int nextGameState = -1;
+
 
     public UI(GamePanel gp){
         this.gp = gp;
@@ -68,6 +79,8 @@ public class UI {
         if (gp.gameState == gp.minigameState && gp.currentMinigame != null) {
             gp.currentMinigame.draw(g2);
         }
+
+        drawTransition(g2);
     }
 
     public int getXforCenteredText(String text) {
@@ -157,13 +170,44 @@ public class UI {
 
         drawSubWindow(x,y,width,height);
 
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 12F));
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
         x+= gp.tileSize;
         y+= gp.tileSize;
 
+
+
+        if(npc.dialogues[npc.dialogueSet][npc.dialogueIndex] != null) {
+            //currentDialogue = npc.dialogues[npc.dialogueSet][npc.dialogueIndex];
+            char[] characters = npc.dialogues[npc.dialogueSet][npc.dialogueIndex].toCharArray();
+            if(charIndex < characters.length){
+                gp.playSE(7);
+                String s = String.valueOf(characters[charIndex]);
+                combinedText = combinedText + s;
+                currentDialogue = combinedText;
+                charIndex++;
+
+            }
+
+
+
+            if(gp.keyH.enterPressed){
+                charIndex = 0;
+                combinedText = "";
+                if(gp.gameState == gp.dialogueState){
+                    npc.dialogueIndex++;
+                    gp.keyH.enterPressed = false;
+                }
+            }
+        } else {
+            npc.dialogueIndex = 0;
+            if(gp.gameState == gp.dialogueState){
+                gp.gameState = gp.playState; // Return to play state if dialogue is finished
+            }
+        }
+
         for(String line : currentDialogue.split("\n")) {
             g2.drawString(line, x, y);
-            y += 32;
+            y += 40;
         }
     }
 
@@ -351,33 +395,34 @@ public class UI {
             g2.drawString(line, textX, textY);
             textY += 32;
         }
-        //YES
+
+        // YES
         String text = "YES";
         textX = getXforCenteredText(text);
-        textY += gp.tileSize*3;
+        textY += gp.tileSize * 3;
         g2.drawString(text, textX, textY);
         if(commandNum == 0){
-            g2.drawString(">", textX-25, textY);
+            g2.drawString(">", textX - 25, textY);
             if(gp.keyH.enterPressed){
                 subState = 0;
                 gp.gameState = gp.titleState;
                 gp.stopMusic();
             }
         }
-        //NO
+
+        // NO
         text = "NO";
         textX = getXforCenteredText(text);
-        textY += gp.tileSize*3;
+        textY += gp.tileSize;
         g2.drawString(text, textX, textY);
         if(commandNum == 1){
-            g2.drawString(">", textX-25, textY);
+            g2.drawString(">", textX - 25, textY);
             if(gp.keyH.enterPressed){
                 subState = 0;
-                commandNum = 4;
+                commandNum = 4; // return focus to "End Game" option
             }
         }
     }
-
     public void drawSubWindow(int x, int y, int width, int height){
     Color c = new Color (0,0,0,210);
     g2.setColor(c);
@@ -387,6 +432,41 @@ public class UI {
     g2.setColor(c);
     g2.setStroke(new BasicStroke(5));
     g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
+    }
+
+    public void drawTransition(Graphics2D g2) {
+        if (!transitioning) return;
+
+        switch (transitionPhase) {
+            case 1: // Fade out
+                transitionAlpha += 10;
+                if (transitionAlpha >= 255) {
+                    transitionAlpha = 255;
+                    gp.gameState = nextGameState;
+                    transitionPhase = 3; // Start fading in
+                }
+                break;
+            case 3: // Fade in
+                transitionAlpha -= 10;
+                if (transitionAlpha <= 0) {
+                    transitionAlpha = 0;
+                    transitionPhase = 0;
+                    transitioning = false;
+                }
+                break;
+        }
+
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, transitionAlpha / 255f));
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+    }
+
+    public void startTransition(int nextState) {
+        transitioning = true;
+        transitionPhase = 1; // Start fading out
+        transitionAlpha = 0;
+        nextGameState = nextState;
     }
 
 }

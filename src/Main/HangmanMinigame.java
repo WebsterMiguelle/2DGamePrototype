@@ -294,6 +294,7 @@ public class HangmanMinigame extends Minigame {
         }
         public void reset() {
             running = true;
+            gp.playMusic(4);
             won = false;
             finished = false;
             life = 5;

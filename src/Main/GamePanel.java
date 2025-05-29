@@ -71,7 +71,9 @@ public class GamePanel extends JPanel implements Runnable{
     public final int minigameState = 5;
     public Minigame currentMinigame = null;
     public boolean inMinigame = false;
-    //MINIGAMES
+
+    //Story State
+public final int storyState = 7;
 
     public GamePanel(){
         this.setPreferredSize(new java.awt.Dimension(screenWidth, screenHeight));
@@ -227,7 +229,6 @@ public class GamePanel extends JPanel implements Runnable{
 
             g2.drawString("Draw Time: " + passed, x, y);
         }
-
     }
 
     public void drawToScreen(){

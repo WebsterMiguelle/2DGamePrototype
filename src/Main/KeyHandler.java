@@ -64,7 +64,7 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_E) {
             gp.playSE(2);
             if (gp.ui.commandNum == 0) {
-                gp.gameState = gp.playState;
+                gp.ui.startTransition(gp.playState);
                 gp.playMusic(0);
             }
             if (gp.ui.commandNum == 1) {
@@ -122,8 +122,8 @@ public class KeyHandler implements KeyListener {
         //reloadmap
         if(code == KeyEvent.VK_R){
             switch(gp.currentMap){
-                case 0: gp.tileM.loadMap("maps/BedroomMap.txt", 0); break;
-                case 1: gp.tileM.loadMap("maps/livingroom.txt", 1); break;
+                case 0: gp.tileM.loadMap("maps/bedroomMap(withFurniture).txt", 0); break;
+                case 1: gp.tileM.loadMap("maps/LivingRoomMap.txt", 1); break;
             }
         }
     }
@@ -138,7 +138,7 @@ public class KeyHandler implements KeyListener {
     }
     public void dialogueState(int code){
         if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_E) {
-            gp.gameState = gp.playState;
+            enterPressed = true;
         }
     }
     public void optionsState(int code){

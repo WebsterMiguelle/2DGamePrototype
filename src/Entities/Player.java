@@ -16,6 +16,10 @@ public class Player extends Entity{
 
     private boolean canInteract = false;
     public boolean hasCrown, hasSword, hasBook;
+    public boolean crownDone, bookDone, swordDone;
+
+    Font interactableFont;
+    private BufferedImage notificationBox;
     private int boxX = 0;
     private int boxY = 0;
     //boolean moving = false;
@@ -32,8 +36,8 @@ public class Player extends Entity{
         screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
 
-        boxX = screenX + gp.tileSize / 2 - 24 / 2;
-        boxY = screenY - 24 - 5;
+        boxX = screenX + gp.tileSize / 2 - 24;
+        boxY = screenY - 24 - 10;
 
         solidArea = new Rectangle();
         solidArea.x = 8;
@@ -42,6 +46,10 @@ public class Player extends Entity{
         solidAreaDefaultY = solidArea.y;
         solidArea.width = 32;
         solidArea.height = 32;
+
+        interactableFont = new Font("Calibre", Font.BOLD, 15);
+
+        prepareNotifBox();
 
     }
     public void setDefaultValues() {
@@ -186,11 +194,11 @@ public class Player extends Entity{
                 }
                 if (hasCrown) {
                     if (keyH.enterPressed) {
-                        gp.gameState = gp.minigameState;
+                        gp.ui.startTransition(gp.minigameState);
                         gp.inMinigame = true;
                         gp.currentMinigame = new SnakeMinigame(gp);
                         hasCrown = false;
-
+                        crownDone = true;
                     }
                 }
             }
@@ -203,10 +211,11 @@ public class Player extends Entity{
                 }
                 if (hasBook) {
                     if (keyH.enterPressed) {
-                        gp.gameState = gp.minigameState;
+                        gp.ui.startTransition(gp.minigameState);
                         gp.inMinigame = true;
                         gp.currentMinigame = new HangmanMinigame(gp);
                         hasBook = false;
+                        bookDone = true;
                     }
                 }
             }
@@ -219,10 +228,11 @@ public class Player extends Entity{
                 }
                 if (hasSword) {
                     if (keyH.enterPressed) {
-                        gp.gameState = gp.minigameState;
+                        gp.ui.startTransition(gp.minigameState);
                         gp.inMinigame = true;
                         gp.currentMinigame = new RPSMinigame(gp);
                         hasSword = false;
+                        swordDone = true;
                     }
                 }
             }
@@ -233,7 +243,6 @@ public class Player extends Entity{
     public void interactNPC(int i){
         if(gp.keyH.enterPressed) {
             if (i != 999) {
-                gp.gameState = gp.dialogueState;
                 gp.npc[gp.currentMap][i].speak();
             }
         }
@@ -276,15 +285,20 @@ public class Player extends Entity{
         //debug
 //        g2.setColor(Color.RED);
 //        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
-
-        if (canInteract) {
-            g2.setColor(new Color(0, 0, 0, 180));
-            g2.fillRoundRect(boxX, boxY, 24, 24, 10, 10);
-
-            g2.setColor(Color.WHITE);
-            g2.setFont(new Font("Arial", Font.BOLD, 16));
-            g2.drawString("E  to Interact", boxX + 7, boxY + 17);
+        if (canInteract && notificationBox != null) {
+            g2.drawImage(notificationBox, boxX, boxY , null);
         }
+    }
+    private void prepareNotifBox(){
+        notificationBox = new BufferedImage(70, 30, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = notificationBox.createGraphics();
 
+        g.setColor(new Color(46, 46, 46, 180));
+        g.fillRoundRect(0, 0, 70, 30, 10, 10);
+
+        g.setColor(Color.WHITE);
+        g.setFont(interactableFont);
+        g.drawString("E/Enter", 5, 20); // You can write full "E to Interact" if it fits
+        g.dispose();
     }
 }

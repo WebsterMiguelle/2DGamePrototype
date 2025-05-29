@@ -1,8 +1,11 @@
 package Main;
 
+import Entities.Entity;
+
 public class EventHandler {
     GamePanel gp;
     EventRect[][][] eventRect;
+    Entity eventEntity;
 
     int previousEventX, previousEventY;
     boolean canTouchEvent = true;

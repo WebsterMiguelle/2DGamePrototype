@@ -22,6 +22,7 @@ public class Sound {
         soundURL[4] = getClass().getResource(("/sound/SoldierPoetKingKalimba.wav"));
         soundURL[5] = getClass().getResource(("/sound/SoldierPoetKingPercussive.wav"));
         soundURL[6] = getClass().getResource(("/sound/SoldierPoetKingTuba.wav"));
+        soundURL[7] = getClass().getResource(("/sound/talk.wav"));
     }
 
     public void setFile(int i){
