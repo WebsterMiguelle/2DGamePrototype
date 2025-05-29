@@ -23,32 +23,38 @@ public class RPSMinigame extends Minigame {
 
     Font daydreamFont;
     BufferedImage background, sword, spear, shield, stage,
-            player, playerSword, playerShield, playerSpear, npc, npcSword, npcShield, npcSpear;
-    Image sword1, spear1, shield1, currentPlayerSprite, currentNpcSprite;
+            player, playerSword, playerShield, playerSpear, npc, npcSword, npcShield, npcSpear, stick;
+    Image sword1, spear1, shield1, currentPlayerSprite, currentNpcSprite, stick1;
+    Image standardPlayerSprite, standardNpcSprite; // new standard sprites
     int weaponSize = tileSize * 2;
     int spriteSize = tileSize * 5;
     private boolean running = false;
     private boolean won = false;
     private boolean draw = false;
 
-    //RPS VARIABLES
-    private int playerChoice = -1; // 0: Rock, 1: Paper, 2: Scissors
+    // RPS VARIABLES
+    private int playerChoice = -1; // 0: Sword, 1: Shield, 2: Spear
     private int npcChoice = -1;
     private String finalResult = "";
     private int playerWins = 0;
     private int npcWins = 0;
     private int rounds = 0;
     private boolean gameOver = false;
+    private boolean done = false;
     private long gameOverTime = 0;
-    private final long showResultDuration = 10000;
+
+    private boolean showingResult = false;
+    private long resultStartTime = 0;
+    private final long roundDisplayDuration = 2000; // 2 seconds for round result
+    private final long finalDisplayDuration = 1000 * 30; // 3 seconds for final game resul
 
     TileManager tileManager;
 
     public RPSMinigame(GamePanel gp) {
         super(gp);
-        gp.stopMusic();
-        gp.playMusic(5);
         running = true;
+        done = false;
+        gameOver = false;
         loadImages();
         resetGame();
 
@@ -79,9 +85,16 @@ public class RPSMinigame extends Minigame {
             npcShield = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_front.png")));
             npcSpear = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_back.png")));
 
+            stick = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/red_potion.png")));
+
             sword1 = sword.getScaledInstance(weaponSize, weaponSize, Image.SCALE_FAST);
             spear1 = spear.getScaledInstance(weaponSize, weaponSize, Image.SCALE_FAST);
             shield1 = shield.getScaledInstance(weaponSize, weaponSize, Image.SCALE_FAST);
+            standardPlayerSprite = player.getScaledInstance(spriteSize, spriteSize, Image.SCALE_SMOOTH);
+            standardNpcSprite = npc.getScaledInstance(spriteSize, spriteSize, Image.SCALE_SMOOTH);
+
+            currentPlayerSprite = standardPlayerSprite;
+            currentNpcSprite = standardNpcSprite;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,15 +104,33 @@ public class RPSMinigame extends Minigame {
     @Override
     public void update() {
         if (!running) return;
-    }
 
+        if (showingResult) {
+            long elapsed = System.currentTimeMillis() - resultStartTime;
+            long duration = gameOver ? finalDisplayDuration : roundDisplayDuration;
+            if (elapsed >= duration) {
+                if (gameOver) {
+                } else {
+                    playerChoice = -1;
+                    npcChoice = -1;
+                    won = false;
+                    draw = false;
+                    currentPlayerSprite = standardPlayerSprite;
+                    currentNpcSprite = standardNpcSprite;
+                    showingResult = false;
+                }
+            }
+        }
+       
+    }
 
     public void draw(Graphics2D g2) {
         g2.drawImage(background, 0, 0, screenWidth, screenHeight, null);
 
-
         int spriteY = screenHeight / 3 + 10;
         int spriteXOffset = tileSize * 6;
+
+       update();
 
         if (currentPlayerSprite != null) {
             g2.drawImage(currentPlayerSprite, (screenWidth / 2 - spriteXOffset - tileSize) - 70, spriteY, null);
@@ -109,24 +140,36 @@ public class RPSMinigame extends Minigame {
         }
 
         g2.drawImage(stage, 0, 0, screenWidth, screenHeight, null);
-        if (!running) {
-            gameOver = true;
-            result(g2);
 
+        if (gameOver) {
+            result(g2);
         } else {
             drawOptions(g2);
-
             if (playerChoice != -1 && npcChoice != -1) {
                 result(g2);
             }
+
+            int playerX = (screenWidth / 2 - (tileSize * 6) - tileSize) - 70;
+            int npcX = (screenWidth / 2 + (tileSize * 6) - tileSize) - 70;
+            int pointY = 30; 
+            
+            for (int i = 0; i < playerWins; i++) {
+                g2.drawImage(stick, playerX + (i * (tileSize) + 20), pointY, tileSize, tileSize, null);
+            }
+            for (int i = 0; i < npcWins; i++) {
+                g2.drawImage(stick, npcX + (i * (tileSize) + 20), pointY, tileSize, tileSize, null);
+            }
         }
     }
-
 
     private void drawOptions(Graphics2D g2) {
         int hiddenBoxY = screenHeight - screenHeight / 4;
         int hiddenBoxHeight = screenHeight - hiddenBoxY;
         int spacing = screenWidth / 4;
+
+        int playerLabelX = (screenWidth / 2 - (tileSize * 6) - tileSize) - 70;
+        int npcLabelX = (screenWidth / 2 + (tileSize * 6) - tileSize) - 70;
+        int pointY = 30;
 
         Image[] assets = {sword1, shield1, spear1};
         String[] labels = {"Sword (1)", "Shield (2)", "Spear (3)"};
@@ -167,9 +210,25 @@ public class RPSMinigame extends Minigame {
 
             g2.setColor(Color.yellow);
             g2.drawString(labels[i], centerX - textWidth / 2, y + weaponSize + 10);
+
+            //Point Standing
+            c = new Color(100, 0, 0, 120);
+            g2.setColor(c);
+            g2.fillRect(playerLabelX, pointY - 5, screenWidth / 4, tileSize + 10);
+
+            g2.setColor(c);
+            g2.fillRect(npcLabelX, pointY - 5, screenWidth /4 , tileSize + 10);
+
+            c = new Color(255, 255, 0, 255);
+            g2.setColor(c);
+            g2.setStroke(new BasicStroke(5));
+            g2.drawRect(playerLabelX - 3, pointY - 5 - 3, screenWidth / 4 + 5, tileSize + 15);
+
+            g2.setColor(c);
+            g2.setStroke(new BasicStroke(5));
+            g2.drawRect(npcLabelX - 3, pointY - 5 - 3, screenWidth /4 + 5 , tileSize + 15);
         }
     }
-
 
     public void result(Graphics2D g2) {
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50f));
@@ -177,19 +236,19 @@ public class RPSMinigame extends Minigame {
         g2.setColor(Color.YELLOW);
         int x, y;
         int textHeight = fm.getHeight();
+
         if (gameOver || !running) {
-            gp.stopMusic();
             if (playerWins == 3) {
+                done = true;
                 finalResult = "You won the game!";
             } else if (npcWins == 3) {
                 finalResult = "You lost the game!";
+                done = true;
             }
             // Show result text
             x = screenWidth / 2 - fm.stringWidth(finalResult) / 2;
             y = (screenHeight / 2) - (textHeight / 2);
             g2.drawString(finalResult, x, y);
-
-
         } else {
             if (draw) {
                 finalResult = "Draw!";
@@ -205,14 +264,14 @@ public class RPSMinigame extends Minigame {
         g2.drawString(finalResult, x, y);
     }
 
-
     private void makeChoice(int choice) {
-
         Random rand = new Random();
         playerChoice = choice;
         npcChoice = rand.nextInt(3);
 
-        // Reset previous result flags
+        showingResult = true;
+        resultStartTime = System.currentTimeMillis();
+
         won = false;
         draw = false;
 
@@ -228,7 +287,6 @@ public class RPSMinigame extends Minigame {
             case 2 -> currentNpcSprite = npcSpear.getScaledInstance(spriteSize, spriteSize, Image.SCALE_SMOOTH);
         }
 
-
         if (playerChoice == npcChoice) {
             draw = true;
         } else if (
@@ -243,18 +301,16 @@ public class RPSMinigame extends Minigame {
         }
         rounds++;
 
-
         if (playerWins == 3 || npcWins == 3) {
             gameOver = true;
             running = false;
-            gameOverTime = System.currentTimeMillis();
+            showingResult = true;
+            resultStartTime = System.currentTimeMillis();
+            gameOverTime = resultStartTime;
         }
 
         System.out.println("Player Choice: " + playerChoice + "\n NPC Choice: " + npcChoice);
         System.out.println("Rounds: " + rounds + "\nWins: " + playerWins + "\nLoses: " + npcWins);
-//        System.out.println("Player Choice: " + playerChoice +"\n NPC Choice: " + npcChoice);
-
-        // No need for "else won = false;" — because default is already false
     }
 
     public void resetGame() {
@@ -266,22 +322,23 @@ public class RPSMinigame extends Minigame {
         gameOver = false;
         won = false;
         draw = false;
-        currentPlayerSprite = null;
-        currentNpcSprite = null;
+        resultStartTime = 0;
+        showingResult = false;
+        done = false;
 
+        currentPlayerSprite = standardPlayerSprite;
+        currentNpcSprite = standardNpcSprite;
     }
 
     @Override
     public boolean isWon() {
-        return playerWins == 3 || npcWins == 3;
-
+        return done;
     }
 
     public void handleKeyPress(int code) {
         if (!running) {
             if (gameOver) {
-                // Check if enough time has passed to show the result
-                if (System.currentTimeMillis() - gameOverTime >= showResultDuration) {
+                if (System.currentTimeMillis() - gameOverTime >= resultStartTime) {
                     if (code == KeyEvent.VK_ENTER) {
                         resetGame();
                         running = true;
@@ -291,18 +348,24 @@ public class RPSMinigame extends Minigame {
             }
 
             if (code == KeyEvent.VK_ESCAPE) {
-                gp.gameState = gp.titleState; // Exit minigame
-                gp.playMusic(0); // Resume background music
+                gp.gameState = gp.titleState;
+                gp.playMusic(0);
                 return;
             }
         }
 
         if (code == KeyEvent.VK_1 || code == KeyEvent.VK_NUMPAD1) {
-            makeChoice(0);
+            if (!showingResult && !gameOver) {
+                makeChoice(0);
+            }
         } else if (code == KeyEvent.VK_2 || code == KeyEvent.VK_NUMPAD2) {
-            makeChoice(1);
+            if (!showingResult && !gameOver) {
+                makeChoice(1);
+            }
         } else if (code == KeyEvent.VK_3 || code == KeyEvent.VK_NUMPAD3) {
-            makeChoice(2);
+            if (!showingResult && !gameOver) {
+                makeChoice(2);
+            }
         }
     }
 }
