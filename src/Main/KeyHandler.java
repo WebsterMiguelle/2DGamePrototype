@@ -40,6 +40,9 @@ public class KeyHandler implements KeyListener {
          if (gp.gameState == gp.minigameState && gp.currentMinigame instanceof HangmanMinigame hangmanGame) {
             hangmanGame.handleKeyPress(code);
         }
+        if (gp.gameState == gp.minigameState && gp.currentMinigame instanceof RPSMinigame RPSGame) {
+            RPSGame.handleKeyPress(code);
+        }
     }
 
     public void titleState(int code){
@@ -80,6 +83,11 @@ public class KeyHandler implements KeyListener {
             gp.gameState = gp.minigameState;
             gp.inMinigame = true;
             gp.currentMinigame = new HangmanMinigame(gp);// Example minigame, you can replace it with any other minigame
+        }
+        if(code == KeyEvent.VK_R) {
+            gp.gameState = gp.minigameState;
+            inMinigame = true;
+            gp.currentMinigame = new RPSMinigame(gp);// Example minigame, you can replace it with any other minigame
         }
     }
     public void playState(int code){
