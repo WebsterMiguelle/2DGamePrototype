@@ -68,7 +68,7 @@ public class NPC1 extends Entity {
         if(actionLockCounter == 120) {
             Random random = new Random();
             int i = random.nextInt(100) + 1; // Random number between 1 and 100
-    
+
             if (i <= 25) {
                 direction = "up";
             }
