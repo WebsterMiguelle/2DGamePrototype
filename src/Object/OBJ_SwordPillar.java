@@ -14,6 +14,7 @@ public class OBJ_SwordPillar extends Entity {
 
         name = "SwordPillar";
         down1 = setup("/objects/Pillar");
+        collision = true;
 
         solidArea.x = 0;
         solidArea.y = 0;

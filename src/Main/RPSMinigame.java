@@ -46,6 +46,8 @@ public class RPSMinigame extends Minigame {
 
     public RPSMinigame(GamePanel gp) {
         super(gp);
+        gp.stopMusic();
+        gp.playMusic(5);
         running = true;
         loadImages();
         resetGame();
@@ -176,6 +178,7 @@ public class RPSMinigame extends Minigame {
         int x, y;
         int textHeight = fm.getHeight();
         if (gameOver || !running) {
+            gp.stopMusic();
             if (playerWins == 3) {
                 finalResult = "You won the game!";
             } else if (npcWins == 3) {

@@ -86,7 +86,7 @@ public class KeyHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_R) {
             gp.gameState = gp.minigameState;
-            inMinigame = true;
+            gp.inMinigame = true;
             gp.currentMinigame = new RPSMinigame(gp);// Example minigame, you can replace it with any other minigame
         }
     }

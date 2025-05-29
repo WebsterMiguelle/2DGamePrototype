@@ -20,6 +20,8 @@ public class Sound {
         soundURL[2] = getClass().getResource(("/sound/mixkit-select-click-1109.wav"));
         soundURL[3] = getClass().getResource(("/sound/mixkit-arcade-retro-game-over-213.wav"));
         soundURL[4] = getClass().getResource(("/sound/SoldierPoetKingKalimba.wav"));
+        soundURL[5] = getClass().getResource(("/sound/SoldierPoetKingPercussive.wav"));
+        soundURL[6] = getClass().getResource(("/sound/SoldierPoetKingTuba.wav"));
     }
 
     public void setFile(int i){

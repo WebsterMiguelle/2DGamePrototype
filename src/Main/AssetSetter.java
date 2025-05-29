@@ -40,6 +40,12 @@ public class AssetSetter {
                 gp.obj[mapNum][i].worldX = 21 * gp.tileSize;
                 gp.obj[mapNum][i].worldY = 36 * gp.tileSize;
 
+                i++;
+                gp.obj[mapNum][i] = new OBJ_SwordPillar(gp);
+                gp.obj[mapNum][i].worldX = 34 * gp.tileSize;
+                gp.obj[mapNum][i].worldY = 36 * gp.tileSize;
+
+
         }
 
         public void setNPC(){

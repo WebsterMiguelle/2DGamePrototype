@@ -1,9 +1,6 @@
 package Entities;
 
-import Main.GamePanel;
-import Main.HangmanMinigame;
-import Main.KeyHandler;
-import Main.SnakeMinigame;
+import Main.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -175,6 +172,12 @@ public class Player extends Entity{
                     gp.obj[gp.currentMap][i] = null;
                 }}
 
+            case type_sword -> { if (keyH.enterPressed) {
+                gp.obj[gp.currentMap][i].interact();
+                    hasSword = true;
+                    gp.obj[gp.currentMap][i] = null;
+                }}
+
             case type_CrownPillar -> {
                 if (!hasCrown) {
                     if (keyH.enterPressed) {
@@ -187,6 +190,7 @@ public class Player extends Entity{
                         gp.inMinigame = true;
                         gp.currentMinigame = new SnakeMinigame(gp);
                         hasCrown = false;
+
                     }
                 }
             }
@@ -206,6 +210,23 @@ public class Player extends Entity{
                     }
                 }
             }
+
+            case type_SwordPillar -> {
+                if (!hasSword) {
+                    if (keyH.enterPressed) {
+                        gp.obj[gp.currentMap][i].interact();
+                    }
+                }
+                if (hasSword) {
+                    if (keyH.enterPressed) {
+                        gp.gameState = gp.minigameState;
+                        gp.inMinigame = true;
+                        gp.currentMinigame = new RPSMinigame(gp);
+                        hasSword = false;
+                    }
+                }
+            }
+
         }
     }
 

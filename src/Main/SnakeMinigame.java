@@ -47,6 +47,8 @@ public class SnakeMinigame extends Minigame {
 
     public SnakeMinigame(GamePanel gp) {
         super(gp);
+        gp.stopMusic();
+        gp.playMusic(6);
         loadImages();
         spawnFood();
 
@@ -74,8 +76,8 @@ public class SnakeMinigame extends Minigame {
 
         if (snakeLength >= 10) {
             running = false;
+            gp.stopMusic();
             won = true;
-            gp.playMusic(0);
         }
     }
 
@@ -247,6 +249,7 @@ public class SnakeMinigame extends Minigame {
         for (int i = 1; i < snakeLength; i++) {
             if (snakeX[0] == snakeX[i] && snakeY[0] == snakeY[i]) {
                 running = false;
+                gp.stopMusic();
                 return;
             }
         }
@@ -254,12 +257,14 @@ public class SnakeMinigame extends Minigame {
         // Wall collision
         if (snakeX[0] < 0 || snakeX[0] >= screenWidth || snakeY[0] < 0 || snakeY[0] >= screenHeight) {
             running = false;
+            gp.stopMusic();
         }
     }
 
 
     public void handleKeyPress(int code) {
         if (!running) {
+            gp.stopMusic();
             if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_R) {
                 resetGame();
             }
@@ -294,6 +299,7 @@ public class SnakeMinigame extends Minigame {
     }
 
     public void resetGame() {
+        gp.playMusic(6);
         snakeLength = 1;
         for (int i = 0; i < snakeLength; i++) {
             snakeX[i] = 0;
