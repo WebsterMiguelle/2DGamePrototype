@@ -180,7 +180,7 @@ public class UI {
             //currentDialogue = npc.dialogues[npc.dialogueSet][npc.dialogueIndex];
             char[] characters = npc.dialogues[npc.dialogueSet][npc.dialogueIndex].toCharArray();
             if(charIndex < characters.length){
-                gp.playSE(7);
+                //gp.playSE(7);
                 String s = String.valueOf(characters[charIndex]);
                 combinedText = combinedText + s;
                 currentDialogue = combinedText;

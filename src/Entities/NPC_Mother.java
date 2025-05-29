@@ -44,7 +44,7 @@ public class NPC_Mother extends Entity {
     }
 
     public void setDialogue(){
-
+//DIALOGUE NOT SET
         dialogues[0][0] = "Heed my warnings, traveler.";
         dialogues[0][1] = "Your adventure will not be easy \nfor you will face many foes.";
         dialogues[0][2] = "But you shall prevail.";

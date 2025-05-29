@@ -19,34 +19,31 @@ public class AssetSetter {
 
         mapNum = 1;
 
-            mapNum = 2;
-                gp.obj[mapNum][i] = new OBJ_Crown(gp);
-                gp.obj[mapNum][i].worldX = 35 * gp.tileSize;
-                gp.obj[mapNum][i].worldY = 43 * gp.tileSize;
+        mapNum = 2;
+            gp.obj[mapNum][i] = new OBJ_Crown(gp);
+            gp.obj[mapNum][i].worldX = 35 * gp.tileSize;
+            gp.obj[mapNum][i].worldY = 43 * gp.tileSize;
             i++;
-                gp.obj[mapNum][i] = new OBJ_Sword(gp);
-                gp.obj[mapNum][i].worldX = 46 * gp.tileSize;
-                gp.obj[mapNum][i].worldY = 33 * gp.tileSize;
+            gp.obj[mapNum][i] = new OBJ_Sword(gp);
+            gp.obj[mapNum][i].worldX = 46 * gp.tileSize;
+            gp.obj[mapNum][i].worldY = 33 * gp.tileSize;
             i++;
-                gp.obj[mapNum][i] = new OBJ_Book(gp);
-                gp.obj[mapNum][i].worldX = 9 * gp.tileSize;
-                gp.obj[mapNum][i].worldY = 44 * gp.tileSize;
+            gp.obj[mapNum][i] = new OBJ_Book(gp);
+            gp.obj[mapNum][i].worldX = 9 * gp.tileSize;
+            gp.obj[mapNum][i].worldY = 44 * gp.tileSize;
             i++;
-                gp.obj[mapNum][i] = new OBJ_CrownPillar(gp);
-                gp.obj[mapNum][i].worldX = 28 * gp.tileSize;
-                gp.obj[mapNum][i].worldY = 42 * gp.tileSize;
-
-                i++;
-                gp.obj[mapNum][i] = new OBJ_BookPillar(gp);
-                gp.obj[mapNum][i].worldX = 21 * gp.tileSize;
-                gp.obj[mapNum][i].worldY = 36 * gp.tileSize;
-
-                i++;
-                gp.obj[mapNum][i] = new OBJ_SwordPillar(gp);
-                gp.obj[mapNum][i].worldX = 34 * gp.tileSize;
-                gp.obj[mapNum][i].worldY = 36 * gp.tileSize;
-
-
+            gp.obj[mapNum][i] = new OBJ_CrownPillar(gp);
+            gp.obj[mapNum][i].worldX = 28 * gp.tileSize;
+            gp.obj[mapNum][i].worldY = 42 * gp.tileSize;
+            i++;
+            gp.obj[mapNum][i] = new OBJ_BookPillar(gp);
+            gp.obj[mapNum][i].worldX = 21 * gp.tileSize;
+            gp.obj[mapNum][i].worldY = 36 * gp.tileSize;
+            i++;
+            gp.obj[mapNum][i] = new OBJ_SwordPillar(gp);
+            gp.obj[mapNum][i].worldX = 34 * gp.tileSize;
+            gp.obj[mapNum][i].worldY = 36 * gp.tileSize;
+            i++;
         }
 
         public void setNPC(){

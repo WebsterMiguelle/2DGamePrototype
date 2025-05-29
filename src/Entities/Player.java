@@ -1,7 +1,7 @@
 package Entities;
 
 import Main.*;
-
+import Object.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -199,6 +199,9 @@ public class Player extends Entity{
                         gp.currentMinigame = new SnakeMinigame(gp);
                         hasCrown = false;
                         crownDone = true;
+                        gp.obj[2][i] = new OBJ_Crown(gp);
+                        gp.obj[2][i].worldX = 28 * gp.tileSize;
+                        gp.obj[2][i].worldY = 39 * gp.tileSize;
                     }
                 }
             }
@@ -216,6 +219,9 @@ public class Player extends Entity{
                         gp.currentMinigame = new HangmanMinigame(gp);
                         hasBook = false;
                         bookDone = true;
+                        gp.obj[2][i] = new OBJ_Book(gp);
+                        gp.obj[2][i].worldX = 21 * gp.tileSize;
+                        gp.obj[2][i].worldY = 33 * gp.tileSize;
                     }
                 }
             }
@@ -233,6 +239,9 @@ public class Player extends Entity{
                         gp.currentMinigame = new RPSMinigame(gp);
                         hasSword = false;
                         swordDone = true;
+                        gp.obj[2][i] = new OBJ_Sword(gp);
+                        gp.obj[2][i].worldX = 34 * gp.tileSize;
+                        gp.obj[2][i].worldY = 33 * gp.tileSize;
                     }
                 }
             }
