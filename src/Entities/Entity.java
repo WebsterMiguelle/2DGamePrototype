@@ -15,7 +15,7 @@ public class Entity {
     public int worldX, worldY;
     public int speed;
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2,
-            standNorth, standSouth, standEast, standWest;
+            standNorth, standSouth, standEast, standWest,frame1,frame2;
     public String direction = "down";
     public int spriteCounter = 0;
     public int spriteNum = 1;
@@ -76,12 +76,6 @@ public class Entity {
 
     public void update(){
         setAction();
-
-        collisionOn = false;
-        gp.cChecker.checkTile(this);
-        gp.cChecker.checkObject(this, false);
-        gp.cChecker.checkPlayer(this);
-
 
         if(!collisionOn){
             switch(direction){

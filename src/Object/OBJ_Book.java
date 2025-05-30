@@ -13,6 +13,7 @@ public class OBJ_Book extends Entity {
 
         name = "book";
         down1 = setup("/objects/book");
+        down2 = setup("/objects/book");
         collision = true;
 
         solidArea.x = 0;

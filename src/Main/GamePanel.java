@@ -152,6 +152,12 @@ public class GamePanel extends JPanel implements Runnable{
                     npc[currentMap][i].update();
                 }
             }
+            //OBJ
+            for(int i = 0 ; i < obj[1].length; i++) {
+                if (obj[currentMap][i] != null) {
+                    obj[currentMap][i].update();
+                }
+            }
         }
         if(gameState == pauseState) {
             //nothing
@@ -289,8 +295,7 @@ public class GamePanel extends JPanel implements Runnable{
         npc = new Entity[maxMap][10];
         obj = new Entity[maxMap][10];
 
-
-        aSetter.i = 0;
+        
         aSetter.setNPC();
         aSetter.setObject();
 

@@ -13,6 +13,7 @@ public class OBJ_Crown extends Entity {
 
         name = "Crown";
         down1 = setup("/objects/Crown");
+        down2 = setup("/objects/Crown");
         collision = true;
 
         solidArea.x = 0;

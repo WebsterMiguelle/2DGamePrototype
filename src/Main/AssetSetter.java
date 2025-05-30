@@ -8,14 +8,14 @@ public class AssetSetter {
 
     GamePanel gp;
 
-    public int i = 0;
+
     public AssetSetter(GamePanel gp){
         this.gp = gp;
 
     }
         public void setObject(){
         int mapNum = 0;
-
+int i = 0;
 
         mapNum = 1;
 
@@ -53,17 +53,28 @@ public class AssetSetter {
 
         public void setNPC(){
             int mapNum = 0;
-            gp.npc[mapNum][0] = new NPC_Mage(gp);
-            gp.npc[mapNum][0].worldX = 20 * gp.tileSize;
-            gp.npc[mapNum][0].worldY = 29 * gp.tileSize;
-
+int i = 0;
             mapNum = 1;
+            gp.npc[mapNum][i] = new NPC_Mother(gp);
+            gp.npc[mapNum][i].worldX = 19 * gp.tileSize;
+            gp.npc[mapNum][i].worldY = 29 * gp.tileSize;
+            i++;
 
             mapNum = 2;
 
-            gp.npc[mapNum][0] = new NPC1(gp);
-            gp.npc[mapNum][0].worldX = 35 * gp.tileSize;
-            gp.npc[mapNum][0].worldY = 13 * gp.tileSize;
+            gp.npc[mapNum][i] = new NPC1(gp);
+            gp.npc[mapNum][i].worldX = 35 * gp.tileSize;
+            gp.npc[mapNum][i].worldY = 13 * gp.tileSize;
+            i++;
+
+            gp.npc[mapNum][i] = new NPC2(gp);
+            gp.npc[mapNum][i].worldX = 27 * gp.tileSize;
+            gp.npc[mapNum][i].worldY = 6 * gp.tileSize;
+            i++;
+
+            gp.npc[mapNum][i] = new NPC3(gp);
+            gp.npc[mapNum][i].worldX = 12 * gp.tileSize;
+            gp.npc[mapNum][i].worldY = 5 * gp.tileSize;
             i++;
         }
 }

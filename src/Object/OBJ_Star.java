@@ -10,7 +10,7 @@ public class OBJ_Star extends Entity {
         this.gp = gp;
 
         name = "Star";
-        down1 = setup("/objects/Blue_Key");
+        getImage();
         type = type_star;
         collision = true;
 
@@ -47,5 +47,13 @@ public class OBJ_Star extends Entity {
         else{
             startDialogue(this, 0);
         }
+    }
+
+    public void getImage(){
+        frame1 = setup("/objects/Sparkle1");
+        frame2 = setup("/objects/Sparkle2");
+
+        down1 = frame1; // used by draw()
+        down2 = frame2; // used by draw()
     }
 }

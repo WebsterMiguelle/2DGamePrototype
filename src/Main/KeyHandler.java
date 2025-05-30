@@ -76,21 +76,6 @@ public class KeyHandler implements KeyListener {
                 System.exit(0);
             }
         }
-        if(code == KeyEvent.VK_M){
-            gp.gameState = gp.minigameState;
-            gp.inMinigame = true;
-            gp.currentMinigame = new SnakeMinigame(gp);// Example minigame, you can replace it with any other minigame
-        }
-        if(code == KeyEvent.VK_H){
-            gp.gameState = gp.minigameState;
-            gp.inMinigame = true;
-            gp.currentMinigame = new HangmanMinigame(gp);// Example minigame, you can replace it with any other minigame
-        }
-        if(code == KeyEvent.VK_R) {
-            gp.gameState = gp.minigameState;
-            gp.inMinigame = true;
-            gp.currentMinigame = new RPSMinigame(gp);// Example minigame, you can replace it with any other minigame
-        }
     }
     public void playState(int code){
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {

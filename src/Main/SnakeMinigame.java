@@ -180,23 +180,23 @@ public class SnakeMinigame extends Minigame {
             headDown1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/Player_Down_1.png")));
             headDown2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/Player_Down_2.png")));
             //PEOPLE
-            body = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/Mage_FaceFront.png")));
+            body = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/NPC1_StandFront.png")));
 
-            bodyRight = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/Mage_FaceRight.png")));
-            bodyRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/Mage_WalkRight1.png")));
-            bodyRight2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/Mage_WalkRight2.png")));
+            bodyRight = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/NPC1_StandRight.png")));
+            bodyRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/NPC1_Right_1.png")));
+            bodyRight2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/NPC1_Right_2.png")));
 
-            bodyLeft = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/Mage_FaceLeft.png")));
-            bodyLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/Mage_WalkLeft1.png")));
-            bodyLeft2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/Mage_WalkLeft2.png")));
+            bodyLeft = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/NPC1_StandLeft.png")));
+            bodyLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/NPC1_Left_1.png")));
+            bodyLeft2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/NPC1_Left_2.png")));
 
-            bodyUp = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/Mage_FaceBack.png")));
-            bodyUp1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/Mage_WalkUp1.png")));
-            bodyUp2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/Mage_WalkUp2.png")));
+            bodyUp = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/NPC1_StandBack.png")));
+            bodyUp1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/NPC1_Up_1.png")));
+            bodyUp2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/NPC1_Up_2.png")));
 
-            bodyDown = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/Mage_FaceFront.png")));
-            bodyDown1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/Mage_WalkDown1.png")));
-            bodyDown2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/Mage_WalkDown2.png")));
+            bodyDown = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/NPC1_StandFront.png")));
+            bodyDown1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/NPC1_Down_1.png")));
+            bodyDown2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/NPC1_Down_2.png")));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -298,46 +298,40 @@ public class SnakeMinigame extends Minigame {
 //            return;
 //        }
 
-        if ((code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) && directionX != -1) {
+        if (code == KeyEvent.VK_RIGHT && !left) {
             directionX = 1; directionY = 0;
             right = true; left = up = down = false;
         }
-        if ((code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) && directionX != 1) {
+        if (code == KeyEvent.VK_LEFT && !right) {
             directionX = -1; directionY = 0;
             left = true; right = up = down = false;
         }
-        if ((code == KeyEvent.VK_W || code == KeyEvent.VK_UP) && directionY != 1) {
+        if (code == KeyEvent.VK_UP && !down) {
             directionX = 0; directionY = -1;
-            up = true; right = left = down = false;
+            up = true; down = left = right = false;
         }
-        if ((code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) && directionY != -1) {
+        if (code == KeyEvent.VK_DOWN && !up) {
             directionX = 0; directionY = 1;
-            down = true; right = left = up = false;
+            down = true; up = left = right = false;
         }
+
     }
 
     public void resetGame() {
-        gp.playMusic(6);
         snakeLength = 1;
-        for (int i = 0; i < snakeLength; i++) {
-            snakeX[i] = 0;
-            snakeY[i] = 0;
-        }
-
         directionX = 1;
         directionY = 0;
-        right = true;
-        left = up = down = false;
+        right = true; left = false; up = false; down = false;
+        won = false; running = true; finished = false;
+        gameTitle = true;
 
-        running = true;
-        won = false;
-
-        spawnFood();
-        lastUpdate = System.currentTimeMillis();
-
-        // Set initial head position
+        snakeX[0] = (maxScreenCol / 2) * tileSize;
+        snakeY[0] = (maxScreenRow / 2) * tileSize;
         headX = snakeX[0];
         headY = snakeY[0];
+
+        spawnFood();
+        gp.playMusic(6); // Restart minigame music
     }
 
 

@@ -105,15 +105,14 @@ public class Player extends Entity{
                 collisionOn = false;
                 gp.cChecker.checkTile(this);
 
-                //CHECKS OBJECT COLLISION
                 int objIndex = gp.cChecker.checkObject(this, true);
-                canInteract = objIndex != 999;
                 pickUpObject(objIndex);
 
-                //CHECKS NPC COLLISION
                 int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
-                canInteract = npcIndex != 999;
                 interactNPC(npcIndex);
+
+// Only show prompt if either object or NPC is interactable
+                canInteract = (objIndex != 999) || (npcIndex != 999);
 
                 //CHECKS EVENT COLLISION
                 gp.eHandler.checkEvent();
