@@ -33,12 +33,13 @@ public class SnakeMinigame extends Minigame {
     private int foodX, foodY;
     private final Random rand = new Random();
 
+    private boolean gameTitle = true;
     private boolean running = true;
     private boolean won = false;
     private boolean finished = false;
 
     private int spriteNum = 1;
-    private BufferedImage background, headRight, headLeft, headUp, headDown, body,
+    private BufferedImage title, background, headRight, headLeft, headUp, headDown, body,
     headRight1, headRight2, headLeft1, headLeft2, headUp1, headUp2, headDown1, headDown2,
 
     bodyRight, bodyLeft, bodyUp, bodyDown,
@@ -84,6 +85,10 @@ public class SnakeMinigame extends Minigame {
 
     @Override
     public void draw(Graphics2D g2) {
+        if(gameTitle) {
+            g2.drawImage(title, 0, 0, screenWidth, screenHeight, null);
+            return;
+        }
         g2.drawImage(background, 0, 0, screenWidth, screenHeight, null);
         if (!running) {
             gp.inMinigame = false;
@@ -156,6 +161,7 @@ public class SnakeMinigame extends Minigame {
 
     private void loadImages() {
         try {
+            title = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/photoBGs/snake.png")));
             background = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/photoBGs/battle-background-sunny-hillsx4.png")));
             //KING
             headRight = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_right.png")));
@@ -277,7 +283,12 @@ public class SnakeMinigame extends Minigame {
             }
             return;
         }
-
+        if (gameTitle) {
+            if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_DOWN || code == KeyEvent.VK_LEFT || code == KeyEvent.VK_UP) {
+                gameTitle= false;
+            }
+            return;
+        }
 //        if (code == KeyEvent.VK_ESCAPE) {
 //            gp.gameState = gp.titleState; // Exit minigame
 //            return;
