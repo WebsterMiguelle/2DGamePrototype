@@ -24,8 +24,9 @@ public class HangmanMinigame extends Minigame {
     public int maxLife = 5;
     public int life = 5;
 
-    BufferedImage background, heartFull, heartHalf, heartBlank,
+    BufferedImage title, background,
     life0,life1, life2, life3, life4, life5, life6, life7;
+    private boolean gameTitle = true;
     private boolean running = false;
     private boolean won = false;
     private boolean finished = false;
@@ -73,6 +74,7 @@ public class HangmanMinigame extends Minigame {
 
     private void loadImages() {
         try {
+            title = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/photoBGs/hangman.png")));
             background = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/photoBGs/night-sky-background-zoomed.png")));
             life0 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life0.png")));
             life1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/life1.png")));
@@ -88,6 +90,10 @@ public class HangmanMinigame extends Minigame {
 
     @Override
     public void draw(Graphics2D g2) {
+        if(gameTitle) {
+            g2.drawImage(title, 0, 0, screenWidth, screenHeight, null);
+            return;
+        }
         g2.drawImage(background, 0, 0, screenWidth, screenHeight, null);
         if (running) {
             if (wordChallenge == null) {
@@ -132,14 +138,6 @@ public class HangmanMinigame extends Minigame {
             int textX = (screenWidth - textWidth) / 2;
             int textY = boxY+ (labelHeight + textHeight) / 2-4;
 
-//            Color yellowTransparent = new Color(255, 255, 0, 180);
-//            g2.setColor(yellowTransparent);
-//            g2.fillRect(boxX, boxY, screenWidth, labelHeight);
-//
-//            g2.setColor(Color.BLACK);
-//            g2.setStroke(new BasicStroke(5));
-//            g2.drawRect(boxX, boxY, screenWidth - 3, labelHeight);
-
             g2.setColor(Color.WHITE);
             String[] lines = category.split("=");
             int lineHeight = g2.getFontMetrics().getHeight();
@@ -174,32 +172,9 @@ public class HangmanMinigame extends Minigame {
             g2.setColor(blackTransparent);
             g2.fillRect(hiddenBoxX, hiddenBoxY, screenWidth, hiddenBoxHeight);
 
-//            g2.setColor(Color.BLACK);
-//            g2.setStroke(new BasicStroke(5));
-//            g2.drawRect(hiddenBoxX, hiddenBoxY, screenWidth - 3, hiddenBoxHeight);
 
             g2.setColor(Color.white);
             g2.drawString(word,  hiddenTextX, hiddenTextY);
-
-            //PLAYER HEART LIVES STATUS
-//            int x = gp.tileSize / 2;
-//            int y = gp.tileSize / 2;
-//
-//            for (int i = 0; i < maxLife / 2; i++) {
-//                g2.drawImage(heartBlank, x + i * gp.tileSize, y, gp.tileSize, gp.tileSize, null);
-//            }
-//
-//            // Draw full hearts
-//            x = gp.tileSize / 2;
-//            int fullHearts = life / 2;
-//            for (int i = 0; i < fullHearts; i++) {
-//                g2.drawImage(heartFull, x + i * gp.tileSize, y, gp.tileSize, gp.tileSize, null);
-//            }
-//
-//            // If odd number, draw half heart
-//            if (life % 2 != 0) {
-//                g2.drawImage(heartHalf, x + fullHearts * gp.tileSize, y, gp.tileSize, gp.tileSize, null);
-//            }
 
         }
         if (!running) {
@@ -245,6 +220,14 @@ public class HangmanMinigame extends Minigame {
                 gp.gameState = gp.titleState;
                 return;
             }
+
+            if (gameTitle) {
+                if (code == KeyEvent.VK_ENTER) {
+                    gameTitle= false;
+                }
+                return;
+            }
+
             if (code >= KeyEvent.VK_A && code <= KeyEvent.VK_Z) {
                 guessedOnce = true;
                 char guessedChar = (char) code;
