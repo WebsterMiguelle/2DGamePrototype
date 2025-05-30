@@ -34,7 +34,7 @@ public class SnakeMinigame extends Minigame {
     private final Random rand = new Random();
 
     private boolean gameTitle = true;
-    private boolean running = true;
+    private boolean running = false;
     private boolean won = false;
     private boolean finished = false;
 
@@ -89,6 +89,7 @@ public class SnakeMinigame extends Minigame {
             g2.drawImage(title, 0, 0, screenWidth, screenHeight, null);
             return;
         }
+
         g2.drawImage(background, 0, 0, screenWidth, screenHeight, null);
         if (!running) {
             gp.inMinigame = false;
@@ -280,15 +281,22 @@ public class SnakeMinigame extends Minigame {
                 if(code == KeyEvent.VK_N) {
                     resetGame();
                 }
+                return;
+            }
+            if (gameTitle) {
+                // Start the game when any arrow key is pressed
+                if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_SPACE ||
+                        code == KeyEvent.VK_UP || code == KeyEvent.VK_DOWN ||
+                        code == KeyEvent.VK_LEFT || code == KeyEvent.VK_RIGHT) {
+                    gameTitle = false; // Dismiss the title screen
+                    running = true; // Start the game
+                    gp.playMusic(6);
+                    return;
+                }
             }
             return;
         }
-        if (gameTitle) {
-            if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_DOWN || code == KeyEvent.VK_LEFT || code == KeyEvent.VK_UP) {
-                gameTitle= false;
-            }
-            return;
-        }
+
 //        if (code == KeyEvent.VK_ESCAPE) {
 //            gp.gameState = gp.titleState; // Exit minigame
 //            return;
@@ -323,7 +331,6 @@ public class SnakeMinigame extends Minigame {
         directionY = 0;
         right = true; left = false; up = false; down = false;
         won = false; running = true; finished = false;
-        gameTitle = true;
 
         snakeX[0] = (maxScreenCol / 2) * tileSize;
         snakeY[0] = (maxScreenRow / 2) * tileSize;
