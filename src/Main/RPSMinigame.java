@@ -18,6 +18,10 @@ public class RPSMinigame extends Minigame {
     private final int screenWidth = tileSize * maxScreenCol;
     private final int screenHeight = tileSize * maxScreenRow;
 
+    private boolean showingAcceptFate = false;
+    private boolean minigameCompleted = false;
+    private boolean playerWonMinigame = false;
+
     public int maxLife = 7;
     public int life = maxLife;
 
@@ -39,8 +43,6 @@ public class RPSMinigame extends Minigame {
     private int playerWins = 0;
     private int npcWins = 0;
     private int rounds = 0;
-    private boolean gameOver = false;
-    private boolean done = false;
     private long gameOverTime = 0;
 
     private boolean showingResult = false;
@@ -53,8 +55,6 @@ public class RPSMinigame extends Minigame {
     public RPSMinigame(GamePanel gp) {
         super(gp);
         running = true;
-        done = false;
-        gameOver = false;
         loadImages();
         resetGame();
 
@@ -71,21 +71,21 @@ public class RPSMinigame extends Minigame {
         try {
             background = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/photoBGs/Battleground1.png")));
             sword = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/SwordT2.png")));
-            spear = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/SpearT2.png")));
+            spear = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/Bow.png")));
             shield = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/ShieldLargeT2.png")));
             stage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/stage4.png")));
 
-            player = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_back.png")));
-            playerSword = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_left.png")));
-            playerShield = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_front.png")));
-            playerSpear = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_back.png")));
+            player = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/PlayerStatic.png")));
+            playerSword = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/PlayerSword.png")));
+            playerShield = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/PlayerShield.png")));
+            playerSpear = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/PlayerBow.png")));
 
-            npc = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_back.png")));
-            npcSword = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_left.png")));
-            npcShield = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_front.png")));
-            npcSpear = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_back.png")));
+            npc = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/EnemyStatic.png")));
+            npcSword = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/EnemySword.png")));
+            npcShield = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/EnemyShield.png")));
+            npcSpear = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/EnemyBow.png")));
 
-            stick = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/red_potion.png")));
+            stick = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/coin.png")));
 
             sword1 = sword.getScaledInstance(weaponSize, weaponSize, Image.SCALE_FAST);
             spear1 = spear.getScaledInstance(weaponSize, weaponSize, Image.SCALE_FAST);
@@ -107,9 +107,9 @@ public class RPSMinigame extends Minigame {
 
         if (showingResult) {
             long elapsed = System.currentTimeMillis() - resultStartTime;
-            long duration = gameOver ? finalDisplayDuration : roundDisplayDuration;
+            long duration = minigameCompleted ? finalDisplayDuration : roundDisplayDuration;
             if (elapsed >= duration) {
-                if (gameOver) {
+                if (minigameCompleted) {
                 } else {
                     playerChoice = -1;
                     npcChoice = -1;
@@ -127,6 +127,11 @@ public class RPSMinigame extends Minigame {
     public void draw(Graphics2D g2) {
         g2.drawImage(background, 0, 0, screenWidth, screenHeight, null);
 
+        if(showingAcceptFate){
+            drawAcceptFateScreen(g2);
+            return;
+        }
+
         int spriteY = screenHeight / 3 + 10;
         int spriteXOffset = tileSize * 6;
 
@@ -141,7 +146,7 @@ public class RPSMinigame extends Minigame {
 
         g2.drawImage(stage, 0, 0, screenWidth, screenHeight, null);
 
-        if (gameOver) {
+        if (minigameCompleted) {
             result(g2);
         } else {
             drawOptions(g2);
@@ -162,6 +167,31 @@ public class RPSMinigame extends Minigame {
         }
     }
 
+    private void drawAcceptFateScreen(Graphics2D g2){
+        int textY = screenHeight / 2;
+        g2.setColor(Color.darkGray);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50f));
+        String msg = "Game Over";
+        g2.drawString(msg, (screenWidth - g2.getFontMetrics().stringWidth(msg)) / 2, textY);
+
+        textY -= 3;
+        g2.setColor(Color.white);
+        msg = "Game Over";
+        g2.drawString(msg, ((screenWidth - g2.getFontMetrics().stringWidth(msg)) / 2) - 3, textY);
+
+        textY += 100;
+        g2.setColor(Color.red);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 30f));
+        msg = "Do you accept this fate?";
+        g2.drawString(msg, ((screenWidth - g2.getFontMetrics().stringWidth(msg)) / 2), textY);
+
+        textY += 50;
+        g2.setColor(Color.white);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20f));
+        msg = "Yes  or  No";
+        g2.drawString(msg, ((screenWidth - g2.getFontMetrics().stringWidth(msg)) / 2), textY);
+    }
+
     private void drawOptions(Graphics2D g2) {
         int hiddenBoxY = screenHeight - screenHeight / 4;
         int hiddenBoxHeight = screenHeight - hiddenBoxY;
@@ -172,7 +202,7 @@ public class RPSMinigame extends Minigame {
         int pointY = 30;
 
         Image[] assets = {sword1, shield1, spear1};
-        String[] labels = {"Sword (1)", "Shield (2)", "Spear (3)"};
+        String[] labels = {"Sword (1)", "Shield (2)", "Bow (3)"};
 
         for (int i = 0; i < assets.length; i++) {
             int centerX = spacing * (i + 1);
@@ -237,13 +267,11 @@ public class RPSMinigame extends Minigame {
         int x, y;
         int textHeight = fm.getHeight();
 
-        if (gameOver || !running) {
+        if (!running) {
             if (playerWins == 3) {
-                done = true;
                 finalResult = "You won the game!";
             } else if (npcWins == 3) {
                 finalResult = "You lost the game!";
-                done = true;
             }
             // Show result text
             x = screenWidth / 2 - fm.stringWidth(finalResult) / 2;
@@ -302,11 +330,21 @@ public class RPSMinigame extends Minigame {
         rounds++;
 
         if (playerWins == 3 || npcWins == 3) {
-            gameOver = true;
             running = false;
             showingResult = true;
             resultStartTime = System.currentTimeMillis();
             gameOverTime = resultStartTime;
+        }
+
+        if(playerWins == 3){
+            minigameCompleted = true;
+            playerWonMinigame = true;
+            running = false;
+        } else if (npcWins == 3){
+            minigameCompleted = true;
+            playerWonMinigame = false;
+            showingAcceptFate = true;
+            running = false;
         }
 
         System.out.println("Player Choice: " + playerChoice + "\n NPC Choice: " + npcChoice);
@@ -319,12 +357,14 @@ public class RPSMinigame extends Minigame {
         playerChoice = -1;
         npcChoice = -1;
         rounds = 0;
-        gameOver = false;
         won = false;
         draw = false;
         resultStartTime = 0;
         showingResult = false;
-        done = false;
+
+        minigameCompleted = false;
+        playerWonMinigame = false;
+        showingAcceptFate = false;
 
         currentPlayerSprite = standardPlayerSprite;
         currentNpcSprite = standardNpcSprite;
@@ -332,12 +372,24 @@ public class RPSMinigame extends Minigame {
 
     @Override
     public boolean isWon() {
-        return done;
+        return playerWonMinigame;
     }
 
     public void handleKeyPress(int code) {
+        if(showingAcceptFate){
+            if(code == KeyEvent.VK_Y){
+                gp.gameState = gp.playState;
+                gp.playMusic(0);
+                gp.inMinigame = false;
+            } else if (code == KeyEvent.VK_N){
+                resetGame();
+                running = true;
+            }
+            return;
+        }
+
         if (!running) {
-            if (gameOver) {
+            if (minigameCompleted) {
                 if (System.currentTimeMillis() - gameOverTime >= resultStartTime) {
                     if (code == KeyEvent.VK_ENTER) {
                         resetGame();
@@ -355,15 +407,15 @@ public class RPSMinigame extends Minigame {
         }
 
         if (code == KeyEvent.VK_1 || code == KeyEvent.VK_NUMPAD1) {
-            if (!showingResult && !gameOver) {
+            if (!showingResult && !minigameCompleted) {
                 makeChoice(0);
             }
         } else if (code == KeyEvent.VK_2 || code == KeyEvent.VK_NUMPAD2) {
-            if (!showingResult && !gameOver) {
+            if (!showingResult && !minigameCompleted) {
                 makeChoice(1);
             }
         } else if (code == KeyEvent.VK_3 || code == KeyEvent.VK_NUMPAD3) {
-            if (!showingResult && !gameOver) {
+            if (!showingResult && !minigameCompleted) {
                 makeChoice(2);
             }
         }

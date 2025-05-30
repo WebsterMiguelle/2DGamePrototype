@@ -51,12 +51,12 @@ public class CutsceneManager {
             +" Not as a ruler, but as the voice of wisdom, guiding the kingdom into peace.";
 
     String trueKingEnding ="You faced every trial.\n\n" +
-            "With strength, with wisdom, and with heart.\n]n" +
+            "With strength, with wisdom, and with heart.\n\n" +
             "No part of you was missing.\n\n" +
             "The spirits saw it.\n\n" +
             "The land felt it.\n\n" +
             "You are the one.\n\n" +
-            "The true king.\n]n" +
+            "The true king.\n\n" +
             "And with you, the kingdom is reborn.";
     //Scene
 
@@ -201,7 +201,7 @@ public class CutsceneManager {
                }
                y--;
                drawString(alpha, 20, y, trueWarriorEnding, 70);
-               if(counterReached(600)||gp.keyH.enterPressed) {
+               if(y < -1000||gp.keyH.enterPressed) {
                    //play ending music
                    scenePhase++;
                }
@@ -272,7 +272,7 @@ public class CutsceneManager {
            }
            y--;
            drawString(alpha, 20, y, trueSageEnding, 70);
-           if(counterReached(600)||gp.keyH.enterPressed) {
+           if(y < -1000||gp.keyH.enterPressed) {
                //play ending music
                scenePhase++;
            }
@@ -343,7 +343,7 @@ public class CutsceneManager {
            }
            y--;
            drawString(alpha, 20, y, trueKingEnding, 70);
-           if(counterReached(600)||gp.keyH.enterPressed) {
+           if(y < -1000||gp.keyH.enterPressed) {
                //play ending music
                scenePhase++;
            }
