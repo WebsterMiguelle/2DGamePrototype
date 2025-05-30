@@ -68,7 +68,7 @@ public class SnakeMinigame extends Minigame {
         if(!running)return;
 
         long now = System.currentTimeMillis();
-        if (now - lastUpdate >= 120) { // move every 100ms
+        if (now - lastUpdate >= 120) { // move every 120ms
             move();
             checkCollision();
             checkEat();
