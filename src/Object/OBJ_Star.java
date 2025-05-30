@@ -31,10 +31,11 @@ public class OBJ_Star extends Entity {
     public void interact() {
         if(gp.player.hasDoneAllMinigames()){
             gp.gameState = gp.cutsceneState;
+            gp.cutsceneManager.scenePhase = 0;
             if(!(gp.trueKing || gp.trueSage || gp.trueWarrior)) {
                 gp.cutsceneManager.sceneNum = 1;
             }
-            else if(gp.trueWarrior){
+            if(gp.trueWarrior){
                 gp.cutsceneManager.sceneNum = 2;
                 if(gp.trueSage){
                     gp.cutsceneManager.sceneNum = 3;
@@ -42,7 +43,7 @@ public class OBJ_Star extends Entity {
                         gp.cutsceneManager.sceneNum = 4;
                     }
                 }
-            }
+            } else {gp.cutsceneManager.sceneNum = 1;}
         }
         else{
             startDialogue(this, 0);

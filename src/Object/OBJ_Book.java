@@ -12,8 +12,7 @@ public class OBJ_Book extends Entity {
         type = type_book;
 
         name = "book";
-        down1 = setup("/objects/book");
-        down2 = setup("/objects/book");
+        getImage();
         collision = true;
 
         solidArea.x = 0;
@@ -29,5 +28,13 @@ public class OBJ_Book extends Entity {
     }
     public void interact(){
         startDialogue(this, 0);
+        gp.playSE(10);
+    }
+    public void getImage(){
+        frame1 = setup("/objects/Book1");
+        frame2 = setup("/objects/Book2");
+
+        down1 = frame1; // used by draw()
+        down2 = frame2; // used by draw()
     }
 }

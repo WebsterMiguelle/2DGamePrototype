@@ -47,43 +47,27 @@ public class NPC2 extends Entity {
 
     public void setDialogue(){
 
-        dialogues[0][0] = "Heed my warnings, traveler.";
-        dialogues[0][1] = "Your adventure will not be easy \nfor you will face many foes.";
-        dialogues[0][2] = "But you shall prevail.";
-        dialogues[0][3] = "Goodluck Rex";
-
-        dialogues[1][4] = "I am the Mage of this realm.";
-        dialogues[1][5] = "I can help you on your journey.";
-        dialogues[1][6] = "If you need assistance, just ask.";
-        dialogues[1][7] = "Remember, knowledge is power.";
-
-        dialogues[2][8] = "I can teach you spells to aid you in battle.";
-        dialogues[2][9] = "But first, you must prove your worth.";
-        dialogues[2][10] = "Return to me when you are ready.";
-
+        dialogues[0][0] = "I tried doing the trial";
+        dialogues[0][1] = "I just realized, the items\ncan only be taken from below";
+        dialogues[0][2] = "Please Save Us!";
 
     }
 
-    public void setAction(){
+    public void setAction() {
         actionLockCounter++;
 
-        if(actionLockCounter == 120) {
+        if (actionLockCounter == 120) {
             Random random = new Random();
-            int i = random.nextInt(100) + 1; // Random number between 1 and 100
+            int i = random.nextInt(2) + 1;  // Random number between 1 and 100
 
-            if (i <= 25) {
+            if (i == 1) {
                 direction = "up";
             }
-            if (i > 25 && i <= 50) {
+            if (i == 2) {
                 direction = "down";
+
+                actionLockCounter = 0;
             }
-            if (i > 50 && i <= 75) {
-                direction = "left";
-            }
-            if (i > 75) {
-                direction = "right";
-            }
-            actionLockCounter = 0;
         }
     }
 

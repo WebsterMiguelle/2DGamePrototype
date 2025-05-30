@@ -49,14 +49,14 @@ public class KeyHandler implements KeyListener {
 
     public void titleState(int code){
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
-            gp.ui.commandNum--;
+            gp.ui.commandNum-=2;
             gp.playSE(1);
             if (gp.ui.commandNum < 0) {
                 gp.ui.commandNum = 2;
             }
         }
         if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
-            gp.ui.commandNum++;
+            gp.ui.commandNum+=2;
             gp.playSE(1);
             if (gp.ui.commandNum > 2) {
                 gp.ui.commandNum = 0;

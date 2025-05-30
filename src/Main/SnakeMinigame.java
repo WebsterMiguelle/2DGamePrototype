@@ -77,8 +77,6 @@ public class SnakeMinigame extends Minigame {
 
         if (snakeLength >= 10) {
             running = false;
-            gp.stopMusic();
-            gp.playMusic(0);
             won = true;
         }
     }
@@ -258,6 +256,7 @@ public class SnakeMinigame extends Minigame {
             if (snakeX[0] == snakeX[i] && snakeY[0] == snakeY[i]) {
                 running = false;
                 gp.stopMusic();
+                gp.playSE(8);
                 return;
             }
         }
@@ -265,6 +264,7 @@ public class SnakeMinigame extends Minigame {
         // Wall collision
         if (snakeX[0] < 0 || snakeX[0] >= screenWidth || snakeY[0] < 0 || snakeY[0] >= screenHeight) {
             running = false;
+            gp.playSE(8);
             gp.stopMusic();
         }
     }

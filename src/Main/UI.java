@@ -116,7 +116,7 @@ public class UI {
             //MENU
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 30F));
 
-            text = "NEW GAME";
+            text = "PLAY";
             x = getXforCenteredText(text);
             y += gp.tileSize * 4;
             g2.drawString(text, x, y);
@@ -124,13 +124,13 @@ public class UI {
                 g2.drawString(">", x - gp.tileSize / 2, y);
             }
 
-            text = "LOAD GAME";
-            x = getXforCenteredText(text);
+//            text = "LOAD GAME";
+//            x = getXforCenteredText(text);
             y += gp.tileSize + 5;
-            g2.drawString(text, x, y);
-            if (commandNum == 1) {
-                g2.drawString(">", x - gp.tileSize / 2, y);
-            }
+//            g2.drawString(text, x, y);
+//            if (commandNum == 1) {
+//                g2.drawString(">", x - gp.tileSize / 2, y);
+//            }
 
             text = "QUIT";
             x = getXforCenteredText(text);

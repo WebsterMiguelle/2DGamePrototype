@@ -314,17 +314,18 @@ public class RPSMinigame extends Minigame {
             case 2 -> currentNpcSprite = npcSpear.getScaledInstance(spriteSize, spriteSize, Image.SCALE_SMOOTH);
         }
 
-        if (playerChoice == npcChoice) {
+        if (playerChoice == npcChoice) { gp.playSE(11);
             draw = true;
         } else if (
                 (playerChoice == 1 && npcChoice == 0) || // Shield beats Bow
                         (playerChoice == 2 && npcChoice == 1) || // Sword beats Shield
                         (playerChoice == 0 && npcChoice == 2)    // Bow beats Sword
-        ) {
+        ) { gp.playSE(13);
             playerWins++;
             won = true;
         } else {
             npcWins++;
+            gp.playSE(12);
         }
         rounds++;
 
@@ -346,6 +347,7 @@ public class RPSMinigame extends Minigame {
             showingAcceptFate = true;
             running = false;
             gp.stopMusic();
+            gp.playSE(8);
         }
 
         System.out.println("Player Choice: " + playerChoice + "\n NPC Choice: " + npcChoice);
@@ -353,6 +355,8 @@ public class RPSMinigame extends Minigame {
     }
 
     public void resetGame() {
+        gp.stopMusic();
+        gp.playMusic(5);
         playerWins = 0;
         npcWins = 0;
         playerChoice = -1;
@@ -369,7 +373,6 @@ public class RPSMinigame extends Minigame {
 
         currentPlayerSprite = standardPlayerSprite;
         currentNpcSprite = standardNpcSprite;
-        gp.playMusic(5);
     }
 
     @Override
@@ -381,6 +384,7 @@ public class RPSMinigame extends Minigame {
         if(showingAcceptFate){
             if(code == KeyEvent.VK_Y){
                 gp.gameState = gp.playState;
+                gp.stopMusic();
                 gp.playMusic(0);
                 gp.inMinigame = false;
             } else if (code == KeyEvent.VK_N){
@@ -408,12 +412,6 @@ public class RPSMinigame extends Minigame {
                 return;
             }
         }
-
-            if (code == KeyEvent.VK_ESCAPE) {
-                gp.gameState = gp.titleState;
-                gp.playMusic(0);
-                return;
-            }
 
 
         if (code == KeyEvent.VK_1 || code == KeyEvent.VK_NUMPAD1) {

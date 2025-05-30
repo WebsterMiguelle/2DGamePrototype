@@ -47,7 +47,7 @@ public class NPC_Mother extends Entity {
 
     public void setDialogue(){
 //DIALOGUE NOT SET
-        dialogues[0][0] = "You were tossing all night, sweetheart\nAnother dream?";
+        dialogues[0][0] = "You were tossing all night\nsweetheart, Another dream?";
         dialogues[0][1] = "The star again, wasn't it?";
         dialogues[0][2] = "Your father used to say the\ntrials chose those with something\nmore...not just strength, but heart.";
         dialogues[0][3] = "If you're going...\ngo with your whole self.";
@@ -57,7 +57,7 @@ public class NPC_Mother extends Entity {
         dialogues[0][7] = "Go as you. All of you";
         dialogues[0][8] = "And maybe... just maybe...\nthe kingdom will rise again.";
         dialogues[0][9] = "You do remember where\nthe trials are right?";
-        dialogues[0][10] = "Its just north of the village";
+        dialogues[0][10] = "Its just south of the village";
         dialogues[0][11] = "Come back to me, alright?";
         dialogues[0][12] = "Trials or not... you're still my child.";
     }

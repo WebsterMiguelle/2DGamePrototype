@@ -31,6 +31,7 @@ public class HangmanMinigame extends Minigame {
     private boolean won = false;
     private boolean finished = false;
     private boolean guessedOnce = false;
+    private boolean lostSound = false;
 
     //HANGMAN VARIABLES
     private final WordDB wordDB;
@@ -179,7 +180,6 @@ public class HangmanMinigame extends Minigame {
         }
         if (!running) {
             gp.inMinigame = false;
-            gp.stopMusic();
             if(!won) {
                 int textY = screenHeight / 2;
                 g2.setColor(Color.darkGray);
@@ -251,15 +251,17 @@ public class HangmanMinigame extends Minigame {
                     correctAnswers++;
                     int REQUIRED_CORRECT_ANSWERS = 3;
                     if (correctAnswers >= REQUIRED_CORRECT_ANSWERS) {
+                        gp.stopMusic();
+                        gp.playMusic(0);
                         won = true;      // Player wins the whole game
                         running = false;
-                        gp.playMusic(0);
                     } else {
                         // Reset for next challenge
                         loadNewChallenge();   // method to load a new riddle + reset displayWord and life
                     }
                 }
                 if(life <= 0) {
+                    gp.playSE(8);
                     won = false;
                     running = false;
                     correctAnswers = 0;
@@ -268,6 +270,7 @@ public class HangmanMinigame extends Minigame {
            if(finished){
                if(code == KeyEvent.VK_Y) {
                    gp.gameState = gp.playState;
+                   gp.stopMusic();
                    gp.playMusic(0);
                }
                if(code == KeyEvent.VK_N) {
@@ -277,6 +280,7 @@ public class HangmanMinigame extends Minigame {
         }
         public void reset() {
             running = true;
+            gp.stopMusic();
             gp.playMusic(4);
             won = false;
             finished = false;

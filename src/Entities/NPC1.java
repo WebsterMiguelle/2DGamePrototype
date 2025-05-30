@@ -47,20 +47,9 @@ public class NPC1 extends Entity {
 
     public void setDialogue(){
 
-        dialogues[0][0] = "Heed my warnings, traveler.";
-        dialogues[0][1] = "Your adventure will not be easy \nfor you will face many foes.";
-        dialogues[0][2] = "But you shall prevail.";
-        dialogues[0][3] = "Goodluck Rex";
-
-        dialogues[1][4] = "I am the Mage of this realm.";
-        dialogues[1][5] = "I can help you on your journey.";
-        dialogues[1][6] = "If you need assistance, just ask.";
-        dialogues[1][7] = "Remember, knowledge is power.";
-
-        dialogues[2][8] = "I can teach you spells to aid you in battle.";
-        dialogues[2][9] = "But first, you must prove your worth.";
-        dialogues[2][10] = "Return to me when you are ready.";
-
+        dialogues[0][0] = "Heya Rex!";
+        dialogues[0][1] = "I heard you'll be\nhaving your trial today!";
+        dialogues[0][2] = "Good Luck!";
 
     }
 

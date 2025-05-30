@@ -166,7 +166,6 @@ public class GamePanel extends JPanel implements Runnable{
         if (gameState == minigameState && currentMinigame != null) {
             currentMinigame.update();
             if (currentMinigame.isWon()) {
-
                 if(currentMinigame instanceof SnakeMinigame) {
                     trueKing = true;
                 } else if (currentMinigame instanceof HangmanMinigame) {
@@ -178,6 +177,8 @@ public class GamePanel extends JPanel implements Runnable{
                 // You can transition state or reward player
                 gameState = playState;
                 stopMusic();
+                playSE(7);
+                playMusic(0);
             }
         }
 

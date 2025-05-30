@@ -93,6 +93,7 @@ public class EventHandler {
     previousEventY = gp.player.worldY;
     canTouchEvent = false;
     //instert teleport sound here
+        gp.playSE(9);
 
     }
 

@@ -203,7 +203,7 @@ public class Player extends Entity{
                         crownDone = true;
                         gp.obj[2][i] = new OBJ_Crown(gp);
                         gp.obj[2][i].worldX = 28 * gp.tileSize;
-                        gp.obj[2][i].worldY = 39 * gp.tileSize;
+                        gp.obj[2][i].worldY = 40 * gp.tileSize;
                     }
                 }
             }
@@ -223,7 +223,7 @@ public class Player extends Entity{
                         bookDone = true;
                         gp.obj[2][i] = new OBJ_Book(gp);
                         gp.obj[2][i].worldX = 21 * gp.tileSize;
-                        gp.obj[2][i].worldY = 33 * gp.tileSize;
+                        gp.obj[2][i].worldY = 34 * gp.tileSize;
                     }
                 }
             }
@@ -243,7 +243,7 @@ public class Player extends Entity{
                         swordDone = true;
                         gp.obj[2][i] = new OBJ_Sword(gp);
                         gp.obj[2][i].worldX = 34 * gp.tileSize;
-                        gp.obj[2][i].worldY = 33 * gp.tileSize;
+                        gp.obj[2][i].worldY = 34 * gp.tileSize;
                     }
                 }
             }

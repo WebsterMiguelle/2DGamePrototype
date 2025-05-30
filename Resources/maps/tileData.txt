@@ -19,7 +19,7 @@ false
 09.png
 false
 10.png
-false
+true
 100.png
 false
 101.png
@@ -631,7 +631,7 @@ false
 42.png
 false
 43.png
-false
+true
 44.png
 false
 45.png
@@ -675,7 +675,7 @@ false
 64.png
 false
 65.png
-false
+true
 66.png
 false
 67.png
@@ -741,6 +741,6 @@ false
 97.png
 false
 98.png
-false
+true
 99.png
 false

@@ -25,7 +25,7 @@ public class CutsceneManager {
                     +"For balance.\n\n"
                     +"Three trials await:\n\n"
                     +"Warrior. Poet. King.\n\n"
-                    +"Pass them... and rise.\n\n"
+                    +"Pass them... and rise.\n"
                     +"or\n"
                     +"Fail... and vanish.\n\n\n\n\n\n\n"
                     +"Press Enter";
@@ -40,15 +40,20 @@ public class CutsceneManager {
 
     String trueWarriorEnding ="You proved yourself in battle.\n\n"
             +"Strong, fearless, and unyielding.\n\n"
-            +"Though you could not complete the other trials, your strength changed the land.\n\n"
-            +"You fought back the warlords and gave the next king a fighting chance.\n\n"
-            +"History remembers you as the blade that cleared the path.";
+            +"Though you could not complete\n\n" +
+            "the other trials, your strength changed the land.\n\n"
+            +"You fought back the warlords and\n\n" +
+            "gave the next king a fighting chance.\n\n"
+            +"History remembers you as the\n\n" +
+            "blade that cleared the path.";
 
-    String trueSageEnding = "You mastered the sword, and your words held power.\n\n"
+    String trueSageEnding = "You mastered the sword,\nand your words held power.\n\n"
             +"But the final trial was beyond your reach.\n\n"
-            +"Still, your journey wasn’t wasted.\n\n"
-            +"When the true king rose after you, you stood by their side.\n\n"
-            +" Not as a ruler, but as the voice of wisdom, guiding the kingdom into peace.";
+            +"Still, your journey wasn't wasted.\n\n"
+            +"When the true king rose after you,\n\n" +
+            "you stood by their side.\n\n"
+            +" Not as a ruler, but as the voice\n\n" +
+            "of wisdom, guiding the kingdom into peace.";
 
     String trueKingEnding ="You faced every trial.\n\n" +
             "With strength, with wisdom, and with heart.\n\n" +
@@ -77,10 +82,12 @@ public class CutsceneManager {
    }
    public void openingScene(){
          if (scenePhase == 0) {
+
              drawBlackScreen(1f);
                 if (counterReached(180) || gp.keyH.enterPressed) {
                     scenePhase++;
                     y = gp.screenHeight;
+                    gp.playMusic(14);
                 }
          } if (scenePhase == 1) {
 
@@ -95,13 +102,14 @@ public class CutsceneManager {
          }
          if(scenePhase == 2) {
              gp.gameState = gp.playState; // Change game state to playState
+             gp.stopMusic();
              gp.playMusic(0);
          }
    }
    public void nullEnding() {
           if (scenePhase == 0) {
                 gp.stopMusic();
-
+                gp.playMusic(14);
                 //play null ending music
               scenePhase++;
 
@@ -165,7 +173,7 @@ public class CutsceneManager {
                 drawBlackScreen(1f);
                 //Reset the game
                 drawString(1f, 50, gp.screenHeight/2, "Thank you\nfor Playing!", 70);
-                if(counterReached(180)) {
+                if(counterReached(2400)) {
                  System.exit(0);
                 }
             }
@@ -174,7 +182,7 @@ public class CutsceneManager {
    public void warriorEnding(){
         if (scenePhase == 0) {
        gp.stopMusic();
-
+            gp.playMusic(14);
        //play null ending music
        scenePhase++;
 
@@ -237,7 +245,7 @@ public class CutsceneManager {
                drawBlackScreen(1f);
                //Reset the game
                drawString(1f, 50, gp.screenHeight/2, "Thank you\nfor Playing!", 70);
-               if(counterReached(180)) {
+               if(counterReached(240)) {
                    System.exit(0);
                }
            }
@@ -245,7 +253,7 @@ public class CutsceneManager {
    public void sageEnding(){
         if (scenePhase == 0) {
        gp.stopMusic();
-
+            gp.playMusic(14);
        //play null ending music
        scenePhase++;
 
@@ -308,7 +316,7 @@ public class CutsceneManager {
            drawBlackScreen(1f);
            //Reset the game
            drawString(1f, 50, gp.screenHeight/2, "Thank you\nfor Playing!", 70);
-           if(counterReached(180)) {
+           if(counterReached(240)) {
                System.exit(0);
            }
        }
@@ -316,7 +324,7 @@ public class CutsceneManager {
    public void kingEnding(){
         if(scenePhase == 0) {
        gp.stopMusic();
-
+            gp.playMusic(14);
        //play null ending music
        scenePhase++;
 
@@ -379,7 +387,7 @@ public class CutsceneManager {
            drawBlackScreen(1f);
            //Reset the game
            drawString(1f, 50, gp.screenHeight/2, "Thank you\nfor Playing!", 70);
-           if(counterReached(180)) {
+           if(counterReached(240)) {
                System.exit(0);
            }
        }

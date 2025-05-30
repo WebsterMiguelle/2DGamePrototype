@@ -22,7 +22,14 @@ public class Sound {
         soundURL[4] = getClass().getResource(("/sound/SoldierPoetKingKalimba.wav"));
         soundURL[5] = getClass().getResource(("/sound/SoldierPoetKingPercussive.wav"));
         soundURL[6] = getClass().getResource(("/sound/SoldierPoetKingTuba.wav"));
-        soundURL[7] = getClass().getResource(("/sound/talk.wav"));
+        soundURL[7] = getClass().getResource(("/sound/mixkit-final-level-bonus-2061.wav"));
+        soundURL[8] = getClass().getResource(("/sound/mixkit-player-losing-or-failing-2042.wav"));
+        soundURL[9] = getClass().getResource(("/sound/mixkit-creaky-door-open-195.wav"));
+        soundURL[10]  = getClass().getResource(("/sound/mixkit-winning-a-coin-video-game-2069.wav"));
+        soundURL[11]  = getClass().getResource(("/sound/BOWnSWORD.wav"));
+        soundURL[12]  = getClass().getResource(("/sound/BOWnSHIELD.wav"));
+        soundURL[13]  = getClass().getResource(("/sound/SWORDnSHEILD.wav"));
+        soundURL[14]  = getClass().getResource(("/sound/HarpyHare.wav"));
     }
 
     public void setFile(int i){

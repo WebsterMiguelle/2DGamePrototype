@@ -12,8 +12,7 @@ public class OBJ_Sword extends Entity {
         type = type_sword;
 
         name = "Sword";
-        down1 = setup("/objects/Sword");
-        down2 = setup("/objects/Sword");
+        getImage();
         collision = true;
 
         solidArea.x = 0;
@@ -29,5 +28,13 @@ public class OBJ_Sword extends Entity {
     }
     public void interact(){
         startDialogue(this,0);
+        gp.playSE(10);
+    }
+    public void getImage(){
+        frame1 = setup("/objects/Sword1");
+        frame2 = setup("/objects/Sword2");
+
+        down1 = frame1; // used by draw()
+        down2 = frame2; // used by draw()
     }
 }

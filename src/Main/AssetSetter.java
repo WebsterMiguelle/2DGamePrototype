@@ -22,7 +22,7 @@ int i = 0;
         mapNum = 2;
 
             gp.obj[mapNum][i] = new OBJ_Crown(gp);
-            gp.obj[mapNum][i].worldX = 33 * gp.tileSize;
+            gp.obj[mapNum][i].worldX = 34 * gp.tileSize;
             gp.obj[mapNum][i].worldY = 43 * gp.tileSize;
             i++;
             gp.obj[mapNum][i] = new OBJ_Sword(gp);
@@ -69,7 +69,7 @@ int i = 0;
 
             gp.npc[mapNum][i] = new NPC2(gp);
             gp.npc[mapNum][i].worldX = 27 * gp.tileSize;
-            gp.npc[mapNum][i].worldY = 6 * gp.tileSize;
+            gp.npc[mapNum][i].worldY = 10 * gp.tileSize;
             i++;
 
             gp.npc[mapNum][i] = new NPC3(gp);

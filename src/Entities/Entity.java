@@ -77,6 +77,11 @@ public class Entity {
     public void update(){
         setAction();
 
+        collisionOn = false;
+        gp.cChecker.checkTile(this);
+        gp.cChecker.checkObject(this, false);
+        gp.cChecker.checkPlayer(this);
+
         if(!collisionOn){
             switch(direction){
                 case "up": worldY -= speed;break;

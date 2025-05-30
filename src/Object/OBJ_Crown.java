@@ -12,8 +12,7 @@ public class OBJ_Crown extends Entity {
         type = type_crown;
 
         name = "Crown";
-        down1 = setup("/objects/Crown");
-        down2 = setup("/objects/Crown");
+        getImage();
         collision = true;
 
         solidArea.x = 0;
@@ -29,5 +28,13 @@ public class OBJ_Crown extends Entity {
     }
     public void interact(){
         startDialogue(this, 0);
+        gp.playSE(10);
+    }
+    public void getImage(){
+        frame1 = setup("/objects/Crown1");
+        frame2 = setup("/objects/Crown2");
+
+        down1 = frame1; // used by draw()
+        down2 = frame2; // used by draw()
     }
 }
