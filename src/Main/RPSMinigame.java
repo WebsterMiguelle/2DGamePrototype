@@ -56,6 +56,8 @@ public class RPSMinigame extends Minigame {
     public RPSMinigame(GamePanel gp) {
         super(gp);
         running = true;
+        gp.stopMusic();
+        gp.playMusic(5);
         loadImages();
         resetGame();
 
@@ -337,11 +339,13 @@ public class RPSMinigame extends Minigame {
             minigameCompleted = true;
             playerWonMinigame = true;
             running = false;
+            gp.stopMusic();
         } else if (npcWins == 3){
             minigameCompleted = true;
             playerWonMinigame = false;
             showingAcceptFate = true;
             running = false;
+            gp.stopMusic();
         }
 
         System.out.println("Player Choice: " + playerChoice + "\n NPC Choice: " + npcChoice);
@@ -365,6 +369,7 @@ public class RPSMinigame extends Minigame {
 
         currentPlayerSprite = standardPlayerSprite;
         currentNpcSprite = standardNpcSprite;
+        gp.playMusic(5);
     }
 
     @Override
