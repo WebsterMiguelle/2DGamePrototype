@@ -22,7 +22,7 @@ int i = 0;
         mapNum = 2;
 
             gp.obj[mapNum][i] = new OBJ_Crown(gp);
-            gp.obj[mapNum][i].worldX = 34 * gp.tileSize;
+            gp.obj[mapNum][i].worldX = 35 * gp.tileSize;
             gp.obj[mapNum][i].worldY = 43 * gp.tileSize;
             i++;
             gp.obj[mapNum][i] = new OBJ_Sword(gp);
