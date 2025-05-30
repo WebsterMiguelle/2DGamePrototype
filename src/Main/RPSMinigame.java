@@ -26,7 +26,7 @@ public class RPSMinigame extends Minigame {
     public int life = maxLife;
 
     Font daydreamFont;
-    BufferedImage background, sword, spear, shield, stage,
+    BufferedImage title, background, sword, spear, shield, stage,
             player, playerSword, playerShield, playerSpear, npc, npcSword, npcShield, npcSpear, stick;
     Image sword1, spear1, shield1, currentPlayerSprite, currentNpcSprite, stick1;
     Image standardPlayerSprite, standardNpcSprite; // new standard sprites
@@ -35,6 +35,7 @@ public class RPSMinigame extends Minigame {
     private boolean running = false;
     private boolean won = false;
     private boolean draw = false;
+    private boolean gameTitle = true;
 
     // RPS VARIABLES
     private int playerChoice = -1; // 0: Sword, 1: Shield, 2: Spear
@@ -70,6 +71,7 @@ public class RPSMinigame extends Minigame {
     private void loadImages() {
         try {
             background = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/photoBGs/Battleground1.png")));
+            title = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/photoBGs/rps.png")));
             sword = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/SwordT2.png")));
             spear = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/Bow.png")));
             shield = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/minigame/ShieldLargeT2.png")));
@@ -121,10 +123,16 @@ public class RPSMinigame extends Minigame {
                 }
             }
         }
-       
+
     }
 
     public void draw(Graphics2D g2) {
+
+        if(gameTitle){
+            g2.drawImage(title, 0, 0, screenWidth, screenHeight, null);
+            return;
+        }
+
         g2.drawImage(background, 0, 0, screenWidth, screenHeight, null);
 
         if(showingAcceptFate){
@@ -156,8 +164,8 @@ public class RPSMinigame extends Minigame {
 
             int playerX = (screenWidth / 2 - (tileSize * 6) - tileSize) - 70;
             int npcX = (screenWidth / 2 + (tileSize * 6) - tileSize) - 70;
-            int pointY = 30; 
-            
+            int pointY = 30;
+
             for (int i = 0; i < playerWins; i++) {
                 g2.drawImage(stick, playerX + (i * (tileSize) + 20), pointY, tileSize, tileSize, null);
             }
@@ -265,19 +273,7 @@ public class RPSMinigame extends Minigame {
         FontMetrics fm = g2.getFontMetrics();
         g2.setColor(Color.YELLOW);
         int x, y;
-        int textHeight = fm.getHeight();
-
-        if (!running) {
-            if (playerWins == 3) {
-                finalResult = "You won the game!";
-            } else if (npcWins == 3) {
-                finalResult = "You lost the game!";
-            }
-            // Show result text
-            x = screenWidth / 2 - fm.stringWidth(finalResult) / 2;
-            y = (screenHeight / 2) - (textHeight / 2);
-            g2.drawString(finalResult, x, y);
-        } else {
+        if(running) {
             if (draw) {
                 finalResult = "Draw!";
             } else if (won) {
@@ -286,6 +282,7 @@ public class RPSMinigame extends Minigame {
                 finalResult = "You Lose!";
             }
         }
+
 
         x = screenWidth / 2 - fm.stringWidth(finalResult) / 2;
         y = screenHeight / 2;
@@ -318,9 +315,9 @@ public class RPSMinigame extends Minigame {
         if (playerChoice == npcChoice) {
             draw = true;
         } else if (
-                (playerChoice == 1 && npcChoice == 0) || // Sword beats Shield
-                        (playerChoice == 0 && npcChoice == 2) || // Spear beats Sword
-                        (playerChoice == 2 && npcChoice == 1)    // Shield beats Spear
+                (playerChoice == 1 && npcChoice == 0) || // Shield beats Bow
+                        (playerChoice == 2 && npcChoice == 1) || // Sword beats Shield
+                        (playerChoice == 0 && npcChoice == 2)    // Bow beats Sword
         ) {
             playerWins++;
             won = true;
@@ -387,6 +384,13 @@ public class RPSMinigame extends Minigame {
             }
             return;
         }
+        if (gameTitle) {
+            if (code == KeyEvent.VK_NUMPAD1 || code == KeyEvent.VK_NUMPAD2 || code == KeyEvent.VK_NUMPAD3 ||
+                    code == KeyEvent.VK_1 || code == KeyEvent.VK_2 || code == KeyEvent.VK_3) {
+                gameTitle= false;
+            }
+            return;
+        }
 
         if (!running) {
             if (minigameCompleted) {
@@ -398,13 +402,14 @@ public class RPSMinigame extends Minigame {
                 }
                 return;
             }
+        }
 
             if (code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.titleState;
                 gp.playMusic(0);
                 return;
             }
-        }
+
 
         if (code == KeyEvent.VK_1 || code == KeyEvent.VK_NUMPAD1) {
             if (!showingResult && !minigameCompleted) {
