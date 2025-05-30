@@ -66,7 +66,7 @@ public class OBJ_BookPillar extends Entity {
             line = "The book is already placed.";
         } else {
             gp.gameState = gp.dialogueState;
-            line = "It seems that this pillar needs its item.";
+            line = "It seems that this\npillar needs its item.";
         }
         dialogues[0][0] = line;
     }

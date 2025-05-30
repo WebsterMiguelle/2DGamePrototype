@@ -52,7 +52,7 @@ public class OBJ_CrownPillar extends Entity {
             Line = "The crown is already placed.";
         } else {
             gp.gameState = gp.dialogueState;
-            Line = "It seems that this pillar needs its item.";
+            Line = "It seems that this\npillar needs its item.";
         }
         dialogues[0][0] = Line;
     }

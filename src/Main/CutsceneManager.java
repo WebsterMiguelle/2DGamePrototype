@@ -32,11 +32,30 @@ public class CutsceneManager {
 
     String endCredit = "Credits:\n\n"
             +"\n\n\n\n\n\n\n"
-            + "Game Design: Your Name\n"
-            + "Programming: Your Name\n"
-            + "Graphics: Your Name\n"
-            + "Music: Your Name\n"
-            + "Special Thanks: Everyone who played the game!";
+            + "In partial fullfilment of IC124\n\n"
+
+            + "Submitted By:\n" +
+            "Kimberly Bermoy\n" +
+            "Elvie May Mara\n" +
+            "Webster Miguelle Isidor\n\n"
+
+            + "Graphics:\n" +
+            "Kimberly Bermoy\n" +
+            "+ Internet Sources\n\n"
+
+            + "Music:\n\n" +
+
+            "Soldier, Poet, King\n" +
+            "By: The Oh Hellos\n\n" +
+
+            "Harpy Hare\n" +
+            "By: Yaelokre\n\n" +
+
+            "Code Base: RyiSnow\n\n" +
+
+            "Special Thanks: To Sir Tupas for giving\n" +
+            "for believing and giving us the motivation\n" +
+            "to make this game.";
 
     String trueWarriorEnding ="You proved yourself in battle.\n\n"
             +"Strong, fearless, and unyielding.\n\n"
@@ -165,7 +184,7 @@ public class CutsceneManager {
                 drawBlackScreen(1f);
                 y--;
                 drawString(1f,20,y, endCredit,70);
-                if(y < -1000||gp.keyH.enterPressed) {
+                if(counterReached(3600)||gp.keyH.enterPressed) {
                     scenePhase++;
                 }
             }
@@ -237,7 +256,7 @@ public class CutsceneManager {
                drawBlackScreen(1f);
                y--;
                drawString(1f,20,y, endCredit,70);
-               if(y < -1000||gp.keyH.enterPressed) {
+               if(counterReached(3600)||gp.keyH.enterPressed) {
                    scenePhase++;
                }
            }
@@ -308,7 +327,7 @@ public class CutsceneManager {
            drawBlackScreen(1f);
            y--;
            drawString(1f,20,y, endCredit,70);
-           if(y < -1000||gp.keyH.enterPressed) {
+           if(counterReached(3600)||gp.keyH.enterPressed) {
                scenePhase++;
            }
        }
@@ -379,7 +398,7 @@ public class CutsceneManager {
            drawBlackScreen(1f);
            y--;
            drawString(1f,20,y, endCredit,70);
-           if(y < -1000||gp.keyH.enterPressed) {
+           if(counterReached(3600)||gp.keyH.enterPressed) {
                scenePhase++;
            }
        }
