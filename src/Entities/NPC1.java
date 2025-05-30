@@ -15,6 +15,8 @@ public class NPC1 extends Entity {
         getImage();
         setDialogue();
 
+        collision = true;
+
         solidArea = new Rectangle();
         solidArea.x = 8;
         solidArea.y = 12;

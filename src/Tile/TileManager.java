@@ -64,7 +64,7 @@ public class TileManager {
         }
         loadMap("/maps/bedroomMap(withFurniture).txt", 0);
         loadMap("/maps/LivingRoomMap.txt", 1);
-        loadMap("/maps/VillageAndForestMap.txt", 2);
+        loadMap("/maps/ffOutsideWorldMap.txt", 2);
 
     }
 

@@ -295,7 +295,7 @@ public class GamePanel extends JPanel implements Runnable{
         npc = new Entity[maxMap][10];
         obj = new Entity[maxMap][10];
 
-        
+
         aSetter.setNPC();
         aSetter.setObject();
 

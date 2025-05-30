@@ -50,8 +50,8 @@ public class EventHandler {
             if(hit(0,21, 25, "up")) {teleport(1,15,33);}
             else if(hit(1,15, 33, "left")) {teleport(0,21,25);}
 
-            else if(hit(1,19, 28, "up")) {teleport(2,10,12);}
-            else if(hit(2,10, 12, "up")) {teleport(1,19,27);}
+            else if(hit(1,19, 28, "up")) {teleport(2,10,13);}
+            else if(hit(2,10, 13, "up")) {teleport(1,19,27);}
         }
 
 
