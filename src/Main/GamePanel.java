@@ -49,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
+    public CutsceneManager cutsceneManager = new CutsceneManager(this);
     Config config = new Config(this);
     Thread gameThread;
 
@@ -56,6 +57,7 @@ public class GamePanel extends JPanel implements Runnable{
     public Player player = new Player(this, keyH);
     public Entity[][] obj = new Entity[maxMap][10];
     public Entity[][] npc = new Entity[maxMap][10];
+
     ArrayList<Entity> entityList = new ArrayList<>();
 
     //Game States
@@ -65,15 +67,14 @@ public class GamePanel extends JPanel implements Runnable{
     public final int pauseState = 2;
     public final int dialogueState = 3;
     public final int optionsState = 4;
-
+    public final int cutsceneState = 6;
     //Minigames state
 
     public final int minigameState = 5;
     public Minigame currentMinigame = null;
+    public boolean trueWarrior = false ,trueSage = false ,trueKing = false;
     public boolean inMinigame = false;
 
-    //Story State
-public final int storyState = 7;
 
     public GamePanel(){
         this.setPreferredSize(new java.awt.Dimension(screenWidth, screenHeight));
@@ -87,6 +88,7 @@ public final int storyState = 7;
         aSetter.setNPC();
         //playMusic(0);
         //stopMusic();
+        cutsceneManager.sceneNum = 0; // Set initial cutscene scene
         gameState = titleState;
 
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
@@ -154,15 +156,25 @@ public final int storyState = 7;
         if(gameState == pauseState) {
             //nothing
         }
+
         if (gameState == minigameState && currentMinigame != null) {
             currentMinigame.update();
             if (currentMinigame.isWon()) {
+
+                if(currentMinigame instanceof SnakeMinigame) {
+                    trueKing = true;
+                } else if (currentMinigame instanceof HangmanMinigame) {
+                    trueSage = true;
+                } else if (currentMinigame instanceof RPSMinigame) {
+                    trueWarrior = true;
+                }
+
                 // You can transition state or reward player
                 gameState = playState;
                 stopMusic();
-                currentMinigame = null;
             }
         }
+
 
     }
     public void drawToTempScreen(){
@@ -210,6 +222,10 @@ public final int storyState = 7;
            }
            entityList.clear();
 
+           //Cutscene
+            if(gameState == cutsceneState) {
+                cutsceneManager.draw(g2);
+            }
             //UI
             ui.draw(g2);
         }
@@ -249,5 +265,51 @@ public final int storyState = 7;
     public void playSE(int i){
         sound.setFile(i);
         sound.play();
+    }
+    public void resetGame() {
+        // Reset map and state
+        currentMap = 0;
+        gameState = titleState;
+
+// Clear any UI or event data if needed
+        ui.reset();
+        eHandler.reset();
+
+        // Reset player
+        player.reset();
+        player = new Player(this, keyH);
+
+        // Reset NPCs and Objects
+         for (int i = 0; i < maxMap; i++) {
+             for (int j = 0; j < 10; j++) {
+                 npc[i][j] = null;
+                 obj[i][j] = null;
+             }
+         }
+        npc = new Entity[maxMap][10];
+        obj = new Entity[maxMap][10];
+
+
+        aSetter.i = 0;
+        aSetter.setNPC();
+        aSetter.setObject();
+
+        // Reset cutscene
+        cutsceneManager.sceneNum = 0;
+
+        // Reset minigame and sound
+        stopMusic();
+        currentMinigame = null;
+        inMinigame = false;
+
+
+
+        // Reset camera/screen if needed
+        if (fullScreenOn) {
+            setFullScreen();
+        }
+
+        // Optionally redraw immediately
+        repaint();
     }
 }

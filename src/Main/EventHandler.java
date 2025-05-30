@@ -54,6 +54,8 @@ public class EventHandler {
             else if(hit(2,10, 12, "up")) {teleport(1,19,27);}
         }
 
+
+
     }
 
     public boolean hit(int map, int col, int row, String reqDirection) {
@@ -93,4 +95,27 @@ public class EventHandler {
     //instert teleport sound here
 
     }
+
+    public void reset() {
+        previousEventX = 0;
+        previousEventY = 0;
+        canTouchEvent = true;
+
+        // Optionally reset all EventRect objects if needed
+        for (int map = 0; map < gp.maxMap; map++) {
+            for (int col = 0; col < gp.maxWorldCol; col++) {
+                for (int row = 0; row < gp.maxWorldRow; row++) {
+                    if (eventRect[map][col][row] != null) {
+                        eventRect[map][col][row].x = 23;
+                        eventRect[map][col][row].y = 23;
+                        eventRect[map][col][row].width = 2;
+                        eventRect[map][col][row].height = 2;
+                        eventRect[map][col][row].eventRectDefaultX = 23;
+                        eventRect[map][col][row].eventRectDefaultY = 23;
+                    }
+                }
+            }
+        }
+    }
+
 }

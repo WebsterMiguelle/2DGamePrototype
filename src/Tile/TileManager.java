@@ -85,37 +85,6 @@ public class TileManager {
 
             setup(i, fileName, collision);
         }
-
-        //Bedroom Tiles
-//        setup(0, "00", true);
-//        setup(1, "01", true);
-//        setup(2, "02", true);
-//        setup(3, "03", true);
-//        setup(4, "04", true);
-//        setup(5, "05", true);
-//        setup(6, "06", true);
-//        setup(7, "07", true);
-//        setup(8, "08", true);
-//        setup(9, "09", false);
-//        setup(10, "10", true);
-//        setup(11, "11", false);
-//        setup(12, "12", true);
-//        setup(13, "13", false);
-//        setup(14, "14", false);
-//        //Living Room Tiles
-//        setup(15, "15", true);
-//        setup(16, "16", true);
-//        setup(17, "17", true);
-//        setup(18, "18", true);
-//        setup(19, "19", true);
-//        setup(20, "20", true);
-//        setup(21, "21", true);
-//        setup(22, "22", true);
-//        setup(23, "23", false);
-//        setup(24, "24", true);
-//        setup(25, "25", true);
-//        setup(26, "26", false);
-//        setup(27, "27", true);
     }
 
     public void setup(int index, String imagePath, boolean collision){

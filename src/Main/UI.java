@@ -76,6 +76,10 @@ public class UI {
             drawOptionsScreen();
         }
 
+        if(gp.gameState == gp.cutsceneState){
+            gp.cutsceneManager.draw(g2);
+        }
+
         if (gp.gameState == gp.minigameState && gp.currentMinigame != null) {
             gp.currentMinigame.draw(g2);
         }
@@ -173,8 +177,6 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
         x+= gp.tileSize;
         y+= gp.tileSize;
-
-
 
         if(npc.dialogues[npc.dialogueSet][npc.dialogueIndex] != null) {
             //currentDialogue = npc.dialogues[npc.dialogueSet][npc.dialogueIndex];
@@ -468,5 +470,37 @@ public class UI {
         transitionAlpha = 0;
         nextGameState = nextState;
     }
+
+    public void startingMessage() {
+        showMessage("Welcome to Rex the Great! \nPress Enter to start your adventure.");
+    }
+
+    public void reset() {
+        // Message display
+        messageOn = false;
+        message = "";
+        messageCounter = 0;
+
+        // Dialogue
+        currentDialogue = "";
+        charIndex = 0;
+        combinedText = "";
+        if (npc != null) {
+            npc.dialogueIndex = 0;
+        }
+
+        // Title/Menu
+        commandNum = 0;
+        titleScreenState = 0;
+        subState = 0;
+
+        // Game end and transitions
+        gameFinished = false;
+        transitioning = false;
+        transitionAlpha = 0;
+        transitionPhase = 0;
+        nextGameState = -1;
+    }
+
 
 }

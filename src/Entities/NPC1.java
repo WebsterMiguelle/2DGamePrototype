@@ -96,4 +96,5 @@ public class NPC1 extends Entity {
             dialogueSet --;
         }
     }
+
 }

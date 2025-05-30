@@ -46,6 +46,7 @@ public class Entity {
     public final int type_CrownPillar = 7;
     public final int type_SwordPillar = 8;
     public final int type_BookPillar = 9;
+    public final int type_star = 10;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
@@ -167,17 +168,21 @@ public class Entity {
 
     public void interact(){}
 
-    public int removeItem(Entity[][] target, String itemName){
-        int index = 999;
 
-        for(int i = 0; i < target[1].length; i++){
-            if(target[gp.currentMap][i] != null){
-                if(target[gp.currentMap][i].name.equals(itemName)){
-                    index = i;
-                    break; // Exit loop after finding the item
-                }
-            }
-        }
-        return index;
+    public void reset() {
+        worldX = 0;
+        worldY = 0;
+        direction = "down";
+        spriteCounter = 0;
+        spriteNum = 1;
+        actionLockCounter = 0;
+        collisionOn = false;
+        dialogueIndex = 0;
+        dialogueSet = 0;
+
+        // Reset solid area
+        solidArea.x = solidAreaDefaultX;
+        solidArea.y = solidAreaDefaultY;
     }
+
 }

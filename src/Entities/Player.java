@@ -163,6 +163,9 @@ public class Player extends Entity{
 
             }
 
+    public boolean hasDoneAllMinigames() {
+        return crownDone && bookDone && swordDone;
+    }
 
     public void pickUpObject(int i) {
         if(i == 999) {return;}
@@ -246,7 +249,13 @@ public class Player extends Entity{
                 }
             }
 
+            case type_star -> {
+                if (keyH.enterPressed) {
+                    gp.obj[gp.currentMap][i].interact();
+                }
+            }
         }
+
     }
 
     public void interactNPC(int i){
@@ -309,5 +318,21 @@ public class Player extends Entity{
         g.setFont(interactableFont);
         g.drawString("E/Enter", 5, 20); // You can write full "E to Interact" if it fits
         g.dispose();
+    }
+
+    public void reset() {
+        worldX = 0;
+        worldY = 0;
+        direction = "down";
+        spriteCounter = 0;
+        spriteNum = 1;
+        actionLockCounter = 0;
+        collisionOn = false;
+        dialogueIndex = 0;
+        dialogueSet = 0;
+
+        // Reset solid area
+        solidArea.x = solidAreaDefaultX;
+        solidArea.y = solidAreaDefaultY;
     }
 }

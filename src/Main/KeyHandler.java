@@ -32,6 +32,8 @@ public class KeyHandler implements KeyListener {
             }
             else if (gp.gameState == gp.optionsState) {
                 optionsState(code);
+            } else if (gp.gameState == gp.cutsceneState) {
+                cutsceneState(code);
             }
 
         if (gp.gameState == gp.minigameState && gp.currentMinigame instanceof SnakeMinigame snakeGame) {
@@ -64,8 +66,8 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_E) {
             gp.playSE(2);
             if (gp.ui.commandNum == 0) {
-                gp.ui.startTransition(gp.playState);
-                gp.playMusic(0);
+                gp.ui.startTransition(gp.cutsceneState);
+                gp.cutsceneManager.sceneNum = 0;
             }
             if (gp.ui.commandNum == 1) {
                 //load game
@@ -195,6 +197,12 @@ public class KeyHandler implements KeyListener {
                     gp.playSE(1);
                 }
             }
+        }
+    }
+    public void cutsceneState(int code) {
+        if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_E) {
+            enterPressed = true;
+            gp.playSE(2);
         }
     }
 
